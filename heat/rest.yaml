@@ -1,0 +1,113 @@
+  
+heat_template_version: 2013-05-23
+
+description: >
+  HOT template to add dir02, login01, login02 and test to node.consul 
+  infrastructure, Note: THIS DEPENDS ON iac_base
+parameters:
+  key_name:
+    type: string
+    description: Name of keypair to assign to servers
+  image_ubnt20:
+    type: string
+    description: Name of image to use for servers
+  image_ubnt18:
+    type: string
+    description: Name of image to use for servers
+  image_kali19:
+    type: string
+    description: Name of image to use for servers
+  image_kali20:
+    type: string
+    description: Name of image to use for servers
+  sec_group_linux:
+    type: comma_delimited_list
+    description: Security groups
+  sec_group_windows:
+    type: comma_delimited_list
+    description: Security groups
+  public_net:
+    type: string
+    description: >
+      ID or name of public network for which floating IP addresses will be allocated
+  admin_net:
+    type: string
+    description: UUID of admin net created in base template (iac_admin_net)
+  admin_subnet:
+    type: string
+    description: UUID of admin subnet created in base template (192.168.180.0/24)
+  manager_ip:
+    type: string
+    description: IP address of server manager created in base template
+
+resources:
+
+  kali19:
+    type: lib/kali19.yaml
+    properties:
+          key_name:          { get_param: key_name }
+          server_name:       kali19-%index%
+          image:             { get_param: image_kali19 }  
+          flavor:            m1.small
+          sec_group_linux:   { get_param: sec_group_linux }  
+          public_net:        { get_param: public_net }  
+          admin_net:         { get_param: admin_net }
+          admin_subnet:      { get_param: admin_subnet }
+          manager_ip:        { get_param: manager_ip }
+  kali20:
+    type: lib/kali20.yaml
+    properties:
+          key_name:          { get_param: key_name }
+          server_name:       kali20-%index%
+          image:             { get_param: image_kali20 }  
+          flavor:            m1.small
+          sec_group_linux:   { get_param: sec_group_linux }  
+          public_net:        { get_param: public_net }  
+          admin_net:         { get_param: admin_net }
+          admin_subnet:      { get_param: admin_subnet }
+          manager_ip:        { get_param: manager_ip }
+
+  win:
+    type: lib/windows_server.yaml
+    properties:
+      key_name:          { get_param: key_name }
+      server_name:       win-%index%
+      image:             { get_param: image_windows }  
+      flavor:            m1.small
+      sec_group_windows: { get_param: sec_group_windows }  
+      public_net:        { get_param: public_net }  
+      admin_net:         { get_param: admin_net }
+      admin_subnet:      { get_param: admin_subnet }
+      manager_ip:        { get_param: manager_ip }
+
+  ubnt20:
+    type: OS::Heat::ResourceGroup
+    properties:
+      resource_def:
+        type: lib/ubnt20.yaml
+        properties:
+          server_name:       ubnt20-%index%
+          key_name:          { get_param: key_name }
+          image:             { get_param: image_ubnt20 }
+          flavor:            m1.small
+          sec_group_linux:   { get_param: sec_group_linux }
+          public_net:        { get_param: public_net }
+          admin_net:         { get_param: admin_net }
+          admin_subnet:      { get_param: admin_subnet }
+          manager_ip:        { get_param: manager_ip }
+
+  ubnt18:
+    type: OS::Heat::ResourceGroup
+    properties:
+      resource_def:
+        type: lib/ubnt18.yaml
+        properties:
+          server_name:       ubnt18-%index%
+          key_name:          { get_param: key_name }
+          image:             { get_param: image_ubnt18 }
+          flavor:            m1.small
+          sec_group_linux:   { get_param: sec_group_linux }
+          public_net:        { get_param: public_net }
+          admin_net:         { get_param: admin_net }
+          admin_subnet:      { get_param: admin_subnet }
+          manager_ip:        { get_param: manager_ip }          
