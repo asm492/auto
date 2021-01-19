@@ -48,9 +48,9 @@ resources:
       sec_group_linux:   { get_param: sec_group_linux }  
       sec_group_windows: { get_param: sec_group_windows }
       public_net:        { get_param: public_net }  
-      admin_net:         { get_attr: [iac_base,admin_net] }
-      admin_subnet:      { get_attr: [iac_base,admin_subnet] }
-      manager_ip:        { get_attr: [iac_base,manager_ip] }
+      admin_net:         { get_attr: [base,admin_net] }
+      admin_subnet:      { get_attr: [base,admin_subnet] }
+      manager_ip:        { get_attr: [base,manager_ip] }
 
 outputs:
   manager_ip:
