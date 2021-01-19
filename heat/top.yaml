@@ -6,14 +6,22 @@ parameters:
   key_name:
     type: string
     description: Name of keypair to assign to servers
-  image_linux:
+  image_ubnt20:
     type: string
-    description: Name of image to use for GNU/Linux servers
+    description: Name of image to use for servers
+    default: Ubuntu Server 20.04 LTS (Focal Fossa) amd64
+  image_ubnt18:
+    type: string
+    description: Name of image to use for servers
     default: Ubuntu Server 18.04 LTS (Bionic Beaver) amd64
-  image_windows:
+  image_kali19:
     type: string
-    description: Name of image to use for Windows servers
-    default: Windows Server 2019 Standard [Evaluation]
+    description: Name of image to use for servers
+    default: Kali Linux 2019.4 xfce amd64 
+  image_kali20:
+    type: string
+    description: Name of image to use for servers
+    default: Kali Linux 2020.3 xfce amd64
   sec_group_linux:
     type: comma_delimited_list
     description: Security groups
@@ -43,7 +51,10 @@ resources:
     depends_on: base
     properties:
       key_name:          { get_param: key_name }
-      image_linux:       { get_param: image_linux }  
+      image_kali19:       { get_param: image_kali19 }
+      image_kali20:       { get_param: image_kali20 }
+      image_ubnt18:       { get_param: image_ubnt18 }
+      image_ubnt20:       { get_param: image_ubnt20 }
       image_windows:     { get_param: image_windows }  
       sec_group_linux:   { get_param: sec_group_linux }  
       sec_group_windows: { get_param: sec_group_windows }
