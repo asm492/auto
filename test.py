@@ -11,15 +11,11 @@ result = nmap.nmap_version_detection("192.168.180.142", args="-O")
 #result = nmap.NmapHostDiscovery("192.168.180.1/24")
 
 print(result)
-#print(result['192.168.180.112']['ports'][1])
-#print(result['osmatch'])
-#print(result['stats'])
-#print(result['runtime'])
 
 mac_addr = result['192.168.180.142']['macaddress']['addr']
 print(mac_addr)
-print(result.keys())
-print(type(result))
+#print(result.keys())
+#print(type(result))
 
 for ip_addr in result:
         if ip_addr != "stats" and ip_addr != "runtime":
@@ -32,16 +28,14 @@ for ip_addr in result:
                         protocol = result[ip_addr]['ports'][index]['protocol']
                         port_id = result[ip_addr]['ports'][index]['portid']
                         port_state = result[ip_addr]['ports'][index]['state']
+                        service_name = result[ip_addr]['ports'][index]['service']['name']
+                        product_name = result[ip_addr]['ports'][index]['service']['product']
+                        product_version = result[ip_addr]['ports'][index]['service']['version']
 
                         print(protocol)
                         print(port_id)
                         print(port_state)
+                        print(service_name)
+                        print(product_name)
+                        print(product_version)
                         index += 1
-                        for service in result[ip_addr]['ports'][index]['service']:
-                                service_name = result[ip_addr]['ports'][index]['service']['name']
-                                product_name = result[ip_addr]['ports'][index]['service']['product']
-                                product_version = result[ip_addr]['ports'][index]['service']['version']
-
-                                print(service_name)
-                                print(product_name)
-                                print(product_version)
