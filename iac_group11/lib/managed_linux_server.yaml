@@ -2,6 +2,7 @@ heat_template_version: 2013-05-23
 
 description: >
   HOT template for a GNU/Linux server with a nic in the admin network. 
+
 parameters:
   key_name:
     type: string
@@ -12,7 +13,7 @@ parameters:
   image:
     type: string
     description: Name of image to use for servers
-    default: Ubuntu Server 20.04 LTS (Focal Fossa) amd64
+    default: Ubuntu Server 18.04 LTS (Bionic Beaver) amd64
   flavor:
     type: string
     description: Flavor to use for servers

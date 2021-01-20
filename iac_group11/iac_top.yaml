@@ -1,0 +1,292 @@
+heat_template_version: 2017-09-01
+
+description: >
+  HOT template that invokes subtemplates
+
+parameters:
+  key_name:
+    type: string
+    description: Name of keypair to assign to servers
+  image_linux:
+    type: string
+    description: Name of image to use for GNU/Linux servers
+    default: Ubuntu Server 18.04 LTS (Bionic Beaver) amd64
+  image_windows_server:
+    type: string
+    description: Name of image to use for Windows servers
+    default: Windows Server 2019 Standard [Evaluation]
+  image_windows_client:
+    type: string
+    description: Name of image to use for Windows servers
+    default: Windows 10 2004 Enterprise [Evaluation]
+  public_net:
+    type: string
+    description: >
+      ID or name of public network for which floating IP addresses will be allocated
+    default: ntnu-internal
+  open_ports_windows_server:
+    type: comma_delimited_list
+    description: >
+      List of port ranges for which to create security group rules for incomning tcp traffic
+      Format: [ port_from-port_to, port, [port_from, port_to], ... ]
+    default:
+      - "80"
+      - 443
+      - 3389
+      - 5985-5986
+  open_ports_windows_client:
+    type: comma_delimited_list
+    description: >
+      List of port ranges for which to create security group rules for incomning tcp traffic
+      Format: [ port_from-port_to, port, [port_from, port_to], ... ]
+    default:
+      - "80"
+      - 443
+      - 3389
+      - 5985-5986
+  open_ports_linux:
+    type: comma_delimited_list
+    description: >
+      List of port ranges for which to create security group rules for incomning tcp traffic
+      Format: [ port_from-port_to, port, [port_from, port_to], ... ]
+    default:
+      - 22
+      - 80
+      - 443
+      - 3000
+      - 8000
+      - 8080
+      - 8081
+      - 8082
+      - 8140
+      - 3306
+      - 5901
+      - 9090
+ 
+resources:
+  # Parsing port parameters into lists that repeat can iterate over:
+  _open_ports_windows_server_from:
+    type: OS::Heat::Value
+    properties:
+      type: comma_delimited_list
+      value:
+        yaql:
+          data: { get_param: open_ports_windows_server }
+          # .select($...) performs action for every list member
+          # .join('-') and .split('-') will split a "port_a-port_b" string into a [port_a, port_b] list
+          #   and leave lists as is
+          # .repeat().flatten().take(2) duplicates single ports so that we have an entry for both range
+          #   start and range end
+          # [n] selects either the first or second port. Iteration over nested lists did not want to work
+          #   so we have two lists; One with the lower port (start) and one with the higher one (end)
+          expression: $.data.select(list(list($).flatten().join('-').split('-').repeat().flatten().take(2))[0])
+  _open_ports_windows_server_to:
+    type: OS::Heat::Value
+    properties:
+      type: comma_delimited_list
+      value:
+        yaql:
+          data: { get_param: open_ports_windows_server }
+          expression: $.data.select(list(list($).flatten().join('-').split('-').repeat().flatten().take(2))[1])
+  _open_ports_windows_client_from:
+    type: OS::Heat::Value
+    properties:
+      type: comma_delimited_list
+      value:
+        yaql:
+          data: { get_param: open_ports_windows_client }
+          expression: $.data.select(list(list($).flatten().join('-').split('-').repeat().flatten().take(2))[0])
+  _open_ports_windows_client_to:
+    type: OS::Heat::Value
+    properties:
+      type: comma_delimited_list
+      value:
+        yaql:
+          data: { get_param: open_ports_windows_client }
+          expression: $.data.select(list(list($).flatten().join('-').split('-').repeat().flatten().take(2))[1])
+  _open_ports_linux_from:
+    type: OS::Heat::Value
+    properties:
+      type: comma_delimited_list
+      value:
+        yaql:
+          data: { get_param: open_ports_linux }
+          expression: $.data.select(list(list($).flatten().join('-').split('-').repeat().flatten().take(2))[0])
+  _open_ports_linux_to:
+    type: OS::Heat::Value
+    properties:
+      type: comma_delimited_list
+      value:
+        yaql:
+          data: { get_param: open_ports_linux }
+          expression: $.data.select(list(list($).flatten().join('-').split('-').repeat().flatten().take(2))[1])
+
+  iac_base:
+    type: iac_base.yaml
+    properties:
+      key_name:          { get_param:    key_name }
+      image_linux:       { get_param:    image_linux }  
+      public_net:        { get_param:    public_net }  
+      sec_group_linux:
+        - { get_resource: sec_group_iac_common }
+        - { get_resource: sec_group_linux } 
+
+  iac_rest:
+    type: iac_rest.yaml
+    depends_on: iac_base
+    properties:
+      key_name:                 { get_param:    key_name }
+      image_linux:              { get_param:    image_linux }  
+      image_windows_server:     { get_param:    image_windows_server }  
+      image_windows_client:     { get_param:    image_windows_client }  
+      sec_group_linux:
+        - { get_resource: sec_group_iac_common }
+        - { get_resource: sec_group_linux }  
+      sec_group_windows_server:
+        - { get_resource: sec_group_iac_common }
+        - { get_resource: sec_group_windows_server }
+      sec_group_windows_client:
+        - { get_resource: sec_group_iac_common }
+        - { get_resource: sec_group_windows_client }
+      public_net:               { get_param:    public_net }  
+      admin_net:                { get_attr:     [iac_base,admin_net] }
+      admin_subnet:             { get_attr:     [iac_base,admin_subnet] }
+      manager_ip:               { get_attr:     [iac_base,manager_ip] }
+
+  sec_group_iac_common:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      description: Common rules for iac VMs. Allows any traffic between any VM in this security group.
+  sec_group_rule_iac_common_in4_icmp:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: ingress
+      ethertype: IPv4
+      protocol: icmp
+      remote_group: { get_resource: sec_group_iac_common }
+  sec_group_rule_iac_common_in6_icmp:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: ingress
+      ethertype: IPv6
+      protocol: icmp
+      remote_group:   { get_resource: sec_group_iac_common }
+  sec_group_rule_iac_common_in4_tcp:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: ingress
+      ethertype: IPv4
+      protocol: tcp
+      remote_group: { get_resource: sec_group_iac_common }
+  sec_group_rule_iac_common_in6_tcp:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: ingress
+      ethertype: IPv6
+      protocol: tcp
+      remote_group:   { get_resource: sec_group_iac_common }
+  sec_group_rule_iac_common_in4_udp:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: ingress
+      ethertype: IPv4
+      protocol: udp
+      remote_group: { get_resource: sec_group_iac_common }
+  sec_group_rule_iac_common_in6_udp:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: ingress
+      ethertype: IPv6
+      protocol: udp
+      remote_group:   { get_resource: sec_group_iac_common }
+  sec_group_rule_iac_common_out4:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: egress
+      ethertype: IPv4
+      remote_ip_prefix: 0.0.0.0/0
+  sec_group_rule_iac_common_out6:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: egress
+      ethertype: IPv6
+      remote_ip_prefix: ::/0
+
+  sec_group_linux:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      description: Add security group rules for Linux server
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: icmp
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 22
+          port_range_max: 22
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 80
+          port_range_max: 80
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 443
+          port_range_max: 443
+  sec_group_windows_server:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      description: Add security group rules for Windows server
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: icmp
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 80
+          port_range_max: 80
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 443
+          port_range_max: 443
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 3389
+          port_range_max: 3389
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 5985
+          port_range_max: 5986
+  sec_group_windows_client:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      description: Add security group rules for Windows server
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: icmp
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 80
+          port_range_max: 80
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 443
+          port_range_max: 443
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 3389
+          port_range_max: 3389
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 5985
+          port_range_max: 5986
+
+outputs:
+  manager_ip:
+    description: IP address of manager in the admin network
+    value: { get_attr: [iac_base,manager_ip] }
