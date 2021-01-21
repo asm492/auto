@@ -14,13 +14,6 @@ def print_json_file(scan_result, time):
         with open("data.json", "w") as file:
                 json.dump(result, file, ensure_ascii=False, indent=4, sort_keys=True)
 
-
-        #Prints the search results to json file
-        #file_name = str(time) + ".json"
-        #file = open(file_name, "w")
-        #file.write(result)
-        #file.close()
-
 nmap = nmap3.Nmap()
 #nmap = nmapp.NmapHostDiscovery()
 
@@ -34,16 +27,6 @@ nmap = nmap3.Nmap()
 #192.168.180.145 = manager
 result = nmap.nmap_version_detection("192.168.180.142", args="-O")
 #result = nmap.NmapHostDiscovery("192.168.180.1/24")
-
-#Saves as string, converts to json
-#result_string = str(result)
-#result_string = result_string.replace("\'", "\"")
-
-#print(result)
-
-#print(result.keys())
-#print(type(result))
-
 #Run with args= "-O"
 for ip_addr in result:
         if ip_addr != "stats" and ip_addr != "runtime":
@@ -80,11 +63,4 @@ print(end_time)
 scan_status = result['runtime']['exit']
 print(scan_status)
 
-#print(result_string)
-#Prints the search results to json file
-#file_name = str(start_time) + ".json"
-#json_file = open(file_name, "w")
-#json_file.write(result_string)
-#json_file.close()
 print_json_file(result, start_time)
-#To do: Write to log file
