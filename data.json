@@ -1,0 +1,210 @@
+{
+    "192.168.180.142": {
+        "hostname": [
+            {
+                "name": "host-192-168-180-142.openstacklocal",
+                "type": "PTR"
+            }
+        ],
+        "macaddress": {
+            "addr": "FA:16:3E:0F:CC:CC",
+            "addrtype": "mac"
+        },
+        "osmatch": [
+            {
+                "accuracy": "96",
+                "cpe": "cpe:/o:linux:linux_kernel:2.6.32",
+                "line": "52612",
+                "name": "Linux 2.6.32",
+                "osclass": {
+                    "accuracy": "96",
+                    "osfamily": "Linux",
+                    "osgen": "2.6.X",
+                    "type": "general purpose",
+                    "vendor": "Linux"
+                }
+            },
+            {
+                "accuracy": "96",
+                "cpe": "cpe:/o:linux:linux_kernel:4",
+                "line": "62168",
+                "name": "Linux 3.2 - 4.8",
+                "osclass": {
+                    "accuracy": "96",
+                    "osfamily": "Linux",
+                    "osgen": "4.X",
+                    "type": "general purpose",
+                    "vendor": "Linux"
+                }
+            },
+            {
+                "accuracy": "96",
+                "cpe": "cpe:/o:linux:linux_kernel:3",
+                "line": "53781",
+                "name": "Linux 2.6.32 - 3.10",
+                "osclass": {
+                    "accuracy": "96",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "type": "general purpose",
+                    "vendor": "Linux"
+                }
+            },
+            {
+                "accuracy": "95",
+                "cpe": "cpe:/o:linux:linux_kernel:3",
+                "line": "62411",
+                "name": "Linux 3.4 - 3.10",
+                "osclass": {
+                    "accuracy": "95",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "type": "general purpose",
+                    "vendor": "Linux"
+                }
+            },
+            {
+                "accuracy": "95",
+                "cpe": "cpe:/a:synology:diskstation_manager:5.2",
+                "line": "95890",
+                "name": "Synology DiskStation Manager 5.2-5644",
+                "osclass": {
+                    "accuracy": "95",
+                    "osfamily": "DiskStation Manager",
+                    "osgen": "5.X",
+                    "type": "storage-misc",
+                    "vendor": "Synology"
+                }
+            },
+            {
+                "accuracy": "95",
+                "cpe": "cpe:/o:linux:linux_kernel:3.1",
+                "line": "60007",
+                "name": "Linux 3.1",
+                "osclass": {
+                    "accuracy": "95",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "type": "general purpose",
+                    "vendor": "Linux"
+                }
+            },
+            {
+                "accuracy": "95",
+                "cpe": "cpe:/o:linux:linux_kernel:3.2",
+                "line": "61524",
+                "name": "Linux 3.2",
+                "osclass": {
+                    "accuracy": "95",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "type": "general purpose",
+                    "vendor": "Linux"
+                }
+            },
+            {
+                "accuracy": "94",
+                "cpe": "cpe:/h:axis:211_network_camera",
+                "line": "58944",
+                "name": "AXIS 210A or 211 Network Camera (Linux 2.6.17)",
+                "osclass": {
+                    "accuracy": "94",
+                    "osfamily": "embedded",
+                    "type": "webcam",
+                    "vendor": "AXIS"
+                }
+            },
+            {
+                "accuracy": "94",
+                "cpe": "cpe:/o:linux:linux_kernel:2.6",
+                "line": "53554",
+                "name": "Linux 2.6.32 - 2.6.35",
+                "osclass": {
+                    "accuracy": "94",
+                    "osfamily": "Linux",
+                    "osgen": "2.6.X",
+                    "type": "general purpose",
+                    "vendor": "Linux"
+                }
+            },
+            {
+                "accuracy": "94",
+                "cpe": "cpe:/o:linux:linux_kernel:3",
+                "line": "53985",
+                "name": "Linux 2.6.32 - 3.5",
+                "osclass": {
+                    "accuracy": "94",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "type": "general purpose",
+                    "vendor": "Linux"
+                }
+            }
+        ],
+        "ports": [
+            {
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:linux:linux_kernel"
+                    }
+                ],
+                "portid": "22",
+                "protocol": "tcp",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "scripts": [],
+                "service": {
+                    "conf": "10",
+                    "extrainfo": "Ubuntu Linux; protocol 2.0",
+                    "method": "probed",
+                    "name": "ssh",
+                    "ostype": "Linux",
+                    "product": "OpenSSH",
+                    "version": "7.6p1 Ubuntu 4ubuntu0.3"
+                },
+                "state": "open"
+            },
+            {
+                "cpe": [
+                    {
+                        "cpe": "cpe:/a:apache:http_server:2.4.29"
+                    }
+                ],
+                "portid": "80",
+                "protocol": "tcp",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "scripts": [],
+                "service": {
+                    "conf": "10",
+                    "extrainfo": "(Ubuntu)",
+                    "method": "probed",
+                    "name": "http",
+                    "product": "Apache httpd",
+                    "version": "2.4.29"
+                },
+                "state": "open"
+            }
+        ],
+        "state": {
+            "reason": "arp-response",
+            "reason_ttl": "0",
+            "state": "up"
+        }
+    },
+    "runtime": {
+        "elapsed": "21.65",
+        "exit": "success",
+        "summary": "Nmap done at Thu Jan 21 14:18:19 2021; 1 IP address (1 host up) scanned in 21.65 seconds",
+        "time": "1611238699",
+        "timestr": "Thu Jan 21 14:18:19 2021"
+    },
+    "stats": {
+        "args": "/usr/bin/nmap -oX - -sV -O 192.168.180.142",
+        "scanner": "nmap",
+        "start": "1611238678",
+        "startstr": "Thu Jan 21 14:17:58 2021",
+        "version": "7.60",
+        "xmloutputversion": "1.04"
+    }
+}
