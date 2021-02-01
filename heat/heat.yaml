@@ -69,7 +69,7 @@ resources:
     properties:
       name: Manager
       image: Kali Linux 2020.3 xfce amd64
-      flavor: m1.medium
+      flavor: m1.small
       key_name: { get_param: key_name }
       networks:
         - port: { get_resource: server1_port }
@@ -236,23 +236,23 @@ resources:
         - ip_address: 192.168.1.10
       security_groups: [{ get_resource: windows_security_group }]
 
-  server9:
-    type: OS::Nova::Server
-    properties:
-      name: Win10-Workstation-2
-      image: Windows 10 20H2 Pro for Workstations [Unlicensed]
-      flavor: m1.small
-      key_name: { get_param: key_name }
-      networks:
-        - port: { get_resource: server9_port }
+#  server9:
+#   type: OS::Nova::Server
+#   properties:
+#     name: Win10-Workstation-2
+#     image: Windows 10 20H2 Pro for Workstations [Unlicensed]
+#     flavor: m1.small
+#     key_name: { get_param: key_name }
+#     networks:
+#       - port: { get_resource: server9_port }
 
-  server9_port:
-    type: OS::Neutron::Port
-    properties:
-      network_id: { get_resource: private_net }
-      fixed_ips:
-        - ip_address: 192.168.1.11
-      security_groups: [{ get_resource: windows_security_group }]
+# server9_port:
+#   type: OS::Neutron::Port
+#   properties:
+#     network_id: { get_resource: private_net }
+#     fixed_ips:
+#       - ip_address: 192.168.1.11
+#     security_groups: [{ get_resource: windows_security_group }]
       
   server10:
     type: OS::Nova::Server
@@ -350,9 +350,9 @@ outputs:
   server8_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server8, first_address ] }
-  server9_private_ip:
-    description: IP address of server1 in private network
-    value: { get_attr: [ server9, first_address ] }
+#  server9_private_ip:
+#    description: IP address of server1 in private network
+#    value: { get_attr: [ server9, first_address ] }
   server10_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server10, first_address ] }
