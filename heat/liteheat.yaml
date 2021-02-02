@@ -1,0 +1,129 @@
+heat_template_version: 2013-05-23
+
+description: >
+  HOT template to deploy a manager only for autoenum.
+  Creates a new neutron network plus a router to the public
+  network, and deploys 1 server into the new network.
+parameters:
+  key_name:
+    type: string
+    description: Name of keypair to assign to servers
+  image:
+    type: string
+    description: Name of image to use for servers
+  flavor:
+    type: string
+    description: Flavor to use for servers
+  public_net:
+    type: string
+    description: >
+      ID or name of public network for which floating IP addresses will be allocated
+  private_net_name:
+    type: string
+    description: Name of private network to be created
+  private_net_cidr:
+    type: string
+    description: Private network address (CIDR notation)
+  private_net_gateway:
+    type: string
+    description: Private network gateway address
+  private_net_pool_start:
+    type: string
+    description: Start of private network IP address allocation pool
+  private_net_pool_end:
+    type: string
+    description: End of private network IP address allocation pool
+  private_subnet_name:
+    type: string
+resources:
+  private_net:
+    type: OS::Neutron::Net
+    properties:
+      name: { get_param: private_net_name }
+
+  private_subnet:
+    type: OS::Neutron::Subnet
+    properties:
+#      name: { get_param: private_subnet_name }
+      network_id: { get_resource: private_net }
+      cidr: { get_param: private_net_cidr }
+      gateway_ip: { get_param: private_net_gateway }
+      allocation_pools:
+        - start: { get_param: private_net_pool_start }
+          end: { get_param: private_net_pool_end }
+
+  router:
+    type: OS::Neutron::Router
+    properties:
+      external_gateway_info:
+        network: { get_param: public_net }
+
+  router_interface:
+    type: OS::Neutron::RouterInterface
+    properties:
+      router_id: { get_resource: router }
+      subnet_id: { get_resource: private_subnet }
+
+  server1:
+    type: OS::Nova::Server
+    properties:
+      name: Manager
+      image: Kali Linux 2020.3 xfce amd64
+      flavor: m1.small
+      key_name: { get_param: key_name }
+      networks:
+#        - port: { get_resource: server1_port }
+        - port: { get_resource: server1_public_port }
+
+#  server1_port:
+#    type: OS::Neutron::Port
+#    properties:
+#      network_id: { get_resource: private_net }
+#      fixed_ips:
+#        - subnet_id: { get_resource: private_subnet }
+#      security_groups: [{ get_resource: manager_security_group }]
+  
+  server1_public_port:
+    type: OS::Neutron::Port
+    properties:
+      network_id: { get_resource: private_net }
+      fixed_ips:
+        - subnet_id: { get_resource: private_subnet }
+      security_groups: [{ get_resource: manager_security_group }]
+
+  server1_floating_ip:
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: { get_param: public_net }
+      port_id: { get_resource: server1_public_port }
+
+  manager_security_group:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      description: Add security group rules for server
+      name: manager-security-group
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          direction: ingress
+          port_range_min: 1
+          port_range_max: 65535
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: icmp
+          direction: ingress
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          direction: egress
+          port_range_min: 1
+          port_range_max: 65535
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: icmp
+          direction: egress
+
+outputs:
+  server1_private_ip:
+    description: IP address of server1 in private network
+    value: { get_attr: [ server1, first_address ] }
+  server1_public_ip:
+    description: Floating IP address of server1 in public network
+    value: { get_attr: [ server1_floating_ip, floating_ip_address ] }
