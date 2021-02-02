@@ -3,7 +3,7 @@ heat_template_version: 2013-05-23
 description: >
   HOT template to deploy the test environment needed for autoenum.
   Creates a new neutron network plus a router to the public
-  network, and deploys X servers into the new network.
+  network, and deploys 9 servers into the new network.
 parameters:
   key_name:
     type: string
@@ -116,36 +116,24 @@ resources:
         - ip_address: 192.168.1.4
       security_groups: [{ get_resource: manager_security_group }]
   
-#  server2_floating_ip:
- #   type: OS::Neutron::FloatingIP
-  #  properties:
-   #   floating_network: { get_param: public_net }
-    #  port_id: { get_resource: server2_port }
+  server3:
+    type: OS::Nova::Server
+    properties:
+      name: WinSrv2019
+      image: Windows Server 2019 Standard [Unlicensed]
+      flavor: m1.small
+      key_name: { get_param: key_name }
+      networks:
+        - port: { get_resource: server3_port }
 
-#  server3:
-#    type: OS::Nova::Server
-#    properties:
-#      name: WinSrv2019
-#      image: Windows Server 2019 Standard [Unlicensed]
-#      flavor: m1.small
-#      key_name: { get_param: key_name }
-#      networks:
-#        - port: { get_resource: server3_port }
-
-#  server3_port:
-#    type: OS::Neutron::Port
-#    properties:
-#      network_id: { get_resource: private_net }
-#      fixed_ips:
-#        - ip_address: 192.168.1.5
-#      security_groups: [{ get_resource: windows_security_group }]
+  server3_port:
+    type: OS::Neutron::Port
+    properties:
+      network_id: { get_resource: private_net }
+      fixed_ips:
+        - ip_address: 192.168.1.5
+      security_groups: [{ get_resource: windows_security_group }]
   
-#  server3_floating_ip:
- #   type: OS::Neutron::FloatingIP
-  #  properties:
-   #   floating_network: { get_param: public_net }
-    #  port_id: { get_resource: server3_port }
-
   server4:
     type: OS::Nova::Server
     properties:
@@ -332,9 +320,9 @@ outputs:
   server2_private_ip:
     description: IP address of server2 in private network
     value: { get_attr: [ server2, first_address ] }
-#  server3_private_ip:
-#    description: IP address of server1 in private network
-#    value: { get_attr: [ server3, first_address ] }
+  server3_private_ip:
+    description: IP address of server1 in private network
+    value: { get_attr: [ server3, first_address ] }
   server4_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server4, first_address ] }
