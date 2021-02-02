@@ -13,12 +13,17 @@ pip3 install python3-nmap
 sudo apt-get install ansible -y
 
 cat <<EOF > /etc/ansible/hosts
+[ubuntu]
+
+192.168.1.6
+192.168.1.4
+
 [linux]
 
-192.168.1.4
+#192.168.1.4
 192.168.1.8
 192.168.1.12
-192.168.1.6
+#192.168.1.6
 192.168.1.7
 
 [windows]
