@@ -39,6 +39,12 @@ ansible_user=centos
 192.168.1.9
 192.168.1.10
 
+[windows:vars]
+ansible_user=ansibleuser
+ansible_password=@nsib1epaSsw0rd
+ansible_connection=winrm
+ansible_winrm_server_cert_validation=ignore
+
 [linux:children]
 ubuntu
 debian
