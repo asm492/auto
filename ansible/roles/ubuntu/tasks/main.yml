@@ -1,2 +1,52 @@
-- name: "Installing software"
-  apt: pkg=
+- name: Installing software
+  become: yes
+  apt: pkg=vim state=absent
+
+
+- name: Install tools for adding PPA repositories
+  become: true
+  apt:
+    name: software-properties-common
+    state: latest
+
+
+
+- name: php - add repository
+  become: yes
+  apt_repository:
+   repo: "ppa:ondrej/php"
+   state: "present"
+   update_cache: yes
+
+- name: Installing php
+  become: yes
+  apt:
+   pkg: ['php5.6', 'php5.6-gd', 'php5.6-xml', 'php5.6-mysql', 'php5.6-mbstring']
+   state: present
+
+- name: Installing Apache and MySQL
+  become: yes
+  apt:
+    pkg: ['apache2', 'mysql-server']
+
+- name: Start Apache
+  service:
+    name: apache2
+    state: started
+
+- name: Start MySQL
+  service:
+    name: mysql
+    state: started
+
+- name: Create a new database with name 'drupal2'
+  mysql_db:
+    name: drupal2
+    state: present
+    encoding: utf8
+
+- mysql_user:
+    name: drupal2
+    password: drupal2
+    priv: '*.*:ALL,GRANT'
+    state: present
