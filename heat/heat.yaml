@@ -4,6 +4,8 @@ description: >
   HOT template to deploy the test environment needed for autoenum.
   Creates a new neutron network plus a router to the public
   network, and deploys 9 servers into the new network.
+  
+  Quota needed: 9 instances, 14 VCPUs, 28 GB RAM, 1 FloatIP, 4 security-group.
 parameters:
   key_name:
     type: string
@@ -128,6 +130,8 @@ resources:
       image: Windows Server 2019 Standard [Unlicensed]
       flavor: m1.small
       key_name: { get_param: key_name }
+      user_data_format: RAW
+      user_data: { get_file: lib/windows_boot.ps1 }
       networks:
         - port: { get_resource: server3_port }
 
@@ -200,6 +204,8 @@ resources:
       image: Windows 10 20H2 Pro for Workstations [Unlicensed] 
       flavor: m1.small
       key_name: { get_param: key_name }
+      user_data_format: RAW
+      user_data: { get_file: lib/windows_boot.ps1 }
       networks:
         - port: { get_resource: server7_port }
 
@@ -218,6 +224,8 @@ resources:
       image: Windows Server 2016 Standard [Unlicensed]
       flavor: m1.small
       key_name: { get_param: key_name }
+      user_data_format: RAW
+      user_data: { get_file: lib/windows_boot.ps1 }
       networks:
         - port: { get_resource: server8_port }
 
@@ -330,11 +338,19 @@ resources:
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 80, port_range_max: 80}
          #4 ingress: TCP/HTTPS/443/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 443, port_range_max: 443}
+         # MySQL
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 3306, port_range_max: 3306}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 3306, port_range_max: 3306}
          #5 ingress: TCP/RDP/3389/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 3389, port_range_max: 3389}
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: udp, port_range_min: 3389, port_range_max: 3389}
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: tcp, port_range_min: 3389, port_range_max: 3389}
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: udp, port_range_min: 3389, port_range_max: 3389}
+         # Ingress/egress Winrm
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 5985, port_range_max: 5986}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: udp, port_range_min: 5985, port_range_max: 5986}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: tcp, port_range_min: 5985, port_range_max: 5986}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: udp, port_range_min: 5985, port_range_max: 5986}
          #6 ingress: TCP/KMS/1688/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 1688, port_range_max: 1688}
          #7 ingress: TCP/DNS/53/RemoteIP
