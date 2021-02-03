@@ -1,3 +1,4 @@
+#ps1_sysnative
 #https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html#winrm-setup
 
 #Make new user:

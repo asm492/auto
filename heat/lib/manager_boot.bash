@@ -10,7 +10,8 @@ discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/80616814
 
 sudo apt install python3-pip -y
 pip3 install python3-nmap
-pip3 install ansible
+#pip3 install ansible
+sudo apt install ansible -y
 pip3 install "pywinrm>=0.3.0"
 
 cat <<EOF > /etc/ansible/hosts
