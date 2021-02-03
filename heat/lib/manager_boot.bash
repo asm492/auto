@@ -14,23 +14,36 @@ sudo apt-get install ansible -y
 
 cat <<EOF > /etc/ansible/hosts
 [ubuntu]
-
-192.168.1.6
 192.168.1.4
+192.168.1.6
+[ubuntu:vars]
+ansible_user=ubuntu
 
-[linux]
-
-#192.168.1.4
-192.168.1.8
-192.168.1.12
-#192.168.1.6
+[debian]
 192.168.1.7
+[debian:vars]
+ansible_user=debian
+
+[kali]
+192.168.1.12
+[kali:vars]
+ansible_user=root
+
+[centOS]
+192.168.1.8
+[centOS:vars]
+ansible_user=centos
 
 [windows]
-
 192.168.1.5
 192.168.1.9
 192.168.1.10
+
+[linux:children]
+ubuntu
+debian
+kali
+centOS
 
 EOF
 
