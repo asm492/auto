@@ -332,6 +332,9 @@ resources:
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 443, port_range_max: 443}
          #5 ingress: TCP/RDP/3389/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 3389, port_range_max: 3389}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: udp, port_range_min: 3389, port_range_max: 3389}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: tcp, port_range_min: 3389, port_range_max: 3389}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: udp, port_range_min: 3389, port_range_max: 3389}
          #6 ingress: TCP/KMS/1688/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 1688, port_range_max: 1688}
          #7 ingress: TCP/DNS/53/RemoteIP
