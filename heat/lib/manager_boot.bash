@@ -8,8 +8,10 @@ cd ~/Desktop
 git clone https://github.com/ChaoticWeg/discord.sh.git
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Starter installering. Sier i fra når jeg er ferdig."
 
+
 sudo apt install python3-pip -y
 pip3 install python3-nmap
+pip install python3-namp
 #pip3 install ansible
 sudo apt-get install ansible -y
 pip3 install "pywinrm>=0.3.0"
