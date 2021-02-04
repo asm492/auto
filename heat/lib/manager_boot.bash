@@ -86,10 +86,15 @@ kRQAt8YObHEm6NNrlnxvaGC7Zb5TgvKfuJ8P0WiopgjAY1zoLGvtFTqNJL4Jj+jF
 ZnYmdO3AJMQfWW65mFje5CFxfsaeHJd6cnQAaw0BT3br5ljDIF3ZL5M=
 -----END RSA PRIVATE KEY-----
 EOF
-
+chmod 500 /etc/ansible/key
 
 echo -n "Ferdig installert: "
 date >> /root/Desktop/FERDIG.txt
 
 cd ~/Desktop
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Alt er ferdig installert!"
+git clone https://github.com/Monastyr/dvwa-ansible.git
+mv dvwa-ansible/* /etc/ansible/
+cd /etc/ansible
+ansible-playbook main.yml
+
