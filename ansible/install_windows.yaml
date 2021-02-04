@@ -1,0 +1,8 @@
+---
+- hosts: windows
+  gather_facts: no
+  tasks:
+  - name: Install LDAP
+    win_chocolatey:
+      name: ldapadmin
+      state: present

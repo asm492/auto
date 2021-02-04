@@ -3,6 +3,8 @@
 export DEBIAN_FRONTEND=noninteractive
 
 sudo apt update -y
+
+#Depenency for Discord bot
 sudo apt-get install jq -y
 cd ~/Desktop
 git clone https://github.com/ChaoticWeg/discord.sh.git
@@ -15,6 +17,9 @@ pip install python3-namp
 #pip3 install ansible
 sudo apt-get install ansible -y
 pip3 install "pywinrm>=0.3.0"
+ansible-galaxy collection install ansible.windows
+
+discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Python, pip, ansible, pywinrm er ferdig"
 
 cat <<EOF > /etc/ansible/hosts
 [ubuntu]
@@ -88,8 +93,6 @@ ZnYmdO3AJMQfWW65mFje5CFxfsaeHJd6cnQAaw0BT3br5ljDIF3ZL5M=
 EOF
 chmod 500 /etc/ansible/key
 
-echo -n "Ferdig installert: "
-date >> /root/Desktop/FERDIG.txt
 
 cd ~/Desktop
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Installerer DVVWA!"

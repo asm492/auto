@@ -1,0 +1,9 @@
+---
+- hosts: windows
+  gather_facts: no
+  tasks:
+  - name: LDAPAdmin start
+    win_service:
+      name: ldapadminstart
+      state: started
+      username: ansibleuser

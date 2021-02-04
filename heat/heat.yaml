@@ -273,11 +273,11 @@ resources:
         - default
         - { get_resource: windows_security_group }
 
-  server8_floating_ip:
-    type: OS::Neutron::FloatingIP
-    properties:
-      floating_network: { get_param: public_net }
-      port_id: { get_resource: server8_port }
+#  server8_floating_ip:
+#    type: OS::Neutron::FloatingIP
+#    properties:
+#      floating_network: { get_param: public_net }
+#      port_id: { get_resource: server8_port }
 
 #  server9:
 #   type: OS::Nova::Server
@@ -383,7 +383,7 @@ resources:
          #1 ingress: ICMP/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: icmp }
          #2 ingress: TCP/SSH/22/RemoteIP
-         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 22, port_range_max: 22}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 21, port_range_max: 22}
          #3 ingress: TCP/HTTP/80/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 80, port_range_max: 80}
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: tcp, port_range_min: 80, port_range_max: 80}
@@ -443,9 +443,9 @@ outputs:
   server8_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server8, first_address ] }
-  server8_public_ip:
-    description: Floating IP address of server1 in public network
-    value: { get_attr: [ server8_floating_ip, floating_ip_address ] }
+#  server8_public_ip:
+#    description: Floating IP address of server1 in public network
+#    value: { get_attr: [ server8_floating_ip, floating_ip_address ] }
 #  server9_private_ip:
 #    description: IP address of server1 in private network
 #    value: { get_attr: [ server9, first_address ] }

@@ -1,0 +1,10 @@
+---
+- hosts: windows
+  gather_facts: no
+  tasks:
+  - name: Create ldap service
+    win_service:
+      name: ldapadminstart
+      path: C:\ProgramData\chocolatey\lib\ldapadmin\tools\LdapAdmin.exe
+      display_name: LDAP Auto
+      description: Test
