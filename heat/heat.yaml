@@ -97,7 +97,10 @@ resources:
       network_id: { get_resource: private_net }
       fixed_ips:
         - subnet_id: { get_resource: private_subnet }
-      security_groups: [{ get_resource: manager_security_group }]
+      security_groups:
+        # Default NTNU OpenStack security group:
+        - default
+        - { get_resource: manager_security_group }
 
   server1_floating_ip:
     type: OS::Neutron::FloatingIP
@@ -121,8 +124,11 @@ resources:
       network_id: { get_resource: private_net }
       fixed_ips:
         - ip_address: 192.168.1.4
-      security_groups: [{ get_resource: manager_security_group }]
-  
+      security_groups:
+        # Default NTNU OpenStack security group:
+        - default
+        - { get_resource: linux_security_group }  
+
   server3:
     type: OS::Nova::Server
     properties:
@@ -141,8 +147,17 @@ resources:
       network_id: { get_resource: private_net }
       fixed_ips:
         - ip_address: 192.168.1.5
-      security_groups: [{ get_resource: windows_security_group }]
+      security_groups:
+        # Default NTNU OpenStack security group:
+        - default
+        - { get_resource: windows_security_group }
   
+#  server3_floating_ip:
+#    type: OS::Neutron::FloatingIP
+#    properties:
+#      floating_network: { get_param: public_net }
+#      port_id: { get_resource: server3_port }
+
   server4:
     type: OS::Nova::Server
     properties:
@@ -159,7 +174,10 @@ resources:
       network_id: { get_resource: private_net }
       fixed_ips:
         - ip_address: 192.168.1.6
-      security_groups: [{ get_resource: linux_security_group }]
+      security_groups:
+        # Default NTNU OpenStack security group:
+        - default
+        - { get_resource: linux_security_group }
 
   server5:
     type: OS::Nova::Server
@@ -177,7 +195,10 @@ resources:
       network_id: { get_resource: private_net }
       fixed_ips:
         - ip_address: 192.168.1.7
-      security_groups: [{ get_resource: linux_security_group }]
+      security_groups:
+        # Default NTNU OpenStack security group:
+        - default
+        - { get_resource: linux_security_group }
 
   server6:
     type: OS::Nova::Server
@@ -195,7 +216,10 @@ resources:
       network_id: { get_resource: private_net }
       fixed_ips:
         - ip_address: 192.168.1.8
-      security_groups: [{ get_resource: linux_security_group }]
+      security_groups:
+        # Default NTNU OpenStack security group:
+        - default
+        - { get_resource: linux_security_group }
 
   server7:
     type: OS::Nova::Server
@@ -215,7 +239,16 @@ resources:
       network_id: { get_resource: private_net }
       fixed_ips:
         - ip_address: 192.168.1.9
-      security_groups: [{ get_resource: windows_security_group }]
+      security_groups:
+        # Default NTNU OpenStack security group:
+        - default
+        - { get_resource: windows_security_group }
+
+# server7_floating_ip:
+#    type: OS::Neutron::FloatingIP
+#    properties:
+#      floating_network: { get_param: public_net }
+#      port_id: { get_resource: server7_port }
 
   server8:
     type: OS::Nova::Server
@@ -235,7 +268,16 @@ resources:
       network_id: { get_resource: private_net }
       fixed_ips:
         - ip_address: 192.168.1.10
-      security_groups: [{ get_resource: windows_security_group }]
+      security_groups:
+        # Default NTNU OpenStack security group:
+        - default
+        - { get_resource: windows_security_group }
+
+  server8_floating_ip:
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: { get_param: public_net }
+      port_id: { get_resource: server8_port }
 
 #  server9:
 #   type: OS::Nova::Server
@@ -253,7 +295,10 @@ resources:
 #     network_id: { get_resource: private_net }
 #     fixed_ips:
 #       - ip_address: 192.168.1.11
-#     security_groups: [{ get_resource: windows_security_group }]
+#      security_groups:
+#        # Default NTNU OpenStack security group:
+#        - default
+#        - { get_resource: windows_security_group }
       
   server10:
     type: OS::Nova::Server
@@ -271,7 +316,10 @@ resources:
       network_id: { get_resource: private_net }
       fixed_ips:
         - ip_address: 192.168.1.12
-      security_groups: [{ get_resource: linux_security_group }]
+      security_groups:
+        # Default NTNU OpenStack security group:
+        - default
+        - { get_resource: linux_security_group }
 
   manager_security_group:
     type: OS::Neutron::SecurityGroup
@@ -287,6 +335,7 @@ resources:
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 22, port_range_max: 22}
          #3 ingress: TCP/HTTP/80/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 80, port_range_max: 80}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: tcp, port_range_min: 80, port_range_max: 80}
          #4 ingress: TCP/HTTPS/443/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 443, port_range_max: 443}
          #5 ingress: TCP/RDP/3389/RemoteIP
@@ -311,6 +360,7 @@ resources:
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 22, port_range_max: 22}
          #3 ingress: TCP/HTTP/80/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 80, port_range_max: 80}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: tcp, port_range_min: 80, port_range_max: 80}
          #4 ingress: TCP/HTTPS/443/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 443, port_range_max: 443}
          #5 ingress: TCP/RDP/3389/RemoteIP
@@ -336,6 +386,7 @@ resources:
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 22, port_range_max: 22}
          #3 ingress: TCP/HTTP/80/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 80, port_range_max: 80}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: tcp, port_range_min: 80, port_range_max: 80}
          #4 ingress: TCP/HTTPS/443/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 443, port_range_max: 443}
          # MySQL
@@ -371,6 +422,9 @@ outputs:
   server3_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server3, first_address ] }
+#  server3_public_ip:
+#    description: Floating IP address of server3 in public network
+#    value: { get_attr: [ server3_floating_ip, floating_ip_address ] }
   server4_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server4, first_address ] }
@@ -383,9 +437,15 @@ outputs:
   server7_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server7, first_address ] }
+#  server7_public_ip:
+#    description: Floating IP address of server1 in public network
+#    value: { get_attr: [ server7_floating_ip, floating_ip_address ] }
   server8_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server8, first_address ] }
+  server8_public_ip:
+    description: Floating IP address of server1 in public network
+    value: { get_attr: [ server8_floating_ip, floating_ip_address ] }
 #  server9_private_ip:
 #    description: IP address of server1 in private network
 #    value: { get_attr: [ server9, first_address ] }

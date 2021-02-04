@@ -1,9 +1,11 @@
 heat_template_version: 2013-05-23
 
 description: >
-  HOT template to deploy a manager only for autoenum.
+  HOT template to deploy the test environment needed for autoenum.
   Creates a new neutron network plus a router to the public
-  network, and deploys 1 server into the new network.
+  network, and deploys 9 servers into the new network.
+  
+  Quota needed: 9 instances, 14 VCPUs, 28 GB RAM, 1 FloatIP, 4 security-group.
 parameters:
   key_name:
     type: string
@@ -35,6 +37,10 @@ parameters:
     description: End of private network IP address allocation pool
   private_subnet_name:
     type: string
+  REMOTE_IP:
+    type: string
+    default: 0.0.0.0/0
+
 resources:
   private_net:
     type: OS::Neutron::Net
@@ -71,6 +77,8 @@ resources:
       image: Kali Linux 2020.3 xfce amd64
       flavor: m1.small
       key_name: { get_param: key_name }
+      user_data_format: RAW
+      user_data: { get_file: lib/manager_boot.bash }
       networks:
 #        - port: { get_resource: server1_port }
         - port: { get_resource: server1_public_port }
@@ -82,14 +90,17 @@ resources:
 #      fixed_ips:
 #        - subnet_id: { get_resource: private_subnet }
 #      security_groups: [{ get_resource: manager_security_group }]
-  
+
   server1_public_port:
     type: OS::Neutron::Port
     properties:
       network_id: { get_resource: private_net }
       fixed_ips:
         - subnet_id: { get_resource: private_subnet }
-      security_groups: [{ get_resource: manager_security_group }]
+      security_groups:
+        # Default NTNU OpenStack security group:
+        - default
+        - { get_resource: manager_security_group }
 
   server1_floating_ip:
     type: OS::Neutron::FloatingIP
@@ -97,28 +108,32 @@ resources:
       floating_network: { get_param: public_net }
       port_id: { get_resource: server1_public_port }
 
+
   manager_security_group:
     type: OS::Neutron::SecurityGroup
     properties:
-      description: Add security group rules for server
       name: manager-security-group
+      description: >
+        Security group rule to create
+        Allows connection from remote IP (icmp, tcp22, 80, 443, 3389, 1688, 53, and udp 53)
       rules:
-        - remote_ip_prefix: 0.0.0.0/0
-          protocol: tcp
-          direction: ingress
-          port_range_min: 1
-          port_range_max: 65535
-        - remote_ip_prefix: 0.0.0.0/0
-          protocol: icmp
-          direction: ingress
-        - remote_ip_prefix: 0.0.0.0/0
-          protocol: tcp
-          direction: egress
-          port_range_min: 1
-          port_range_max: 65535
-        - remote_ip_prefix: 0.0.0.0/0
-          protocol: icmp
-          direction: egress
+         #1 ingress: ICMP/RemoteIP
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: icmp }
+         #2 ingress: TCP/SSH/22/RemoteIP
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 22, port_range_max: 22}
+         #3 ingress: TCP/HTTP/80/RemoteIP
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 80, port_range_max: 80}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: tcp, port_range_min: 80, port_range_max: 80}
+         #4 ingress: TCP/HTTPS/443/RemoteIP
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 443, port_range_max: 443}
+         #5 ingress: TCP/RDP/3389/RemoteIP
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 3389, port_range_max: 3389}
+         #6 ingress: TCP/KMS/1688/RemoteIP
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 1688, port_range_max: 1688}
+         #7 ingress: TCP/DNS/53/RemoteIP
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 53, port_range_max: 53}
+         #8 ingress: UDP/DNS/53/RemoteIP
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: udp, port_range_min: 53, port_range_max: 53}
 
 outputs:
   server1_private_ip:

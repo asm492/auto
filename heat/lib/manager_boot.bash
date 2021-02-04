@@ -3,7 +3,7 @@
 export DEBIAN_FRONTEND=noninteractive
 
 sudo apt update -y
-sudo apt install jq -y
+sudo apt-get install jq -y
 cd ~/Desktop
 git clone https://github.com/ChaoticWeg/discord.sh.git
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Starter installering. Sier i fra når jeg er ferdig."
@@ -11,7 +11,7 @@ discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/80616814
 sudo apt install python3-pip -y
 pip3 install python3-nmap
 #pip3 install ansible
-sudo apt install ansible -y
+sudo apt-get install ansible -y
 pip3 install "pywinrm>=0.3.0"
 
 cat <<EOF > /etc/ansible/hosts
