@@ -2,8 +2,8 @@
 - hosts: windows
   gather_facts: no
   tasks:
-  - name: LDAPAdmin start
+  - name: Start services
     win_service:
-      name: ldapadminstart
+      name: FTPSVC
+      name: LdapAdmin.exe
       state: started
-      username: ansibleuser

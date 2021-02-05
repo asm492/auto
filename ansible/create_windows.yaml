@@ -2,9 +2,11 @@
 - hosts: windows
   gather_facts: no
   tasks:
-  - name: Create ldap service
+  - name: Run iis web server
     win_service:
-      name: ldapadminstart
-      path: C:\ProgramData\chocolatey\lib\ldapadmin\tools\LdapAdmin.exe
-      display_name: LDAP Auto
-      description: Test
+      name: W3Svc
+      state: started
+  - name: Create website
+    win_copy:
+      content: "<html><head><title>This is a website!</title></head><body><h1>But it's just an example. However this could be a legitimate website being screengrabed. This is just an example tho...</h1><p>This is a paragraph.</p></body></html>"
+      dest: C:\Inetpub\wwwroot\index.html
