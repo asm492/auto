@@ -132,7 +132,7 @@ resources:
   server3:
     type: OS::Nova::Server
     properties:
-      name: WinSrv2019
+      name: Win1
       image: Windows Server 2019 Standard [Unlicensed]
       flavor: m1.small
       key_name: { get_param: key_name }
@@ -224,8 +224,8 @@ resources:
   server7:
     type: OS::Nova::Server
     properties:
-      name: Win10-Workstation-1
-      image: Windows 10 20H2 Pro for Workstations [Unlicensed] 
+      name: Win2
+      image: Windows Server 2019 Standard [Unlicensed] 
       flavor: m1.small
       key_name: { get_param: key_name }
       user_data_format: RAW
@@ -253,7 +253,7 @@ resources:
   server8:
     type: OS::Nova::Server
     properties:
-      name: Win10-Server-2016
+      name: Win3
       image: Windows Server 2016 Standard [Unlicensed]
       flavor: m1.small
       key_name: { get_param: key_name }
