@@ -21,47 +21,6 @@ ansible-galaxy collection install ansible.windows
 
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Python, pip, ansible, pywinrm er ferdig"
 
-cat <<EOF > /etc/ansible/hosts
-[ubuntu]
-192.168.1.4
-192.168.1.6
-[ubuntu:vars]
-ansible_user=ubuntu
-
-[debian]
-192.168.1.7
-[debian:vars]
-ansible_user=debian
-
-[kali]
-192.168.1.12
-[kali:vars]
-ansible_user=root
-
-[centOS]
-192.168.1.8
-[centOS:vars]
-ansible_user=centos
-
-[windows]
-192.168.1.5
-192.168.1.9
-192.168.1.10
-
-[windows:vars]
-ansible_user=ansibleuser
-ansible_password=@nsib1epaSsw0rd
-ansible_connection=winrm
-ansible_winrm_server_cert_validation=ignore
-
-[linux:children]
-ubuntu
-debian
-kali
-centOS
-
-EOF
-
 cat <<EOF > /etc/ansible/key
 -----BEGIN RSA PRIVATE KEY-----
 MIIEpQIBAAKCAQEAxeNN8Qmou5ar72deuhQcew50FSuW2wwiv7jVzJOXmQV5O8lS
