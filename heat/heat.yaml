@@ -203,8 +203,8 @@ resources:
   server6:
     type: OS::Nova::Server
     properties:
-      name: UBNT20
-      image: Ubuntu Server 20.04 LTS (Focal Fossa) amd64
+      name: Ubuntu16
+      image: Ubuntu Server 16.04 LTS (Xenial Xerus) amd64
       flavor: m1.tiny
       key_name: { get_param: key_name }
       networks:
