@@ -18,7 +18,8 @@ pip install python3-namp
 sudo apt-get install ansible -y
 pip3 install "pywinrm>=0.3.0"
 ansible-galaxy collection install ansible.windows
-
+#For unzip
+ansible-galaxy collection install community.windows
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Python, pip, ansible, pywinrm er ferdig"
 
 cat <<EOF > /etc/ansible/key
