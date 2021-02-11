@@ -60,8 +60,19 @@ mv ansible-ubuntu/* /etc/ansible/
 cd /etc/ansible
 ~/Desktop/discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Kjører playbooks"
 ansible-playbook main.yml
+ret=$?
+if [ $ret -ne 0 ]; then
+        echo "All good"
+else
+        echo "Something is not yes!"
+fi
 ~/Desktop/discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "main.yml ferdig!"
 ansible-playbook windows.yaml
+if [ $ret -ne 0 ]; then
+        echo "All good"
+else
+        echo "Something is not yes!"
+fi
 ~/Desktop/discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Windows.yml ferdig!"
 
 #ansible-playbook create_windows.yaml
