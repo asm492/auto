@@ -75,7 +75,7 @@ resources:
     properties:
       name: Manager
       image: Kali Linux 2020.3 xfce amd64
-      flavor: m1.small
+      flavor: m1.large
       key_name: { get_param: key_name }
       user_data_format: RAW
       user_data: { get_file: lib/manager_boot.bash }
@@ -342,6 +342,9 @@ resources:
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 3389, port_range_max: 3389}
          #6 ingress: TCP/KMS/1688/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 1688, port_range_max: 1688}
+         # DHCP
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: udp, port_range_min: 67, port_range_max: 68}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: udp, port_range_min: 67, port_range_max: 68}
          #7 ingress: TCP/DNS/53/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 53, port_range_max: 53}
          #8 ingress: UDP/DNS/53/RemoteIP
@@ -402,6 +405,9 @@ resources:
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: udp, port_range_min: 5985, port_range_max: 5986}
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: tcp, port_range_min: 5985, port_range_max: 5986}
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: udp, port_range_min: 5985, port_range_max: 5986}
+         #DHCP
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: egress, protocol: udp, port_range_min: 67, port_range_max: 68}
+         - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: udp, port_range_min: 67, port_range_max: 68}
          #6 ingress: TCP/KMS/1688/RemoteIP
          - { remote_ip_prefix: { get_param: REMOTE_IP }, direction: ingress, protocol: tcp, port_range_min: 1688, port_range_max: 1688}
          #7 ingress: TCP/DNS/53/RemoteIP
