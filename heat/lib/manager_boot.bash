@@ -66,7 +66,6 @@ if [ $ret -ne 0 ]; then
 else
         ~/Desktop/discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Main returned $ret: Føles bra man!"
 fi
-~/Desktop/discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "main.yml ferdig!"
 ansible-playbook windows.yaml
 ret=$?
 if [ $ret -ne 0 ]; then
@@ -74,7 +73,5 @@ if [ $ret -ne 0 ]; then
 else
          ~/Desktop/discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Windows returned $ret: Føles bra man!"
 fi
-~/Desktop/discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Windows.yml ferdig!"
-
 #ansible-playbook create_windows.yaml
 ~/Desktop/discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Actually sygeman! Alt er ferdig installert!"
