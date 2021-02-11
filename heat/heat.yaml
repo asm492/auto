@@ -179,70 +179,70 @@ resources:
         - default
         - { get_resource: linux_security_group }
 
-  server5:
-    type: OS::Nova::Server
-    properties:
-      name: Debian
-      image: Debian 10 (Buster) stable amd64
-      flavor: m1.tiny
-      key_name: { get_param: key_name }
-      networks:
-        - port: { get_resource: server5_port }
+#  server5:
+#    type: OS::Nova::Server
+#    properties:
+#      name: Debian
+#      image: Debian 10 (Buster) stable amd64
+#      flavor: m1.tiny
+#      key_name: { get_param: key_name }
+#      networks:
+#        - port: { get_resource: server5_port }
 
-  server5_port:
-    type: OS::Neutron::Port
-    properties: 
-      network_id: { get_resource: private_net }
-      fixed_ips:
-        - ip_address: 192.168.1.7
-      security_groups:
+#  server5_port:
+#    type: OS::Neutron::Port
+#    properties: 
+#      network_id: { get_resource: private_net }
+#      fixed_ips:
+#        - ip_address: 192.168.1.7
+#      security_groups:
+#        # Default NTNU OpenStack security group:
+#        - default
+#        - { get_resource: linux_security_group }
+
+#  server6:
+#    type: OS::Nova::Server
+#    properties:
+#      name: Ubuntu16
+#      image: Ubuntu Server 16.04 LTS (Xenial Xerus) amd64
+#      flavor: m1.tiny
+#      key_name: { get_param: key_name }
+#      networks:
+#        - port: { get_resource: server6_port }
+
+#  server6_port:
+#    type: OS::Neutron::Port
+#    properties: 
+#      network_id: { get_resource: private_net }
+#      fixed_ips:
+#        - ip_address: 192.168.1.8
+#      security_groups:
         # Default NTNU OpenStack security group:
-        - default
-        - { get_resource: linux_security_group }
+#        - default
+#        - { get_resource: linux_security_group }
 
-  server6:
-    type: OS::Nova::Server
-    properties:
-      name: Ubuntu16
-      image: Ubuntu Server 16.04 LTS (Xenial Xerus) amd64
-      flavor: m1.tiny
-      key_name: { get_param: key_name }
-      networks:
-        - port: { get_resource: server6_port }
+#  server7:
+#    type: OS::Nova::Server
+#    properties:
+#      name: Win2
+#      image: Windows Server 2019 Standard [Unlicensed] 
+#      flavor: m1.small
+#      key_name: { get_param: key_name }
+#      user_data_format: RAW
+#      user_data: { get_file: lib/windows_boot.ps1 }
+#      networks:
+#        - port: { get_resource: server7_port }
 
-  server6_port:
-    type: OS::Neutron::Port
-    properties: 
-      network_id: { get_resource: private_net }
-      fixed_ips:
-        - ip_address: 192.168.1.8
-      security_groups:
-        # Default NTNU OpenStack security group:
-        - default
-        - { get_resource: linux_security_group }
-
-  server7:
-    type: OS::Nova::Server
-    properties:
-      name: Win2
-      image: Windows Server 2019 Standard [Unlicensed] 
-      flavor: m1.small
-      key_name: { get_param: key_name }
-      user_data_format: RAW
-      user_data: { get_file: lib/windows_boot.ps1 }
-      networks:
-        - port: { get_resource: server7_port }
-
-  server7_port:
-    type: OS::Neutron::Port
-    properties:
-      network_id: { get_resource: private_net }
-      fixed_ips:
-        - ip_address: 192.168.1.9
-      security_groups:
-        # Default NTNU OpenStack security group:
-        - default
-        - { get_resource: windows_security_group }
+#  server7_port:
+#    type: OS::Neutron::Port
+#    properties:
+#      network_id: { get_resource: private_net }
+#      fixed_ips:
+#        - ip_address: 192.168.1.9
+#      security_groups:
+#        # Default NTNU OpenStack security group:
+#        - default
+#        - { get_resource: windows_security_group }
 
 # server7_floating_ip:
 #    type: OS::Neutron::FloatingIP
@@ -253,7 +253,7 @@ resources:
   server8:
     type: OS::Nova::Server
     properties:
-      name: Win3
+      name: Win2
       image: Windows Server 2016 Standard [Unlicensed]
       flavor: m1.small
       key_name: { get_param: key_name }
@@ -428,15 +428,15 @@ outputs:
   server4_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server4, first_address ] }
-  server5_private_ip:
-    description: IP address of server1 in private network
-    value: { get_attr: [ server5, first_address ] }
-  server6_private_ip:
-    description: IP address of server1 in private network
-    value: { get_attr: [ server6, first_address ] }
-  server7_private_ip:
-    description: IP address of server1 in private network
-    value: { get_attr: [ server7, first_address ] }
+#  server5_private_ip:
+#    description: IP address of server1 in private network
+#    value: { get_attr: [ server5, first_address ] }
+#  server6_private_ip:
+#    description: IP address of server1 in private network
+#    value: { get_attr: [ server6, first_address ] }
+#  server7_private_ip:
+#    description: IP address of server1 in private network
+#    value: { get_attr: [ server7, first_address ] }
 #  server7_public_ip:
 #    description: Floating IP address of server1 in public network
 #    value: { get_attr: [ server7_floating_ip, floating_ip_address ] }
