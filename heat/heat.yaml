@@ -3,9 +3,9 @@ heat_template_version: 2013-05-23
 description: >
   HOT template to deploy the test environment needed for autoenum.
   Creates a new neutron network plus a router to the public
-  network, and deploys 9 servers into the new network.
+  network, and deploys 6 servers into the new network.
   
-  Quota needed: 9 instances, 14 VCPUs, 28 GB RAM, 1 FloatIP, 4 security-group.
+  Quota needed: 6 instances, 12 VCPUs, 32 GB RAM, 1 FloatIP, 4 security-group.
 parameters:
   key_name:
     type: string
@@ -80,16 +80,7 @@ resources:
       user_data_format: RAW
       user_data: { get_file: lib/manager_boot.bash }
       networks:
-#        - port: { get_resource: server1_port }
         - port: { get_resource: server1_public_port }
-
-#  server1_port:
-#    type: OS::Neutron::Port
-#    properties:
-#      network_id: { get_resource: private_net }
-#      fixed_ips:
-#        - subnet_id: { get_resource: private_subnet }
-#      security_groups: [{ get_resource: manager_security_group }]
 
   server1_public_port:
     type: OS::Neutron::Port
@@ -152,12 +143,6 @@ resources:
         - default
         - { get_resource: windows_security_group }
   
-#  server3_floating_ip:
-#    type: OS::Neutron::FloatingIP
-#    properties:
-#      floating_network: { get_param: public_net }
-#      port_id: { get_resource: server3_port }
-
   server4:
     type: OS::Nova::Server
     properties:
@@ -178,77 +163,6 @@ resources:
         # Default NTNU OpenStack security group:
         - default
         - { get_resource: linux_security_group }
-
-#  server5:
-#    type: OS::Nova::Server
-#    properties:
-#      name: Debian
-#      image: Debian 10 (Buster) stable amd64
-#      flavor: m1.tiny
-#      key_name: { get_param: key_name }
-#      networks:
-#        - port: { get_resource: server5_port }
-
-#  server5_port:
-#    type: OS::Neutron::Port
-#    properties: 
-#      network_id: { get_resource: private_net }
-#      fixed_ips:
-#        - ip_address: 192.168.1.7
-#      security_groups:
-#        # Default NTNU OpenStack security group:
-#        - default
-#        - { get_resource: linux_security_group }
-
-#  server6:
-#    type: OS::Nova::Server
-#    properties:
-#      name: Ubuntu16
-#      image: Ubuntu Server 16.04 LTS (Xenial Xerus) amd64
-#      flavor: m1.tiny
-#      key_name: { get_param: key_name }
-#      networks:
-#        - port: { get_resource: server6_port }
-
-#  server6_port:
-#    type: OS::Neutron::Port
-#    properties: 
-#      network_id: { get_resource: private_net }
-#      fixed_ips:
-#        - ip_address: 192.168.1.8
-#      security_groups:
-        # Default NTNU OpenStack security group:
-#        - default
-#        - { get_resource: linux_security_group }
-
-#  server7:
-#    type: OS::Nova::Server
-#    properties:
-#      name: Win2
-#      image: Windows Server 2019 Standard [Unlicensed] 
-#      flavor: m1.small
-#      key_name: { get_param: key_name }
-#      user_data_format: RAW
-#      user_data: { get_file: lib/windows_boot.ps1 }
-#      networks:
-#        - port: { get_resource: server7_port }
-
-#  server7_port:
-#    type: OS::Neutron::Port
-#    properties:
-#      network_id: { get_resource: private_net }
-#      fixed_ips:
-#        - ip_address: 192.168.1.9
-#      security_groups:
-#        # Default NTNU OpenStack security group:
-#        - default
-#        - { get_resource: windows_security_group }
-
-# server7_floating_ip:
-#    type: OS::Neutron::FloatingIP
-#    properties:
-#      floating_network: { get_param: public_net }
-#      port_id: { get_resource: server7_port }
 
   server8:
     type: OS::Nova::Server
@@ -272,33 +186,6 @@ resources:
         # Default NTNU OpenStack security group:
         - default
         - { get_resource: windows_security_group }
-
-#  server8_floating_ip:
-#    type: OS::Neutron::FloatingIP
-#    properties:
-#      floating_network: { get_param: public_net }
-#      port_id: { get_resource: server8_port }
-
-#  server9:
-#   type: OS::Nova::Server
-#   properties:
-#     name: Win10-Workstation-2
-#     image: Windows 10 20H2 Pro for Workstations [Unlicensed]
-#     flavor: m1.small
-#     key_name: { get_param: key_name }
-#     networks:
-#       - port: { get_resource: server9_port }
-
-# server9_port:
-#   type: OS::Neutron::Port
-#   properties:
-#     network_id: { get_resource: private_net }
-#     fixed_ips:
-#       - ip_address: 192.168.1.11
-#      security_groups:
-#        # Default NTNU OpenStack security group:
-#        - default
-#        - { get_resource: windows_security_group }
       
   server10:
     type: OS::Nova::Server
@@ -428,33 +315,12 @@ outputs:
   server3_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server3, first_address ] }
-#  server3_public_ip:
-#    description: Floating IP address of server3 in public network
-#    value: { get_attr: [ server3_floating_ip, floating_ip_address ] }
   server4_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server4, first_address ] }
-#  server5_private_ip:
-#    description: IP address of server1 in private network
-#    value: { get_attr: [ server5, first_address ] }
-#  server6_private_ip:
-#    description: IP address of server1 in private network
-#    value: { get_attr: [ server6, first_address ] }
-#  server7_private_ip:
-#    description: IP address of server1 in private network
-#    value: { get_attr: [ server7, first_address ] }
-#  server7_public_ip:
-#    description: Floating IP address of server1 in public network
-#    value: { get_attr: [ server7_floating_ip, floating_ip_address ] }
   server8_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server8, first_address ] }
-#  server8_public_ip:
-#    description: Floating IP address of server1 in public network
-#    value: { get_attr: [ server8_floating_ip, floating_ip_address ] }
-#  server9_private_ip:
-#    description: IP address of server1 in private network
-#    value: { get_attr: [ server9, first_address ] }
   server10_private_ip:
     description: IP address of server1 in private network
     value: { get_attr: [ server10, first_address ] }
