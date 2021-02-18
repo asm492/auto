@@ -2,6 +2,7 @@ import nmap3
 import json
 import socket
 import time
+import imgkit
 
 target = "192.168.1.0/24"
 
@@ -16,7 +17,7 @@ def print_json_file(result, file_name):
                         if not result[ip_addr]['macaddress']:
                                 result[ip_addr]['macaddress'] = "N/A"
         result = str(result)
-        result = result.replace("\'", "\"")
+#       result = result.replace("\'", "\"")
         result = json.loads(result)
         with open(file_name, "w") as file:
                 json.dump(result, file, ensure_ascii=False, indent=4, sort_keys=True)
@@ -28,15 +29,26 @@ def find_interesting_ip(result):
                         print(ip_addr)
                         for i in range(len(result[ip_addr]['ports'])):
                                 if result[ip_addr]['ports'][i]['state'] == "open" or result[ip_addr]['ports'][i]['state'] == "filtered":
-                                        print(result[ip_addr]['ports'][i]['portid'] +  " er: " + result[ip_addr]['ports'][i]['state'])
+                                        #print(result[ip_addr]['ports'][i]['portid'] +  " er: " + result[ip_addr]['ports'][i]['state'])
                                         output_list.write(ip_addr + "\n")
+                                        if result[ip_addr]['ports'][i]['portid'] == "80" or result[ip_addr]['ports'][i]['portid'] == "443":
+                                                port = result[ip_addr]['ports'][i]['portid']
+                                                try:
+                                                        take_screenshot(ip_addr, port)
+                                                except:
+                                                        print("Error")
                                         #Writes IPs to list
-                                        break
         output_list.close()
 
 def take_screenshot(ip, port):
-        #/usr/local/lib/python3.9/dist-packages/webscreenshot
-        #Usage: python3 webscreenshot.py http://192.168.1.5:80 -r chromium
+        try :
+            ip = ip + ":" + port
+            filename = ip + ".jpg"
+            print(filename)
+            imgkit.from_url(ip, filename)
+        except:
+            print("Error on: " + ip)
+
 def perform_host_discovery():
         #Not in use
         nmap = nmap3.NmapHostDiscovery()
@@ -56,7 +68,7 @@ def perform_tcp_scan():
         #Screengrabs kommer her
         write_log("TCP scan started")
         nmap = nmap3.Nmap()
-        result = nmap.nmap_version_detection(None, "-sV -p- -iL list.txt");
+        result = nmap.nmap_version_detection(None, "-sV -p- -iL list.txt -oX tcp.xml");
         print_json_file(result, "tcp.json")
         write_log("TCP scan done!")
         return result
@@ -72,9 +84,10 @@ def perform_udp_scan():
 
 write_log("*******Script starting*********")
 
+#MAIN:
 #result = perform_host_discovery()
 result = perform_portscan()
-result = perform_tcp_scan()
-result = perform_udp_scan()
+#result = perform_tcp_scan()
+#result = perform_udp_scan()
 
 write_log("Script done!")
