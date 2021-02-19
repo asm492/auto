@@ -3,13 +3,24 @@ import json
 import socket
 import time
 import imgkit
+try:
+       import screenshot
+except ImportError:
+       print("screenshot module not found!")
 
 target = "192.168.1.0/24"
 #target = "192.168.1.5"
 
+def exclude_self():
+        host_ip = ([l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0])
+        print(type(host_ip))
+        print("The host IP is.........: " + host_ip)
+        return host_ip
+
 def write_log(text):
         logfile = open("log.txt","a")
-        logfile.write(time.ctime() + ": " + text + "\n")
+#        logfile.write(time.ctime() + ": " + text + "\n")
+        logfile.write(text + " at " + time.ctime() + "\n")
         logfile.close()
 
 def print_json_file(result, file_name):
@@ -24,73 +35,74 @@ def print_json_file(result, file_name):
                 json.dump(result, file, ensure_ascii=False, indent=4, sort_keys=True)
 
 def find_interesting_ip(result):
-        output_list = open("list.txt","w")
+        output_list = open("ips_to_scan.txt","w")
         for ip_addr in result:
                 if ip_addr != "stats" and ip_addr != "runtime":
                         print(ip_addr)
                         for i in range(len(result[ip_addr]['ports'])):
                                 if result[ip_addr]['ports'][i]['state'] == "open" or result[ip_addr]['ports'][i]['state'] == "filtered":
-                                        #print(result[ip_addr]['ports'][i]['portid'] +  " er: " + result[ip_addr]['ports'][i]['state'])
                                         output_list.write(ip_addr + "\n")
-                                        if result[ip_addr]['ports'][i]['portid'] == "80" or result[ip_addr]['ports'][i]['portid'] == "443":
-                                                port = result[ip_addr]['ports'][i]['portid']
+                                        print(result[ip_addr]['ports'][i]['portid'])
                                         break
-                                        try:
-                                                take_screenshot(ip_addr, port)
-                                        except:
-                                                print("Error")
-                                        #Writes IPs to list
         output_list.close()
 
-def take_screenshot(ip, port):
-        try :
-            ip = ip + ":" + port
-            filename = ip + ".jpg"
-            print(filename)
-            imgkit.from_url(ip, filename)
-        except:
-            print("Error on: " + ip)
-
-def perform_host_discovery():
-        #Not in use
-        nmap = nmap3.NmapHostDiscovery()
-        return nmap.nmap_no_portscan(target)
+#def find_webpage():
 
 def perform_portscan():
         #Fast portscan. Aka Stage 1
-        write_log("Fast port scan started")
+        write_log("\t[FAST SCAN] started")
         nmap = nmap3.NmapHostDiscovery()
         res = nmap.scan_top_ports(target, args="-F")
         find_interesting_ip(res)
-        write_log("Fast port scan done!")
+        write_log("\t[FAST SCAN] done")
         return res
+
+def possible_webpage(res):
+        screengrab_list = open("ips_to_screengrab.txt","w")
+        for ip_addr in result:
+            if ip_addr != "stats" and ip_addr != "runtime":
+                for i in range(len(result[ip_addr]['ports'])):
+                    if result[ip_addr]['ports'][i]['state'] == "open" or result[ip_addr]['ports'][i]['state'] == "filtered":
+                       if result[ip_addr]['ports'][i]['portid'] == "80":
+                          screengrab_list.write(ip_addr + "\n")
+        screengrab_list.close()
 
 def perform_tcp_scan():
         #TCP
         #Screengrabs kommer her
-        print("Full TCP scan started")
-        write_log("TCP scan started")
+        print("\t[TCP SCAN] started")
+        write_log("\t[TCP SCAN] started")
         nmap = nmap3.Nmap()
-        result = nmap.nmap_version_detection(None, "-sV -A -p- -iL list.txt");
+        result = nmap.nmap_version_detection(None, "-sV -p- -iL ips_to_scan.txt");
+        print(result)
+        possible_webpage(result)
         print_json_file(result, "tcp.json")
-        write_log("TCP scan done!")
+        write_log("\t[TCP SCAN] done")
         return result
 
 def perform_udp_scan():
         #Scan top UDP
-        write_log("UDP scan started!")
+        write_log("\t[UDP SCAN] started ")
         nmap = nmap3.NmapScanTechniques()
-        result = nmap.nmap_udp_scan(None, "-iL list.txt -p53,67,68,123,137,138,161,445,5000")
+        result = nmap.nmap_udp_scan(None, "-iL ips_to_scan.txt -p53,67,68,123,137,138,161,445,5000")
         print_json_file(result, "udp.json")
-        write_log("UDP scan done!")
+        write_log("\t[UDP SCAN] done")
         return result
 
-write_log("*******Script starting*********")
+write_log("[SCRIPT] started")
 
 #MAIN:
-#result = perform_host_discovery()
 result = perform_portscan()
 result = perform_tcp_scan()
-#result = perform_udp_scan()
+result = perform_udp_scan()
 
-write_log("Script done!")
+write_log("\t[SCREENGRABS] started")
+resp = screenshot.perform_screenshot()
+print(resp)
+
+if resp == 1:
+  write_log("\t[SCREENGRABS] FAILED!")
+else:
+  write_log("\t[SCREENGRABS] done")
+
+write_log("[SCRIPT] done")
