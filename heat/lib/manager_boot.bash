@@ -14,7 +14,7 @@ discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/80616814
 sudo apt install python3-pip -y
 sudo apt-get install -y chromium #For screengrabs
 pip3 install python3-nmap
-pip3 install webscreenshot
+pip3 install imgkit
 pip install python3-namp
 pip install python3-nmap -y
 #pip3 install ansible
