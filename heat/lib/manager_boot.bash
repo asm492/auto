@@ -13,10 +13,8 @@ discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/80616814
 
 sudo apt install python3-pip -y
 sudo apt-get install -y chromium #For screengrabs
-pip3 install python3-nmap
-pip3 install webscreenshot
-pip install python3-namp
-pip install python3-nmap -y
+#pip install python3-namp
+#pip install python3-nmap -y
 #pip3 install ansible
 sudo apt-get install ansible -y
 pip3 install "pywinrm>=0.3.0"
@@ -24,6 +22,9 @@ ansible-galaxy collection install ansible.windows
 #For unzip
 ansible-galaxy collection install community.windows
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Python, pip, ansible, pywinrm er ferdig"
+
+pip3 install python3-nmap
+pip3 install imgkit
 
 cat <<EOF > /etc/ansible/key
 -----BEGIN RSA PRIVATE KEY-----
