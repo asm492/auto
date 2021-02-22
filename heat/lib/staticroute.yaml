@@ -1,0 +1,65 @@
+ subnet_public:
+    type: OS::Neutron::Subnet
+    properties:
+      name: PublicSubnet
+      cidr: 192.168.11.0/24
+      network: { get_resource: network_public }
+      allocation_pools: [ { "start" : '192.168.11.1', "end" : '192.168.11.253'}]
+      dns_nameservers: [ 'xx.xx.xx.xx', ...]
+      enable_dhcp: True
+      gateway_ip: 192.168.11.254
+      host_routes: [ { 'destination' : '192.168.12.0/24', 'nexthop' : '192.168.11.254'}, { 'destination' : '192.168.13.0/24', 'nexthop' : '192.168.11.254'}]
+      ip_version: 4
+      # tenant_id: { get_param: tenantId }
+  subnet_appli:
+    type: OS::Neutron::Subnet
+    properties:
+      name: ApplicationSubnet
+      cidr: 192.168.12.0/24
+      network: { get_resource: network_public }
+      allocation_pools: [ { "start" : '192.168.12.1', "end" : '192.168.12.253'}]
+      dns_nameservers: [ 'xx.xx.xx.xx', ...]
+      enable_dhcp: True
+      gateway_ip: 192.168.12.254
+      host_routes: [ { 'destination' : '192.168.11.0/24', 'nexthop' : '192.168.12.254'}, { 'destination' : '192.168.13.0/24', 'nexthop' : '192.168.12.254'}]
+      ip_version: 4
+      # tenant_id: { get_param: tenantId }
+  subnet_database:
+    type: OS::Neutron::Subnet
+    properties:
+      name: DatabaseSubnet
+      cidr: 192.168.13.0/24
+      network: { get_resource: network_public }
+      allocation_pools: [ { "start" : '192.168.13.1', "end" : '192.168.13.253'}]
+      dns_nameservers: [ 'xx.xx.xx.xx', ...]
+      enable_dhcp: True
+      gateway_ip: 192.168.13.254
+      host_routes: [ { 'destination' : '192.168.11.0/24', 'nexthop' : '192.168.13.254'}, { 'destination' : '192.168.12.0/24', 'nexthop' : '192.168.13.254'}]
+      ip_version: 4
+      # tenant_id: { get_param: tenantId }
+  #
+  # Router
+  router_nat:
+    type: OS::Neutron::Router
+    properties:
+      name: routerNat
+      admin_state_up: True
+      external_gateway_info: { "network": 'ext-net' }
+  gateway_itf:
+    type: OS::Neutron::RouterInterface
+    depends_on: [ network_public, subnet_public, router_nat ]
+    properties:
+      router_id: { get_resource: router_nat }
+      subnet: { get_resource: subnet_public }
+  router_appli_itf:
+    type: OS::Neutron::RouterInterface
+    depends_on: [ network_public, subnet_appli, router_nat ]
+    properties:
+      router_id: { get_resource: router_nat }
+      subnet: { get_resource: subnet_appli }
+  router_database_itf:
+    type: OS::Neutron::RouterInterface
+    depends_on: [ network_public, subnet_database, router_nat ]
+    properties:
+      router_id: { get_resource: router_nat }
+      subnet: { get_resource: subnet_database }

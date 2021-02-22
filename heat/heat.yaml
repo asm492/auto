@@ -2,10 +2,9 @@ heat_template_version: 2013-05-23
 
 description: >
   HOT template to deploy the test environment needed for autoenum.
-  Creates a new neutron network plus a router to the public
-  network, and deploys 6 servers into the new network.
-  
-  Quota needed: 6 instances, 12 VCPUs, 32 GB RAM, 1 FloatIP, 4 security-group.
+  Creates 2 new neutron networks plus two routers to the public
+  network, and deploys 7 servers into the new network.
+  Quota needed: 7 instances, 14 VCPUs, 36 GB RAM, 1 FloatIP, 4 security-group.
 parameters:
   key_name:
     type: string
@@ -37,6 +36,24 @@ parameters:
     description: End of private network IP address allocation pool
   private_subnet_name:
     type: string
+  private_net_name2:
+    type: string
+    description: Name of private network to be created
+  private_net_cidr2: 
+    type: string
+    description: Private network address (CIDR notation)
+  private_subnet_name2: 
+    type: string
+    description: Name of private network to be created
+  private_net_gateway2: 
+    type: string
+    description: Private network gateway address
+  private_net_pool_start2: 
+    type: string
+    description: Start of private network IP address allocation pool
+  private_net_pool_end2: 
+    type: string
+    description: End of private network IP address allocation pool
   REMOTE_IP:
     type: string
     default: 0.0.0.0/0
@@ -46,6 +63,11 @@ resources:
     type: OS::Neutron::Net
     properties:
       name: { get_param: private_net_name }
+
+  private_net2:
+    type: OS::Neutron::Net
+    properties:
+      name: { get_param: private_net_name2 }
 
   private_subnet:
     type: OS::Neutron::Subnet
@@ -57,6 +79,28 @@ resources:
       allocation_pools:
         - start: { get_param: private_net_pool_start }
           end: { get_param: private_net_pool_end }
+
+  private_subnet2:
+    type: OS::Neutron::Subnet
+    properties:
+      network_id: { get_resource: private_net2 }
+      cidr: { get_param: private_net_cidr2 }
+      gateway_ip: { get_param: private_net_gateway2 }
+      allocation_pools:
+        - start: { get_param: private_net_pool_start2 }
+          end: { get_param: private_net_pool_end2 }
+
+  router2:
+    type: OS::Neutron::Router
+    properties:
+      external_gateway_info:
+        network: { get_param: public_net }          
+
+  router_interface2:
+    type: OS::Neutron::RouterInterface
+    properties:
+      router_id: { get_resource: router2 }
+      subnet_id: { get_resource: private_subnet2 }
 
   router:
     type: OS::Neutron::Router
@@ -208,6 +252,27 @@ resources:
         - default
         - { get_resource: linux_security_group }
 
+  server20:
+    type: OS::Nova::Server
+    properties:
+      name: Ubuntu20
+      image: Ubuntu Server 20.04 LTS (Focal Fossa) amd64
+      flavor: m1.tiny
+      key_name: { get_param: key_name }
+      networks:
+        - port: { get_resource: server20_port }
+
+  server20_port:
+    type: OS::Neutron::Port
+    properties:
+      network_id: { get_resource: private_net2 }
+      fixed_ips:
+        - ip_address: 192.168.2.2
+      security_groups:
+        # Default NTNU OpenStack security group:
+        - default
+        - { get_resource: linux_security_group }  
+
   manager_security_group:
     type: OS::Neutron::SecurityGroup
     properties:
@@ -313,14 +378,17 @@ outputs:
     description: IP address of server2 in private network
     value: { get_attr: [ server2, first_address ] }
   server3_private_ip:
-    description: IP address of server1 in private network
+    description: IP address of server3 in private network
     value: { get_attr: [ server3, first_address ] }
   server4_private_ip:
-    description: IP address of server1 in private network
+    description: IP address of server4 in private network
     value: { get_attr: [ server4, first_address ] }
   server8_private_ip:
-    description: IP address of server1 in private network
+    description: IP address of server8 in private network
     value: { get_attr: [ server8, first_address ] }
   server10_private_ip:
-    description: IP address of server1 in private network
+    description: IP address of server10 in private network
     value: { get_attr: [ server10, first_address ] }
+  server20_private_ip:
+    description: IP address of server20 in private network
+    value: { get_attr: [ server20, first_address ] }

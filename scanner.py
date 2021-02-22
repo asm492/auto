@@ -8,18 +8,16 @@ try:
 except ImportError:
        print("screenshot module not found!")
 
-target = "192.168.1.0/24"
+#target = "192.168.1.0/24"
 #target = "192.168.1.5"
 
 def exclude_self():
         host_ip = ([l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0])
-        print(type(host_ip))
-        print("The host IP is.........: " + host_ip)
-        return host_ip
+        f = open("exclude_ip.txt", "w")
+        f.write(host_ip + "\n")
 
 def write_log(text):
         logfile = open("log.txt","a")
-#        logfile.write(time.ctime() + ": " + text + "\n")
         logfile.write(text + " at " + time.ctime() + "\n")
         logfile.close()
 
@@ -46,13 +44,25 @@ def find_interesting_ip(result):
                                         break
         output_list.close()
 
-#def find_webpage():
+def perform_host_discovery():
+        #Aka stage 0
+        write_log("\t[HOST DISCOVERY] started")
+        nmap = nmap3.NmapHostDiscovery()
+        res = nmap.nmap_no_portscan(None, args="-sn --excludefile exclude_ip.txt -iL target.txt")
+        print(res)
 
+        f  = open("ips_to_scan.txt", "w")
+        for ip in res:
+          if ip != "stats" and ip != "runtime":
+            if res[ip]['state']['state'] == "up":
+              f.write(ip + "\n")
+        f.close()
+        write_log("\t[HOST DISCOVERY] done!")
 def perform_portscan():
         #Fast portscan. Aka Stage 1
         write_log("\t[FAST SCAN] started")
         nmap = nmap3.NmapHostDiscovery()
-        res = nmap.scan_top_ports(target, args="-F")
+        res = nmap.scan_top_ports(None, args="-F -iL ips_to_scan.txt")
         find_interesting_ip(res)
         write_log("\t[FAST SCAN] done")
         return res
@@ -68,7 +78,7 @@ def possible_webpage(res):
         screengrab_list.close()
 
 def perform_tcp_scan():
-        #TCP
+        #Aka Stage 2
         #Screengrabs kommer her
         print("\t[TCP SCAN] started")
         write_log("\t[TCP SCAN] started")
@@ -81,7 +91,7 @@ def perform_tcp_scan():
         return result
 
 def perform_udp_scan():
-        #Scan top UDP
+        #Aka Stage 3
         write_log("\t[UDP SCAN] started ")
         nmap = nmap3.NmapScanTechniques()
         result = nmap.nmap_udp_scan(None, "-iL ips_to_scan.txt -p53,67,68,123,137,138,161,445,5000")
@@ -92,10 +102,15 @@ def perform_udp_scan():
 write_log("[SCRIPT] started")
 
 #MAIN:
+
+exclude_self()
+perform_host_discovery()
 result = perform_portscan()
 result = perform_tcp_scan()
 result = perform_udp_scan()
 
+#print(result)
+#Stage 4
 write_log("\t[SCREENGRABS] started")
 resp = screenshot.perform_screenshot()
 print(resp)
