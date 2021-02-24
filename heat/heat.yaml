@@ -249,7 +249,7 @@ resources:
   server20:
     type: OS::Nova::Server
     properties:
-      name: Ubuntu20
+      name: ubuntu-net2
       image: Ubuntu Server 20.04 LTS (Focal Fossa) amd64
       flavor: m1.tiny
       key_name: { get_param: key_name }

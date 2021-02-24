@@ -10,7 +10,7 @@ cd ~
 git clone https://github.com/ChaoticWeg/discord.sh.git
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Starter installering. Sier i fra når jeg er ferdig."
 
-
+sudo apt  install nmap -y
 sudo apt install python3-pip -y
 sudo apt-get install -y chromium #For screengrabs
 #pip install python3-namp
@@ -26,8 +26,9 @@ discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/80616814
 pip3 install python3-nmap
 
 #For screengrabs:
+discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Python nmap ferdig. Installerer imgkit og wkhtmltopdf"
 pip3 install imgkit
-sudo apt-get install wkhtmltopdf
+sudo apt-get install wkhtmltopdf -y
 
 cat <<EOF > /etc/ansible/key
 -----BEGIN RSA PRIVATE KEY-----
