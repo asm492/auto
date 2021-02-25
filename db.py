@@ -1,7 +1,6 @@
 import json
 import mysql.connector
 
-#Test
 # Opening JSON file
 def printOut():
     with open('tcp.json') as json_file:
@@ -11,16 +10,15 @@ def printOut():
             if ip != "stats" and ip != "runtime":
                 if result[ip]['macaddress'] == "N/A":
                     mac = "N/A"
+                    vendor = "N/A"
+                    hostname = "N/A"
                 else:
+                    hostname =  result[ip]['hostname'][0]['name']
                     mac  = result[ip]['macaddress']['addr']
                     if 'vendor' not in result[ip]['macaddress']:
                         vendor = "N/A"
                     else:
                         vendor = result[ip]['macaddress']['vendor']
-                if [0] not in result[ip]['hostname']:
-                    hostname = "N/A"
-                else:
-                    hostname =  result[ip]['hostname'][0]['name']
                 if result[ip]['osmatch']:
                     os = result[ip]['osmatch'][0]['name']
                 else:
@@ -95,16 +93,14 @@ def populate_tables():
                 if result[ip]['macaddress'] == "N/A":
                     mac = "N/A"
                     vendor = "N/A"
+                    hostname = "N/A"
                 else:
+                    hostname = result[ip]['hostname'][0]['name']
                     mac  = result[ip]['macaddress']['addr']
                     if 'vendor' not in result[ip]['macaddress']:
                         vendor = "N/A"
                     else:
                         vendor = result[ip]['macaddress']['vendor']
-                if [0] not in result[ip]['hostname']:
-                    hostname = "N/A"
-                else:
-                    hostname =  result[ip]['hostname'][0]['name']
                 if result[ip]['osmatch']:
                     os = result[ip]['osmatch'][0]['name']
                 else:
@@ -157,6 +153,6 @@ def open_file():
 
 #create_database()
 #printDB()
-#printOut()
-create_table()
+printOut()
+#create_table()
 populate_tables()
