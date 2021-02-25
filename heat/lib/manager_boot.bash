@@ -23,11 +23,15 @@ ansible-galaxy collection install ansible.windows
 ansible-galaxy collection install community.windows
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Python, pip, ansible, pywinrm er ferdig"
 
-pip3 install python3-nmap
+#Set time
+sudo timedatectl set-timezone Europe/Oslo
+
+sudo pip3 install python3-nmap
+sudo pip3 install mysql-connector-python
 
 #For screengrabs:
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Python nmap ferdig. Installerer imgkit og wkhtmltopdf"
-pip3 install imgkit
+sudo pip3 install imgkit
 sudo apt-get install wkhtmltopdf -y
 
 cat <<EOF > /etc/ansible/key
