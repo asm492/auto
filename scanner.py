@@ -3,6 +3,7 @@ import json
 import socket
 import sys
 import os
+import datetime
 import time
 import imgkit
 import argparse
@@ -12,6 +13,9 @@ try:
 except ImportError:
        print("screenshot module not found!")
 
+OUTPUT = 'output.json'
+TCP_FILE = 'tcp.json'
+UDP_FILE = 'udp.json'
 TARGETFILE = "target.txt"
 LOG_FORMAT = "%(name)s %(asctime)s - %(message)s"
 FILENAME = "log.txt"
@@ -61,7 +65,7 @@ def find_interesting_ip(result):
         logging.debug('\t[INTERESTING IP] started')
         output_list = open("ips_to_scan.txt","w")
         for ip_addr in result:
-                if ip_addr != "stats" and ip_addr != "runtime":
+                #if ip_addr != "stats" and ip_addr != "runtime":
                         logging.debug("\t\t" + ip_addr)
                         for i in range(len(result[ip_addr]['ports'])):
                                 if result[ip_addr]['ports'][i]['state'] == "open" or result[ip_addr]['ports'][i]['state'] == "filtered":
@@ -76,11 +80,11 @@ def perform_host_discovery():
         nmap = nmap3.NmapHostDiscovery()
         res = nmap.nmap_no_portscan(None, args="-sn --excludefile exclude_ip.txt -iL target.txt")
         logging.debug('Output of host discovery: ')
+        res = remove_keys(res)
         logging.debug(res)
-
         f  = open("ips_to_scan.txt", "w")
         for ip in res:
-          if ip != "stats" and ip != "runtime":
+          #if ip != "stats" and ip != "runtime":
             logging.debug('Found IP: ' + ip)
             if res[ip]['state']['state'] == "up":
               f.write(ip + "\n")
@@ -91,6 +95,7 @@ def perform_portscan():
         logging.debug('[FAST PORTSCAN] started')
         nmap = nmap3.NmapHostDiscovery()
         res = nmap.scan_top_ports(None, args="-F -iL ips_to_scan.txt")
+        res = remove_keys(res)
         logging.debug(res)
         find_interesting_ip(res)
         logging.debug('[FAST PORTSCAN] done')
@@ -100,7 +105,7 @@ def possible_webpage(res):
         logging.debug('[FIND WEBPAGE] started')
         screengrab_list = open("ips_to_screengrab.txt","w")
         for ip_addr in result:
-            if ip_addr != "stats" and ip_addr != "runtime":
+           # if ip_addr != "stats" and ip_addr != "runtime":
                 for i in range(len(result[ip_addr]['ports'])):
                     if result[ip_addr]['ports'][i]['state'] == "open" or result[ip_addr]['ports'][i]['state'] == "filtered":
                        if result[ip_addr]['ports'][i]['portid'] == "80":
@@ -116,9 +121,10 @@ def perform_tcp_scan():
         logging.debug('[TCP SCAN] started')
         nmap = nmap3.Nmap()
         result = nmap.nmap_version_detection(None, "-sV -p- -O -iL ips_to_scan.txt");
-        logging.debug(result)
+        result = remove_keys(result)
+        logging.debug("perfom_tcp_scan")
         possible_webpage(result)
-        print_json_file(result, "tcp.json")
+        #print_json_file(result, "tcp.json")
         logging.debug('[TCP SCAN] done')
         return result
 
@@ -127,37 +133,74 @@ def perform_udp_scan():
         logging.debug('[UDP SCAN] started')
         nmap = nmap3.NmapScanTechniques()
         result = nmap.nmap_udp_scan(None, "-iL ips_to_scan.txt -p53,67,68,123,137,138,161,445,5000")
-        print_json_file(result, "udp.json")
+        result = remove_keys(result)
+        #print_json_file(result, "udp.json")
         logging.debug('[UDP SCAN] done')
         return result
 
+def remove_keys(res):
+  logging.debug('[KEYS] deleting')
+  res.pop('stats', None)
+  res.pop('runtime', None)
+  logging.debug(res)
+  logging.debug('[KEYS] done')
+  return res
 
+def replace(res):
+    for k, v in res.items():
+        if v is None:
+            res[k] = "N/A"
+        elif type(v) == type(res):
+            replace(v)
 
+def print_merged_file(tcp, udp, start_time):
+  logging.debug('[JSON MERGE] printing')
+  #New dic
+  merged = {}
+  merged['tcp'] = tcp
+  merged['udp'] = udp
+  replace(merged)
+  #End time
+  end_time = int(datetime.datetime.now().timestamp())
+  #merged['scan'] = {'starttime' : start_time, 'endtime' : end_time }
+  logging.debug(merged)
+  #FEILEN LIGGER HER! FÅR KEY VALUE PAIR SOM HAR VERDI NONE
+  merged['scan'] = {'starttime' : start_time, 'endtime' : end_time }
+  logging.debug(merged)
+  merged = str(merged)
+  merged = merged.replace("\'", "\"")
+  merged = json.loads(merged)
+  with open(OUTPUT, "w") as file:
+    json.dump(merged, file, ensure_ascii=False, indent=4, sort_keys=True)
 
+  logging.debug('[JSON MERGE] done')
 
 if __name__=="__main__":
+  #Get current time (Epoch)
+  start = int(datetime.datetime.now().timestamp())
 
+  #For verbose logging and debug:
   parser = argparse.ArgumentParser(description="USAGE: python3 scanner.py [options]")
   parser.add_argument("-v", "--verbose", help="Enable output to screen, no output by default", action="store_true")
   args = parser.parse_args()
-
   level    = logging.DEBUG
   handlers = [logging.FileHandler(FILENAME)]
 
+  #Always output to file. To screen if -v
   if args.verbose:
-    print("VERBOSE")
     handlers.append(logging.StreamHandler())
 
   logging.basicConfig(level = level, format = LOG_FORMAT, handlers = handlers)
+  logging.debug('[SCRIPT] started')
+
 
   #MAIN:
-  logging.debug('[SCRIPT] started')
   has_target()
   exclude_self()
   perform_host_discovery()
   result = perform_portscan()
-  result = perform_tcp_scan()
-  result = perform_udp_scan()
+  result_tcp = perform_tcp_scan()
+  result_udp = perform_udp_scan()
 
 
   #print(result)
@@ -169,4 +212,6 @@ if __name__=="__main__":
     logging.debug('[SCREENGRABS] FAILED!')
   else:
     logging.debug('[SCREENGRABS] taken')
+
+  print_merged_file(result_tcp, result_udp, start)
   logging.debug('[SCRIPT] done')
