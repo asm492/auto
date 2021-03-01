@@ -23,6 +23,10 @@ ansible-galaxy collection install ansible.windows
 ansible-galaxy collection install community.windows
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Python, pip, ansible, pywinrm er ferdig"
 
+#For MongoDB:
+sudo apt install -y mongodb
+pip3 install pymongo
+
 #Set time
 sudo timedatectl set-timezone Europe/Oslo
 
