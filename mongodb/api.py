@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import jsonify
 import pymongo
 import json
 
@@ -22,13 +23,24 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
+  '''
   response = {}
-  myquery = { "scan.starttime": 1614372826 }
+  myquery = {"scan.date": "20210302" }
   response = mycol.find_one(myquery)
   response.pop('_id', None)
   response =  json.dumps(response, indent = 4)
   print(response)
-  return response
+  '''
+  m = {}
+  m['message'] = "Autoenum API. Usage:"
+  m['/'] = "This message"
+  m['/oscpe/<cpe value>'] = "Returns CPE"
+  m['/portcpe/<cpe value>'] = "Returns CPE"
+  return jsonify(m)
+
+@app.route("/oscpe/<string:cpe>", methods=['GET'])
+def oscpe(cpe):
+  #comment
 
 
 if __name__=="__main__":
