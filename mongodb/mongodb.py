@@ -13,6 +13,7 @@ Queries:
 
   db.<collection>.find()
   db.scans.find( {"scan.starttime": 1614372826} )
+  db.scans.deleteOne({ "_id": ObjectId("603e2f89b1c62580bb25c149")});
 
 
 '''

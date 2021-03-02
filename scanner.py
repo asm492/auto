@@ -3,16 +3,15 @@ import json
 import socket
 import sys
 import os
-import datetime
+from datetime import datetime
 import time
 import imgkit
 import argparse
 import logging
-try:
-       import screenshot
-except ImportError:
-       print("screenshot module not found!")
+import pymongo
+import ast #Testing only
 
+DBLINK = 'mongodb://localhost:2701/'
 OUTPUT = 'output.json'
 TCP_FILE = 'tcp.json'
 UDP_FILE = 'udp.json'
@@ -101,7 +100,7 @@ def perform_portscan():
         logging.debug('[FAST PORTSCAN] done')
         return res
 
-def possible_webpage(res):
+def old_possible_webpage(res):
         logging.debug('[FIND WEBPAGE] started')
         screengrab_list = open("ips_to_screengrab.txt","w")
         for ip_addr in result:
@@ -113,30 +112,32 @@ def possible_webpage(res):
                           screengrab_list.write(ip_addr + "\n")
         screengrab_list.close()
         logging.debug('[FIND WEBPAGE] done')
+
+
 def perform_tcp_scan():
-        #Aka Stage 2
-        #Tid uten -A på 192.168.1.0/24 og .2.0/24
-        #: 3:10. Med -A: 4:10 og det klikker.
-        # Med O: 3:36
-        logging.debug('[TCP SCAN] started')
-        nmap = nmap3.Nmap()
-        result = nmap.nmap_version_detection(None, "-sV -p- -O -iL ips_to_scan.txt");
-        result = remove_keys(result)
-        logging.debug("perfom_tcp_scan")
-        possible_webpage(result)
-        #print_json_file(result, "tcp.json")
-        logging.debug('[TCP SCAN] done')
-        return result
+  #Aka Stage 2
+  #Tid uten -A på 192.168.1.0/24 og .2.0/24
+  #: 3:10. Med -A: 4:10 og det klikker.
+  # Med O: 3:36
+  logging.debug('[TCP SCAN] started')
+  nmap = nmap3.Nmap()
+  result = nmap.nmap_version_detection(None, "-sV -p- -O -iL ips_to_scan.txt");
+  #result = remove_keys(result)
+  logging.debug("perfom_tcp_scan")
+  #old_possible_webpage(result)
+  #print_json_file(result, "tcp.json")
+  logging.debug('[TCP SCAN] done')
+  return result
 
 def perform_udp_scan():
-        #Aka Stage 3
-        logging.debug('[UDP SCAN] started')
-        nmap = nmap3.NmapScanTechniques()
-        result = nmap.nmap_udp_scan(None, "-iL ips_to_scan.txt -p53,67,68,123,137,138,161,445,5000")
-        result = remove_keys(result)
-        #print_json_file(result, "udp.json")
-        logging.debug('[UDP SCAN] done')
-        return result
+  #Aka Stage 3
+  logging.debug('[UDP SCAN] started')
+  nmap = nmap3.NmapScanTechniques()
+  result = nmap.nmap_udp_scan(None, "-iL ips_to_scan.txt -p53,67,68,123,137,138,161,445,5000")
+  #result = remove_keys(result)
+  #print_json_file(result, "udp.json")
+  logging.debug('[UDP SCAN] done')
+  return result
 
 def remove_keys(res):
   logging.debug('[KEYS] deleting')
@@ -175,9 +176,71 @@ def print_merged_file(tcp, udp, start_time):
 
   logging.debug('[JSON MERGE] done')
 
+def find_webpage(res):
+  logging.debug('[FIND WEBPAGE] started')
+  screengrab_list = open("ips_to_screengrab.txt","w")
+
+  for k in res['ports']:
+    if k['portid'] == '80':
+      logging.debug('\tPossible webpage on: ' + res['ip'])
+      screengrab_list.write(res['ip'] + "\n")
+
+  screengrab_list.close()
+  logging.debug('[FIND WEBPAGE] done')
+
+def merge_results(t, u, start):
+  ##This function reorganizes output
+  #from nmap to to have data sorted
+  #by hosts.
+
+  #Just converting the start time
+  #object from main to date and time
+  logging.debug("[MERGE RESULTS] start")
+  starttime = start.strftime("%H%M%S")
+  startdate = start.strftime("%Y%m%d")
+
+  #Remove
+
+  #Checking lenght of dict
+  #merged = {}
+
+  #index = 0
+  for i in t:
+    os = t[i]['osmatch']
+    t_ports = t[i]['ports']
+    u_ports = u[i]['ports']
+    ports = t_ports + u_ports
+    hostname = t[i]['hostname']
+    macaddress = t[i]['macaddress']
+    state = t[i]['state']
+    stats = {'scandate': startdate, 'scantime': starttime}
+    host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
+    find_webpage(host)
+
+    #outer_key = str(index)
+    #insert_db(host)
+    #Hacky way to get quotes around key.
+    #merged[outer_key] = host
+    #index += 1
+
+
+
+  #logging.debug(merged)
+  logging.debug("[MERGE RESULTS] done")
+
+def insert_db(res):
+    myclient = pymongo.MongoClient(DBLINK)
+    mydb = myclient["mydb"]
+    mycol = mydb["scans"]
+
+    mycol.insert_one(res)
+
 if __name__=="__main__":
   #Get current time (Epoch)
-  start = int(datetime.datetime.now().timestamp())
+  #start = int(datetime.datetime.now().timestamp())
+  now = datetime.now()
+  start = now.strftime("%H%M%S")
+
 
   #For verbose logging and debug:
   parser = argparse.ArgumentParser(description="USAGE: python3 scanner.py [options]")
@@ -193,8 +256,9 @@ if __name__=="__main__":
   logging.basicConfig(level = level, format = LOG_FORMAT, handlers = handlers)
   logging.debug('[SCRIPT] started')
 
-
   #MAIN:
+
+  '''
   has_target()
   exclude_self()
   perform_host_discovery()
@@ -202,16 +266,38 @@ if __name__=="__main__":
   result_tcp = perform_tcp_scan()
   result_udp = perform_udp_scan()
 
+  f = open("tcp.json", "w")
+  f.write(str(result_tcp))
+  f.close()
+
+  f = open("udp.json", "w")
+  f.write(str(result_udp))
+  f.close()
+
+
+  '''
+  #Testing
+  with open('tcp.json') as f:
+    data = f.read()
+  result_tcp = ast.literal_eval(data)
+  #print(result_tcp)
+  #print(type(result_tcp))
+
+  with open('udp.json') as f:
+    data = f.read()
+  result_udp = ast.literal_eval(data)
+  #print(result_udp)
+  #print(type(result_udp))
 
   #print(result)
 
   #Stage 4
-  resp = screenshot.perform_screenshot()
-
+  '''
   if resp == 1:
     logging.debug('[SCREENGRABS] FAILED!')
   else:
     logging.debug('[SCREENGRABS] taken')
-
-  print_merged_file(result_tcp, result_udp, start)
+  '''
+  #print_merged_file(result_tcp, result_udp, start)
+  merge_results(result_tcp, result_udp, now)
   logging.debug('[SCRIPT] done')
