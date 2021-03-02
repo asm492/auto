@@ -12,7 +12,11 @@ Queries:
   use mydb
 
   db.<collection>.find()
-  db.scans.find( {"scan.starttime": 1614372826} )
+  #Remove all
+  db.scans.remove( {} )
+  db.scans.find( {"scanstats.scantime" : "210642"} )
+  db.scans.find( {"ports.cpe.cpe" : "cpe:/o:linux:linux_kernel"} )
+  db.scans.find( {"osmatch.cpe" : "cpe:/o:linux:linux_kernel:4"} )
   db.scans.deleteOne({ "_id": ObjectId("603e2f89b1c62580bb25c149")});
 
 

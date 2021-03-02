@@ -11,7 +11,7 @@ import logging
 import pymongo
 import ast #Testing only
 
-DBLINK = 'mongodb://localhost:2701/'
+DBLINK = 'mongodb://localhost:27017/'
 OUTPUT = 'output.json'
 TCP_FILE = 'tcp.json'
 UDP_FILE = 'udp.json'
@@ -61,18 +61,19 @@ def print_json_file(result, file_name):
         logging.debug('[JSON] done')
 
 def find_interesting_ip(result):
-        logging.debug('\t[INTERESTING IP] started')
-        output_list = open("ips_to_scan.txt","w")
-        for ip_addr in result:
-                #if ip_addr != "stats" and ip_addr != "runtime":
-                        logging.debug("\t\t" + ip_addr)
-                        for i in range(len(result[ip_addr]['ports'])):
-                                if result[ip_addr]['ports'][i]['state'] == "open" or result[ip_addr]['ports'][i]['state'] == "filtered":
-                                        output_list.write(ip_addr + "\n")
-                                        logging.debug("\t\t\t" + result[ip_addr]['ports'][i]['portid'])
-                                        break
-        output_list.close()
-        logging.debug("\t[INTERESTING IP] done")
+  logging.debug('\t[INTERESTING IP] started')
+  output_list = open("ips_to_scan.txt","w")
+  for ip_addr in result:
+    logging.debug("\t\t" + ip_addr)
+    for i in range(len(result[ip_addr]['ports'])):
+      if result[ip_addr]['ports'][i]['state'] == "open" or result[ip_addr]['ports'][i]['state'] == "filtered":
+        output_list.write(ip_addr + "\n")
+        logging.debug("\t\t\t" + result[ip_addr]['ports'][i]['portid'])
+        break
+
+  output_list.close()
+  logging.debug("\t[INTERESTING IP] done")
+
 def perform_host_discovery():
         #Aka stage 0
         logging.debug('[HOST DISCOVERY] started')
@@ -83,12 +84,12 @@ def perform_host_discovery():
         logging.debug(res)
         f  = open("ips_to_scan.txt", "w")
         for ip in res:
-          #if ip != "stats" and ip != "runtime":
             logging.debug('Found IP: ' + ip)
             if res[ip]['state']['state'] == "up":
               f.write(ip + "\n")
         f.close()
         logging.debug('[HOST DISCOVERY] done')
+
 def perform_portscan():
         #Fast portscan. Aka Stage 1
         logging.debug('[FAST PORTSCAN] started')
@@ -104,7 +105,6 @@ def old_possible_webpage(res):
         logging.debug('[FIND WEBPAGE] started')
         screengrab_list = open("ips_to_screengrab.txt","w")
         for ip_addr in result:
-           # if ip_addr != "stats" and ip_addr != "runtime":
                 for i in range(len(result[ip_addr]['ports'])):
                     if result[ip_addr]['ports'][i]['state'] == "open" or result[ip_addr]['ports'][i]['state'] == "filtered":
                        if result[ip_addr]['ports'][i]['portid'] == "80":
@@ -122,8 +122,8 @@ def perform_tcp_scan():
   logging.debug('[TCP SCAN] started')
   nmap = nmap3.Nmap()
   result = nmap.nmap_version_detection(None, "-sV -p- -O -iL ips_to_scan.txt");
-  #result = remove_keys(result)
-  logging.debug("perfom_tcp_scan")
+  remove_keys(result)
+  logging.debug(result)
   #old_possible_webpage(result)
   #print_json_file(result, "tcp.json")
   logging.debug('[TCP SCAN] done')
@@ -134,7 +134,7 @@ def perform_udp_scan():
   logging.debug('[UDP SCAN] started')
   nmap = nmap3.NmapScanTechniques()
   result = nmap.nmap_udp_scan(None, "-iL ips_to_scan.txt -p53,67,68,123,137,138,161,445,5000")
-  #result = remove_keys(result)
+  remove_keys(result)
   #print_json_file(result, "udp.json")
   logging.debug('[UDP SCAN] done')
   return result
@@ -201,11 +201,10 @@ def merge_results(t, u, start):
 
   #Remove
 
-  #Checking lenght of dict
-  #merged = {}
-
-  #index = 0
   for i in t:
+    logging.debug(i)
+    logging.debug(t[i])
+    logging.debug(t[i]['osmatch'])
     os = t[i]['osmatch']
     t_ports = t[i]['ports']
     u_ports = u[i]['ports']
@@ -216,16 +215,8 @@ def merge_results(t, u, start):
     stats = {'scandate': startdate, 'scantime': starttime}
     host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
     find_webpage(host)
+    insert_db(host)
 
-    #outer_key = str(index)
-    #insert_db(host)
-    #Hacky way to get quotes around key.
-    #merged[outer_key] = host
-    #index += 1
-
-
-
-  #logging.debug(merged)
   logging.debug("[MERGE RESULTS] done")
 
 def insert_db(res):
@@ -258,14 +249,13 @@ if __name__=="__main__":
 
   #MAIN:
 
-  '''
   has_target()
   exclude_self()
   perform_host_discovery()
   result = perform_portscan()
   result_tcp = perform_tcp_scan()
   result_udp = perform_udp_scan()
-
+  '''
   f = open("tcp.json", "w")
   f.write(str(result_tcp))
   f.close()
@@ -275,7 +265,7 @@ if __name__=="__main__":
   f.close()
 
 
-  '''
+
   #Testing
   with open('tcp.json') as f:
     data = f.read()
@@ -292,12 +282,12 @@ if __name__=="__main__":
   #print(result)
 
   #Stage 4
-  '''
   if resp == 1:
     logging.debug('[SCREENGRABS] FAILED!')
   else:
     logging.debug('[SCREENGRABS] taken')
   '''
+
   #print_merged_file(result_tcp, result_udp, start)
   merge_results(result_tcp, result_udp, now)
   logging.debug('[SCRIPT] done')
