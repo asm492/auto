@@ -1,0 +1,21 @@
+version: "3.2"
+services:
+  api:
+    container_name: autoenum_api
+    restart: always
+    build: .
+    ports:
+      - '5000:5000'
+    links:
+      - mongodb-docker
+  mongodb-docker:
+    container_name: mongodb-docker
+    restart: always
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - "mongo-docker-volume:/data/db"
+volumes:
+  mongo-docker-volume:
+    external: false
