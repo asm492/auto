@@ -4,12 +4,14 @@ import socket
 import sys
 import os
 from datetime import datetime
+import sslgrab as sgrab #Our sslgrab.py
 import time
 import imgkit
 import argparse
 import logging
 import pymongo
 import ast #Testing only
+
 
 DBLINK = 'mongodb://localhost:27017/'
 OUTPUT = 'output.json'
@@ -45,20 +47,6 @@ def has_target():
           sys.exit(1)
 
         f.close()
-
-def print_json_file(result, file_name):
-        logging.debug('[JSON] printing')
-        for ip_addr in result:
-                if ip_addr != "stats" and ip_addr != "runtime":
-                        if not result[ip_addr]['macaddress']:
-                                result[ip_addr]['macaddress'] = "N/A"
-                                logging.debug("IP: " + ip_addr + " MAC: " + result[ip_addr]['macaddress'])
-        result = str(result)
-        result = result.replace("\'", "\"")
-        result = json.loads(result)
-        with open(file_name, "w") as file:
-                json.dump(result, file, ensure_ascii=False, indent=4, sort_keys=True)
-        logging.debug('[JSON] done')
 
 def find_interesting_ip(result):
   logging.debug('\t[INTERESTING IP] started')
@@ -101,19 +89,6 @@ def perform_portscan():
         logging.debug('[FAST PORTSCAN] done')
         return res
 
-def old_possible_webpage(res):
-        logging.debug('[FIND WEBPAGE] started')
-        screengrab_list = open("ips_to_screengrab.txt","w")
-        for ip_addr in result:
-                for i in range(len(result[ip_addr]['ports'])):
-                    if result[ip_addr]['ports'][i]['state'] == "open" or result[ip_addr]['ports'][i]['state'] == "filtered":
-                       if result[ip_addr]['ports'][i]['portid'] == "80":
-                          logging.debug('\tPossible webpage on: ' + ip_addr)
-                          screengrab_list.write(ip_addr + "\n")
-        screengrab_list.close()
-        logging.debug('[FIND WEBPAGE] done')
-
-
 def perform_tcp_scan():
   #Aka Stage 2
   #Tid uten -A på 192.168.1.0/24 og .2.0/24
@@ -148,44 +123,26 @@ def remove_keys(res):
   return res
 
 def replace(res):
-    for k, v in res.items():
-        if v is None:
-            res[k] = "N/A"
-        elif type(v) == type(res):
-            replace(v)
+  #Not in use
+  for k, v in res.items():
+    if v is None:
+      res[k] = "N/A"
+    elif type(v) == type(res):
+      replace(v)
 
-def print_merged_file(tcp, udp, start_time):
-  logging.debug('[JSON MERGE] printing')
-  #New dic
-  merged = {}
-  merged['tcp'] = tcp
-  merged['udp'] = udp
-  replace(merged)
-  #End time
-  end_time = int(datetime.datetime.now().timestamp())
-  #merged['scan'] = {'starttime' : start_time, 'endtime' : end_time }
-  logging.debug(merged)
-  #FEILEN LIGGER HER! FÅR KEY VALUE PAIR SOM HAR VERDI NONE
-  merged['scan'] = {'starttime' : start_time, 'endtime' : end_time }
-  logging.debug(merged)
-  merged = str(merged)
-  merged = merged.replace("\'", "\"")
-  merged = json.loads(merged)
-  with open(OUTPUT, "w") as file:
-    json.dump(merged, file, ensure_ascii=False, indent=4, sort_keys=True)
-
-  logging.debug('[JSON MERGE] done')
-
-def find_webpage(res):
+def find_ssl(res):
   logging.debug('[FIND WEBPAGE] started')
-  screengrab_list = open("ips_to_screengrab.txt","w")
+  #screengrab_list = open("ips_to_screengrab.txt","w")
 
+  r = {}
   for k in res['ports']:
     if k['portid'] == '80':
       logging.debug('\tPossible webpage on: ' + res['ip'])
-      screengrab_list.write(res['ip'] + "\n")
+      #screengrab_list.write(res['ip'] + "\n")
+    if k ['portid'] == '443':
+      logging.debug('\tPossible SSL on: ' + res['ip'])
 
-  screengrab_list.close()
+  #screengrab_list.close()
   logging.debug('[FIND WEBPAGE] done')
 
 def merge_results(t, u, start):
@@ -213,8 +170,15 @@ def merge_results(t, u, start):
     macaddress = t[i]['macaddress']
     state = t[i]['state']
     stats = {'scandate': startdate, 'scantime': starttime}
+
     host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
-    find_webpage(host)
+    #sslc = {}
+    for p in t_ports:
+      if p['portid'] == "443":
+        host['ssl'] = sgrab.take_sslgrab(i)
+        print(host['ssl'])
+
+
     insert_db(host)
 
   logging.debug("[MERGE RESULTS] done")
@@ -288,6 +252,5 @@ if __name__=="__main__":
     logging.debug('[SCREENGRABS] taken')
   '''
 
-  #print_merged_file(result_tcp, result_udp, start)
   merge_results(result_tcp, result_udp, now)
   logging.debug('[SCRIPT] done')
