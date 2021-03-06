@@ -96,8 +96,9 @@ def perform_tcp_scan():
   # Med O: 3:36
   logging.debug('[TCP SCAN] started')
   nmap = nmap3.Nmap()
-  result = nmap.nmap_version_detection(None, "-sV -p- -O -iL ips_to_scan.txt");
+  result = nmap.nmap_version_detection(None, "-sV -p- --script ssl-cert -vv -O -iL ips_to_scan.txt");
   remove_keys(result)
+  print(result)
   logging.debug(result)
   #old_possible_webpage(result)
   #print_json_file(result, "tcp.json")
@@ -166,19 +167,31 @@ def merge_results(t, u, start):
     t_ports = t[i]['ports']
     u_ports = u[i]['ports']
     ports = t_ports + u_ports
+
+    for port in ports:
+      for script in port['scripts']:
+        s = script['data']
+        s.pop(0, None)
+
     hostname = t[i]['hostname']
     macaddress = t[i]['macaddress']
     state = t[i]['state']
     stats = {'scandate': startdate, 'scantime': starttime}
 
-    host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
+    #host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
     #sslc = {}
+    '''
+    for port in ports:
+      port['scripts'].pop('data')
+      print(port)
+    '''
+    '''
     for p in t_ports:
       if p['portid'] == "443":
         host['ssl'] = sgrab.take_sslgrab(i)
         print(host['ssl'])
-
-
+    '''
+    host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
     insert_db(host)
 
   logging.debug("[MERGE RESULTS] done")
