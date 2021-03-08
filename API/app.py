@@ -65,7 +65,7 @@ def all():
 
 def find_in_db(q):
   #Denne må antageligvis endres
-  myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+  myclient = pymongo.MongoClient("mongodb://mongoDB:27017/")
   mydb = myclient["mydb"]
   mycol = mydb["scans"]
 

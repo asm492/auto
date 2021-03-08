@@ -1,21 +1,71 @@
 version: "3.2"
 services:
-  api:
-    container_name: autoenum_api
+  autoenum-api:
+    container_name: autoenum-api
     restart: always
-    build: .
+    build: ./api
     ports:
-      - '5000:5000'
-    links:
-      - mongodb-docker
-  mongodb-docker:
-    container_name: mongodb-docker
+      - '5001:5000'
+    networks:
+      - autoenum-network
+  autoenum-mongodb:
+    container_name: autoenum-mongodb
     restart: always
     image: mongo
     ports:
-      - '27017:27017'
+      - '27018:27017'
     volumes:
       - "mongo-docker-volume:/data/db"
+    networks:
+      - autoenum-network
+  cve_search:
+    image: cve_search
+    build:
+      context: .
+      dockerfile: docker/images/cve_search/dockerfile-cve_search
+      args:
+        - REPO=cve-search/cve-search
+        - BRANCH=master
+    hostname: cve_search
+    depends_on:
+      - redis
+      - mongo
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=TRUE
+    ports:
+      - 443:5000
+    networks:
+      - autoenum-network
+  redis:
+    image: cve_search-redis
+    hostname: redis
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/images/redis/dockerfile-redis
+    volumes:
+      - "./.cve_search_data/cve_search_redis:/data"
+    expose:
+      - 6379
+    networks:
+      - autoenum-network
+  mongo:
+    image: cve_search-mongo
+    hostname: mongo
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/images/mongodb/dockerfile-mongo
+    volumes:
+      - "./.cve_search_data/cve_search_mongodb:/data/db"
+    expose:
+      - 27017
+    networks:
+      - autoenum-network
 volumes:
   mongo-docker-volume:
     external: false
+networks:
+  autoenum-network:
+    driver: bridge

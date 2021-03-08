@@ -31,7 +31,7 @@ def hello():
 
   m = {}
   m['message'] = "Autoenum API. Usage:"
-  m['Port'] = "5000"
+  m['Port'] = "5001"
   m['Valid endpoints'] = valid
   m['Examples'] = examples
   return jsonify(m)
@@ -65,14 +65,16 @@ def all():
 
 def find_in_db(q):
   #Denne må antageligvis endres
-  myclient = pymongo.MongoClient("mongodb://mongodb-docker:27017/")
+  #myclient = pymongo.MongoClient("mongodb://autoenum-mongodb:27018/")
+  myclient = pymongo.MongoClient("mongodb://autoenum-mongodb:27017/")
+
   mydb = myclient["mydb"]
   mycol = mydb["scans"]
 
   response = {}
   result = mycol.find(q)
-
   index = 0
+
   for doc in result:
     outer_key = "HostObject-" + str(index)
     #Removes id key:value to make it valid JSON

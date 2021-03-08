@@ -11,12 +11,11 @@ import argparse
 import logging
 import pymongo
 import ast #Testing only
-
-
-DBLINK = 'mongodb://localhost:27017/'
+DBLINK = 'mongodb://localhost:27018/'
+#DBLINK = 'mongodb://autoenum_mongodb:27018/'
 OUTPUT = 'output.json'
-TCP_FILE = 'tcp.json'
-UDP_FILE = 'udp.json'
+#TCP_FILE = 'tcp.json'
+#UDP_FILE = 'udp.json'
 TARGETFILE = "target.txt"
 LOG_FORMAT = "%(name)s %(asctime)s - %(message)s"
 FILENAME = "log.txt"
