@@ -4,7 +4,6 @@ import socket
 import sys
 import os
 from datetime import datetime
-import sslgrab as sgrab #Our sslgrab.py
 import cve_lookup
 import time
 import imgkit
@@ -158,13 +157,21 @@ def merge_results(t, u, start):
   #Remove
 
   for i in t:
-    logging.debug(i)
-    logging.debug(t[i])
-    logging.debug(t[i]['osmatch'])
     os = t[i]['osmatch']
     t_ports = t[i]['ports']
     u_ports = u[i]['ports']
     ports = t_ports + u_ports
+
+    #OS CPE Ny kode start:
+    for j in t[i]['osmatch']:
+      if 'cpe' in j:
+        if j['cpe']:
+          oscve = []
+          oscpe = j['cpe']
+          oscve = cve_lookup.find_cve(oscpe)
+          logging.debug(oscve)
+          j['cve'] = oscve
+    #Ny kode slutt
 
     for port in ports:
       cve = []
@@ -181,8 +188,6 @@ def merge_results(t, u, start):
     state = t[i]['state']
     stats = {'scandate': startdate, 'scantime': starttime}
 
-    #host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
-    #sslc = {}
     host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
     insert_db(host)
     #print("\n\n\n")
@@ -219,13 +224,15 @@ if __name__=="__main__":
   logging.debug('[SCRIPT] started')
 
   #MAIN:
-  '''
   has_target()
   exclude_self()
   perform_host_discovery()
   result = perform_portscan()
   result_tcp = perform_tcp_scan()
   result_udp = perform_udp_scan()
+
+  '''
+  #For testing:
   f = open("tcp.json", "w")
   f.write(str(result_tcp))
   f.close()
@@ -233,7 +240,7 @@ if __name__=="__main__":
   f = open("udp.json", "w")
   f.write(str(result_udp))
   f.close()
-
+  '''
   '''
   #Testing
   with open('tcp.json') as f:
@@ -249,6 +256,8 @@ if __name__=="__main__":
   #print(type(result_udp))
 
   #print(result)
+  '''
+
   '''
   #Stage 4
   if resp == 1:
