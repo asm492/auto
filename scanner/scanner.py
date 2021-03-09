@@ -5,17 +5,16 @@ import sys
 import os
 from datetime import datetime
 import sslgrab as sgrab #Our sslgrab.py
+import cve_lookup
 import time
 import imgkit
 import argparse
 import logging
 import pymongo
 import ast #Testing only
+
 DBLINK = 'mongodb://localhost:27018/'
 #DBLINK = 'mongodb://autoenum_mongodb:27018/'
-OUTPUT = 'output.json'
-#TCP_FILE = 'tcp.json'
-#UDP_FILE = 'udp.json'
 TARGETFILE = "target.txt"
 LOG_FORMAT = "%(name)s %(asctime)s - %(message)s"
 FILENAME = "log.txt"
@@ -168,10 +167,15 @@ def merge_results(t, u, start):
     ports = t_ports + u_ports
 
     for port in ports:
+      cve = []
       for script in port['scripts']:
         s = script['data']
         s.pop(0, None)
-
+      if 'cpe' in port:
+        if 'cpe' in port['cpe'][0]:
+          cpe = port['cpe'][0]['cpe']
+          cve = cve_lookup.find_cve(cpe)
+          port['cpe'][0]['cve'] = cve
     hostname = t[i]['hostname']
     macaddress = t[i]['macaddress']
     state = t[i]['state']
@@ -179,19 +183,10 @@ def merge_results(t, u, start):
 
     #host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
     #sslc = {}
-    '''
-    for port in ports:
-      port['scripts'].pop('data')
-      print(port)
-    '''
-    '''
-    for p in t_ports:
-      if p['portid'] == "443":
-        host['ssl'] = sgrab.take_sslgrab(i)
-        print(host['ssl'])
-    '''
     host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
     insert_db(host)
+    #print("\n\n\n")
+    #print(host)
 
   logging.debug("[MERGE RESULTS] done")
 
@@ -224,14 +219,13 @@ if __name__=="__main__":
   logging.debug('[SCRIPT] started')
 
   #MAIN:
-
+  '''
   has_target()
   exclude_self()
   perform_host_discovery()
   result = perform_portscan()
   result_tcp = perform_tcp_scan()
   result_udp = perform_udp_scan()
-  '''
   f = open("tcp.json", "w")
   f.write(str(result_tcp))
   f.close()
@@ -240,8 +234,7 @@ if __name__=="__main__":
   f.write(str(result_udp))
   f.close()
 
-
-
+  '''
   #Testing
   with open('tcp.json') as f:
     data = f.read()
@@ -256,7 +249,7 @@ if __name__=="__main__":
   #print(type(result_udp))
 
   #print(result)
-
+  '''
   #Stage 4
   if resp == 1:
     logging.debug('[SCREENGRABS] FAILED!')
@@ -264,5 +257,6 @@ if __name__=="__main__":
     logging.debug('[SCREENGRABS] taken')
   '''
 
+  # print(result_tcp)
   merge_results(result_tcp, result_udp, now)
   logging.debug('[SCRIPT] done')
