@@ -30,6 +30,14 @@ services:
       - autoenum-network
     volumes:
       - "screengrab-volume:/pictures"
+  autoenum-webgui:
+    container_name: autoenum-webgui
+    restart: always
+    build: ./website
+    ports:
+      - '8080:8080'
+    networks:
+      - 'autoenum-network'
   cve_search:
     image: cve_search
     build:

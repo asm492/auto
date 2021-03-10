@@ -1,12 +1,22 @@
 {
-    "name": "docker_web_app",
-    "version": "1.0.0",
-    "description": "Node.js on Docker",
-    "main": "server.js",
-    "scripts": {
-      "start": "node server.js"
-    },
-    "dependencies": {
-      "express": "^4.16.1"
-    }
+  "name": "autoenum-webgui",
+  "version": "1.0.0",
+  "description": "Webgui for Autoenum",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asm492/auto.git"
+  },
+  "author": "ASM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asm492/auto/issues"
+  },
+  "homepage": "https://github.com/asm492/auto#readme",
+  "dependencies": {
+    "express": "^4.17.1"
   }
+}
