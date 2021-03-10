@@ -3,6 +3,9 @@ import json
 import socket
 import sys
 import os
+import requests
+import requests.packages
+import urllib3
 from datetime import datetime
 import cve_lookup
 import time
@@ -143,6 +146,26 @@ def find_ssl(res):
   #screengrab_list.close()
   logging.debug('[FIND WEBPAGE] done')
 
+def take_screengrab(ip):
+  url = 'http://localhost:3000/takescreengrab/'
+  url += ip
+  urllib3.disable_warnings()
+  requests.packages.urllib3.disable_warnings()
+  response = ''
+  r = "0"
+  try:
+    resp = requests.get(url, verify=False, timeout=3).json()
+  except requests.exceptions.HTTPError as errorHTTP:
+    logging.debug("[SCREENGRAB] Http Error: ",errorHTTP)
+  except requests.exceptions.ConnectionError as errorConnection:
+    logging.debug("[SCREENGRAB] Error Connecting: ",errorConnection)
+  except requests.exceptions.Timeout as errorTimeout:
+    logging.debug("[SCREENGRAB] Timeout Error: ",errorTimeout)
+  except requests.exceptions.RequestException as errorRequest:
+    logging.debug("[SCREENGRAB] ERROR: ", errorRequest)
+
+  return resp
+
 def merge_results(t, u, start):
   ##This function reorganizes output
   #from nmap to to have data sorted
@@ -183,6 +206,11 @@ def merge_results(t, u, start):
           cpe = port['cpe'][0]['cpe']
           cve = cve_lookup.find_cve(cpe)
           port['cpe'][0]['cve'] = cve
+      #Ny kode
+      if port['portid'] == "80":
+        screengrab = take_screengrab(i)
+        if 'Filename' in screengrab:
+          port['screengrab'] = screengrab
     hostname = t[i]['hostname']
     macaddress = t[i]['macaddress']
     state = t[i]['state']
@@ -222,7 +250,6 @@ if __name__=="__main__":
 
   logging.basicConfig(level = level, format = LOG_FORMAT, handlers = handlers)
   logging.debug('[SCRIPT] started')
-
   #MAIN:
   has_target()
   exclude_self()
@@ -230,7 +257,6 @@ if __name__=="__main__":
   result = perform_portscan()
   result_tcp = perform_tcp_scan()
   result_udp = perform_udp_scan()
-
   '''
   #For testing:
   f = open("tcp.json", "w")
@@ -240,8 +266,6 @@ if __name__=="__main__":
   f = open("udp.json", "w")
   f.write(str(result_udp))
   f.close()
-  '''
-  '''
   #Testing
   with open('tcp.json') as f:
     data = f.read()
@@ -256,14 +280,6 @@ if __name__=="__main__":
   #print(type(result_udp))
 
   #print(result)
-  '''
-
-  '''
-  #Stage 4
-  if resp == 1:
-    logging.debug('[SCREENGRABS] FAILED!')
-  else:
-    logging.debug('[SCREENGRABS] taken')
   '''
 
   # print(result_tcp)

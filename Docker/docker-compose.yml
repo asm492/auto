@@ -8,6 +8,8 @@ services:
       - '5001:5000'
     networks:
       - autoenum-network
+    volumes:
+      - "screengrab-volume:/pictures"
   autoenum-mongodb:
     container_name: autoenum-mongodb
     restart: always
@@ -18,6 +20,16 @@ services:
       - "mongo-docker-volume:/data/db"
     networks:
       - autoenum-network
+  autoenum-screengrab:
+    container_name: autoenum-screengrab
+    restart: always
+    build: ./screengrab
+    ports:
+      - '3000:3000'
+    networks:
+      - autoenum-network
+    volumes:
+      - "screengrab-volume:/pictures"
   cve_search:
     image: cve_search
     build:
@@ -65,6 +77,8 @@ services:
       - autoenum-network
 volumes:
   mongo-docker-volume:
+    external: false
+  screengrab-volume:
     external: false
 networks:
   autoenum-network:

@@ -15,7 +15,6 @@ def find_cve(cpe):
   urllib3.disable_warnings()
   requests.packages.urllib3.disable_warnings()
   cve = []
-  #resp = requests.get('https://10.212.139.228:443/api/cvefor/cpe:/a:apache:http_server:2.2.15', verify=False)
   try:
     resp = requests.get(url, verify=False, timeout=5)
   except requests.exceptions.HTTPError as errorHTTP:

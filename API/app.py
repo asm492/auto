@@ -63,6 +63,20 @@ def all():
   query = {}
   return find_in_db(query)
 
+@app.route("/deleteall". methods=['GET'])
+def deleteall()
+  myclient = pymongo.MongoClient("mongodb://mongoDB:27018/")
+  mydb = myclient["mydb"]
+  mycol = mydb["scans"]
+  x = mycol.delete_many({})
+  number = x.deleted_count
+  res = { 'Deleted ': number }
+  return jsonify(res)
+
+
+
+print(x.deleted_count, " documents deleted.")
+
 def find_in_db(q):
   #Denne må antageligvis endres
   myclient = pymongo.MongoClient("mongodb://mongoDB:27018/")
