@@ -1,7 +1,7 @@
 const hostsRouter = require('./routes/hosts')
 const express = require('express')
 const app = express()
-
+const mongoose = require('mongoose')
 const port = 8080;
 
 app.set('view engine', 'ejs')
