@@ -5,11 +5,25 @@ const app = express()
 const port = 8080;
 
 app.set('view engine', 'ejs')
-app.use(hostsRouter)
+app.use(express.urlencoded({ extended : false }))
 app.get('/', function (req, res){
     //Link til views/index.ejs
-    res.render('index', {text: 'hosts'})
+    const hosts = [{
+      title: '192.168.1.6',
+      createdAt: new Date(),
+      description: 'Test host description'
+    },
+    {
+      title: '192.168.1.5',
+      createdAt: new Date(),
+      description: 'Second host'
+
+     }]
+    res.render('index', {hosts: hosts})
 });
+
+app.use('/hosts', hostsRouter)
+
 
 app.listen(port, () =>{
     console.log('Example app listening at http://localhost:${port}')
