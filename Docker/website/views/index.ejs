@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Autoenum webGUI</title>
+	
+	<style>
+/* Style the body */
+body {
+  font-family: Arial;
+  margin: 0;
+}
+
+/* Header/Logo Title */
+.header {
+  padding: 15px;
+  text-align: left;
+  background: #c70014;
+  color: white;
+  font-size: 20px;
+}
+
+/* Page Content */
+.content {padding:20px;}
+  </style>
+</head>
+<body>
+	<div class="header">
+		<h1>Autoenum</h1>
+  <!--<p>My supercool header</p> -->
+  <!--<img src="Logo.png" alt="logo" style="width:900px;height:200px;vertical-align:top">-->
+	</div>
+</head>
+<body>
+   <div class="container">
+     <h1 class="mb-2">Hosts</h1>
+     <a href="/hosts" class="btn btn-success">Hosts</a>
+     <% hosts.forEach(host => { %>
+       <div class="card mt-3">
+         <div class="card-body">
+           <h4 class="card-title"><%= host.title %></h4>
+           <div class="card-subtitle text-muted mb-2">
+             <%= host.createdAt.toLocaleDateString() %>
+           </div>
+         </div>
+       </div>
+     <% }) %>
+   </div>
+</body>
+</html>
