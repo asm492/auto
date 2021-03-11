@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const hostsRouter = require('./routes/hosts')
 const express = require('express')
 const app = express()
@@ -13,19 +14,10 @@ app.set('view engine', 'ejs')
 
 app.get('/', function (req, res){
     //Link til views/index.ejs
-    const hosts = [{
-      title: '192.168.1.6',
-      createdAt: new Date(),
-      description: 'Test host description'
-    },
-    {
-      title: '192.168.1.5',
-      createdAt: new Date(),
-      description: 'Second host'
-
-     }]
     res.render('index', {hosts: hosts})
 });
+
+app.get('/all')
 
 app.use('/hosts', hostsRouter)
 

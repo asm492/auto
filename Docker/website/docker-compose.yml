@@ -15,7 +15,7 @@ services:
     restart: always
     build: .
     ports:
-      - '8080:8080'
+      - '27018:27017'
     networks:
       - autoenum-network
 volumes:
