@@ -1,12 +1,14 @@
+const hostsRouter = require('./routes/hosts')
 const express = require('express')
 const app = express()
 
 const port = 8080;
 
 app.set('view engine', 'ejs')
-
+app.use(hostsRouter)
 app.get('/', function (req, res){
-    res.render('index!')
+    //Link til views/index.ejs
+    res.render('index', {text: 'hosts'})
 });
 
 app.listen(port, () =>{
