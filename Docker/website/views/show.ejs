@@ -37,20 +37,11 @@ body {
 </head>
 <body>
    <div class="container">
-     <h1 class="mb-2">Hosts</h1>
-     <a href="/hosts" class="btn btn-success">Hosts</a>
-     <% hosts.forEach(host => { %>
-       <div class="card mt-3">
-         <div class="card-body">
-           <h4 class="card-title"><%= host.title %></h4>
-           <div class="card-subtitle text-muted mb-2">
-             <%= host.createdAt.toLocaleDateString() %>
-           </div>
-           <a href="hosts/<%= host.id %>"
-            class="btn btn-primary">Read more</a>
-         </div>
-       </div>
-     <% }) %>
-   </div>
+        <h1 class="mb-2"><%= host.title %></h1>
+        <div>
+             <%= host.createdAt.toLocaleDateString()
+        </div>
+        <a href="/" class="btn btn-success">Back</a>
+    </div>
 </body>
 </html>
