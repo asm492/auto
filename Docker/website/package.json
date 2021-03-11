@@ -4,8 +4,7 @@
   "description": "Website autoenum",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.17.1",
-    "mongoose": "^5.11.19"
+    "express": "^4.17.1"
   },
   "devDependencies": {},
   "scripts": {
