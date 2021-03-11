@@ -1,22 +1,23 @@
 {
-  "name": "autoenum-webgui",
+  "name": "auto",
   "version": "1.0.0",
-  "description": "Webgui for Autoenum",
-  "main": "index.js",
+  "description": "Website autoenum",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/asm492/auto.git"
   },
-  "author": "ASM",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/asm492/auto/issues"
   },
-  "homepage": "https://github.com/asm492/auto#readme",
-  "dependencies": {
-    "express": "^4.17.1"
-  }
+  "homepage": "https://github.com/asm492/auto#readme"
 }
