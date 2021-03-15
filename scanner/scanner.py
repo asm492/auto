@@ -9,17 +9,15 @@ import urllib3
 from datetime import datetime
 import cve_lookup
 import time
-import imgkit
 import argparse
 import logging
 import pymongo
 import ast #Testing only
 
 DBLINK = 'mongodb://localhost:27018/'
-#DBLINK = 'mongodb://autoenum_mongodb:27018/'
 TARGETFILE = "target.txt"
 LOG_FORMAT = "%(name)s %(asctime)s - %(message)s"
-FILENAME = "log.txt"
+FILENAME = "Scanner.log"
 
 def exclude_self():
         host_ip = ([l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0])
@@ -151,6 +149,7 @@ def take_screengrab(ip):
   url += ip
   urllib3.disable_warnings()
   requests.packages.urllib3.disable_warnings()
+  logging.debug(url)
   response = ''
   r = "0"
   try:
@@ -185,7 +184,7 @@ def merge_results(t, u, start):
     u_ports = u[i]['ports']
     ports = t_ports + u_ports
 
-    #OS CPE Ny kode start:
+    #CVEs:
     for j in t[i]['osmatch']:
       if 'cpe' in j:
         if j['cpe']:
@@ -194,8 +193,7 @@ def merge_results(t, u, start):
           oscve = cve_lookup.find_cve(oscpe)
           logging.debug(oscve)
           j['cve'] = oscve
-    #Ny kode slutt
-
+    
     for port in ports:
       cve = []
       for script in port['scripts']:
@@ -206,7 +204,7 @@ def merge_results(t, u, start):
           cpe = port['cpe'][0]['cpe']
           cve = cve_lookup.find_cve(cpe)
           port['cpe'][0]['cve'] = cve
-      #Ny kode
+      #Screengrab
       if port['portid'] == "80":
         screengrab = take_screengrab(i)
         if 'Filename' in screengrab:
@@ -240,6 +238,8 @@ if __name__=="__main__":
   #For verbose logging and debug:
   parser = argparse.ArgumentParser(description="USAGE: python3 scanner.py [options]")
   parser.add_argument("-v", "--verbose", help="Enable output to screen, no output by default", action="store_true")
+  parser.add_argument("-t", "--test", help="Enable test mode. Does not perform a scan, reads from attached file", action="store_true")
+  parser.add_argument("-w", "--write", help="Writes result to separate tcp.json and udp.json files", action="store_true")
   args = parser.parse_args()
   level    = logging.DEBUG
   handlers = [logging.FileHandler(FILENAME)]
@@ -251,37 +251,34 @@ if __name__=="__main__":
   logging.basicConfig(level = level, format = LOG_FORMAT, handlers = handlers)
   logging.debug('[SCRIPT] started')
   #MAIN:
-  has_target()
-  exclude_self()
-  perform_host_discovery()
-  result = perform_portscan()
-  result_tcp = perform_tcp_scan()
-  result_udp = perform_udp_scan()
-  '''
-  #For testing:
-  f = open("tcp.json", "w")
-  f.write(str(result_tcp))
-  f.close()
+  if not args.test:
+    has_target()
+    exclude_self()
+    perform_host_discovery()
+    result = perform_portscan()
+    result_tcp = perform_tcp_scan()
+    result_udp = perform_udp_scan()
 
-  f = open("udp.json", "w")
-  f.write(str(result_udp))
-  f.close()
-  #Testing
-  with open('tcp.json') as f:
-    data = f.read()
-  result_tcp = ast.literal_eval(data)
-  #print(result_tcp)
-  #print(type(result_tcp))
+  if args.write:
+    #For testing:
+    f = open("tcp.json", "w")
+    f.write(str(result_tcp))
+    f.close()
 
-  with open('udp.json') as f:
-    data = f.read()
-  result_udp = ast.literal_eval(data)
-  #print(result_udp)
-  #print(type(result_udp))
+    f = open("udp.json", "w")
+    f.write(str(result_udp))
+    f.close()
 
-  #print(result)
-  '''
+  if args.test:
+    logging.debug("*****[TEST MODE ENABLED]*****")
+    with open('tcp.json') as f:
+      data = f.read()
+    result_tcp = ast.literal_eval(data)
 
-  # print(result_tcp)
+    with open('udp.json') as f:
+      data = f.read()
+    result_udp = ast.literal_eval(data)
+
+
   merge_results(result_tcp, result_udp, now)
   logging.debug('[SCRIPT] done')
