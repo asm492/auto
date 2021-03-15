@@ -1,5 +1,4 @@
 #!/bin/bash -v
-
 export DEBIAN_FRONTEND=noninteractive
 
 sudo apt update -y
@@ -24,7 +23,7 @@ ansible-galaxy collection install community.windows
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Python, pip, ansible, pywinrm er ferdig"
 
 #For MongoDB:
-sudo apt install -y mongodb
+#sudo apt install -y mongodb
 pip3 install pymongo
 
 #Docker and Docker compose
@@ -48,12 +47,7 @@ sudo apt install docker-compose -y
 sudo timedatectl set-timezone Europe/Oslo
 
 sudo pip3 install python3-nmap
-sudo pip3 install mysql-connector-python
 
-#For screengrabs:
-discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Python nmap ferdig. Installerer imgkit og wkhtmltopdf"
-sudo pip3 install imgkit
-sudo apt-get install wkhtmltopdf -y
 
 cat <<EOF > /etc/ansible/key
 -----BEGIN RSA PRIVATE KEY-----
