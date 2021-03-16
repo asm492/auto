@@ -1,0 +1,26 @@
+version: "3.2"
+services:
+  autoenum-mongodb:
+    container_name: autoenum-mongodb
+    restart: always
+    image: mongo
+    ports:
+      - '27018:27017'
+    volumes:
+      - "mongo-docker-volume:/data/db"
+    networks:
+      - autoenum-network
+  autoenum-webgui:
+    container_name: autoenum-webgui
+    restart: always
+    build: .
+    ports:
+      - '8080:8080'
+    networks:
+      - autoenum-network
+volumes:
+  mongo-docker-volume:
+    external: false
+networks:
+  autoenum-network:
+    driver: bridge

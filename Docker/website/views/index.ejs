@@ -42,10 +42,7 @@ body {
      <% hosts.forEach(host => { %>
        <div class="card mt-3">
          <div class="card-body">
-           <h4 class="card-title"><%= host.title %></h4>
-           <div class="card-subtitle text-muted mb-2">
-             <%= host.createdAt.toLocaleDateString() %>
-           </div>
+           <h4 class="card-title"><%= host.ip %></h4>
          </div>
        </div>
      <% }) %>

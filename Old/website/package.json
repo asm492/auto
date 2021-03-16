@@ -1,0 +1,25 @@
+{
+  "name": "auto",
+  "version": "1.0.0",
+  "description": "Website autoenum",
+  "main": "server.js",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.20"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asm492/auto.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asm492/auto/issues"
+  },
+  "homepage": "https://github.com/asm492/auto#readme"
+}

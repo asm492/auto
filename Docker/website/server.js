@@ -1,25 +1,38 @@
 const hostsRouter = require('./routes/hosts')
 const express = require('express')
 const app = express()
+const Scan = require('./models/scan')
 const mongoose = require('mongoose')
 const port = 8080;
 
+const MongoClient = require('mongodb').MongoClient;
+const { urlencoded } = require('body-parser')
+
+//REMEBER TO CHANGE WHEN RUNNING IN OPENSTACK
+const uri = "mongodb+srv://user3:6p@biBWhJF@Fs@Z@cluster0.yqxoa.mongodb.net/mydb?retryWrites=true&w=majority"
+//const uri = "mongodb://autoenum-mongodb:27017/"
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 app.set('view engine', 'ejs')
 
-app.get('/', function (req, res){
+app.get('/', async (req, res) =>{
     //Link til views/index.ejs
-    const hosts = [{
-      title: '192.168.1.6',
-      createdAt: new Date(),
-      description: 'Test host description'
-    },
-    {
-      title: '192.168.1.5',
-      createdAt: new Date(),
-      description: 'Second host'
-
-     }]
-    res.render('index', {hosts: hosts})
+    try{
+      await client.connect();
+      const database = client.db('mydb');
+      const collection = database.collection('scans');
+      //var q = {ip:"192.168.1.5"}
+      var hosts = [];
+      hosts = await collection.find().toArray();
+      console.log(hosts)
+      res.render('index', {hosts: hosts});
+      
+    }catch(err){
+      console.log(err)
+    }finally{
+      await client.close();
+    }
+    
 });
 
 app.use('/hosts', hostsRouter)
