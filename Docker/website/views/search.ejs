@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ("./header.ejs") %>
+</head>
+<body>
+   <div class="container">
+        <div class="card mt-3">
+            <div class="card-body">
+                <h4 class="card-title">Search</h4>
+                <div class="card-subtitle text-muted mb-2">
+                    Write one search query...
+                </div>
+                
+                
+                <div class="card mt-3">
+                    <div class="card-body">
+                    <form action="/hosts/getsearchresults/ip" method="POST">
+                        <label for="ip"><b>IP:</b></label><br>
+                      <input type="text" placeholder="192.168.1.5" id="search_query" name="search_query"><br><br>
+                      <button type="submit">Search</button>
+                    </form>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-body">
+                    <form action="/hosts/getsearchresults/mac" method="POST">
+                        <label for="ip"><b>MAC:</b></label><br>
+                        <input type="text" placeholder="FA:16:3E:79:CF:20" id="search_query" name="search_query"><br><br>
+                        <button type="submit">Search</button>
+                      </form>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                      <form action="/hosts/getsearchresults/cpe" method="POST">
+                        <label for="ip"><b>CPE:</b></label><br>
+                        <input type="text" placeholder="cpe:/o:microsoft:windows" id="search_query" name="search_query"><br><br>
+                        <button type="submit">Search</button>
+                      </form>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                      <form action="/hosts/getsearchresults/date" method="POST">
+                        <label for="ip"><b>Date:</b></label><br>
+                        <input type="text" placeholder="YYYYMMDD" id="search_query" name="search_query"><br><br>
+                        <button type="submit">Search</button>
+                      </form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+   </div>
+</body>
+</html>

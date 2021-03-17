@@ -7,6 +7,7 @@ const port = 8080;
 
 const MongoClient = require('mongodb').MongoClient;
 const { urlencoded } = require('body-parser')
+app.use(express.urlencoded({ extended: false }))
 
 //REMEBER TO CHANGE WHEN RUNNING IN OPENSTACK
 const uri = "mongodb+srv://user3:6p@biBWhJF@Fs@Z@cluster0.yqxoa.mongodb.net/mydb?retryWrites=true&w=majority"

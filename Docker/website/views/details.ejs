@@ -1,60 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Autoenum webGUI</title>
-	
-	<style>
-/* Style the body */
-body {
-  font-family: Arial;
-  margin: 0;
-}
-
-/* Header/Logo Title */
-.header {
-  padding: 15px;
-  text-align: left;
-  background: #c70014;
-  color: white;
-  font-size: 20px;
-}
-
-/* Page Content */
-.content {padding:20px;}
-  </style>
-</head>
-<body>
-	<div class="header">
-		<h1>Autoenum</h1>
-  <!--<p>My supercool header</p> -->
-  <!--<img src="Logo.png" alt="logo" style="width:900px;height:200px;vertical-align:top">-->
-  <div style="display: flex; justify-content: flex-end" class="input-group">
-    
-    <button type="button" class="btn btn-primary btn-lg">
-      <i class="fas fa-search">Search</i>
-    </button>
-  </div>
-
-
-	</div>
-
-
-
-
-
+    <%- include ("./header.ejs") %>
 </head>
 <body>
    <div class="container">
      <h1 class="mb-2">Host details</h1>
       <a href="/hosts/list_view" class="btn"><i class="fa fa-bars"></i> List view</a>
- 
+      <a href="/hosts/getjson/<%= host._id %>" class="btn"><i class="fa fa-code"></i> JSON</a>
        <div class="card mt-3">
          <div class="card-body">
             <h4 class="card-title"><%= host._id %></h4>
@@ -73,7 +26,7 @@ body {
                     <div>
                     <b>Scan time:</b>
                     <%= host.scanstats['scantime'] %>
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -88,9 +41,19 @@ body {
                     <b>MAC:</b>
                     <%= host.macaddress['addr'] %>
                     </div>
+                    <div>
                     <b>Hostname:</b>
                     <%= host.hostname[0]['name'] %>
                     </div>
+                    <div>
+                        <b>State:</b>
+                        <%= host.state['state'] %>
+                    </div>
+                    <div>
+                        <b>State reason:</b>
+                        <%= host.state['reason'] %>
+                    </div>
+
                 </div>
             </div>
 
@@ -118,13 +81,16 @@ body {
             <ul>
               <% host.ports.forEach(port => { %>
                  <li>
-                  <%= port['portid'] %>
+                  <b><%= port['portid'] %></b>
                   <%= port['protocol'] %>
                   <%= port['service']['name'] %>
                   <%= port['service']['product'] %>
                   <%= port['service']['version'] %>
                   <%= port['service']['extrainfo'] %>
-                </li>
+                  <b><%= port['state'] %></b>
+
+
+                 </li>
             <% }) %>
             </ul>
                 </div>
@@ -132,6 +98,32 @@ body {
 
         </div>
        </div>
+
+        <!--
+       <div class="card mt-3">
+        <div class="card-body">
+            <p class="card-text"><b>Screengrabs:</b></p>
+
+        
+            <div class="card" style="width: 18rem;">
+                <img src="./Logo.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+              </div>
+              -->
+
+
+       
+        </div>
+  
+
+
+
+        </div>
+    </div>
+        
+       
    
    </div>
 </body>
