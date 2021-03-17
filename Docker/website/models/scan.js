@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 
-var customerSchema = new mongoose.Schema({
+var scanSchema = new mongoose.Schema({
     ip: {
-        type: String,
+        type: String
+    },
+    hostname: {
+        type: Array
     }
 });
+//Todo : Update to host
 module.exports = mongoose.model('Scan', scanSchema);

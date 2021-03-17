@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Autoenum webGUI</title>
+	
+	<style>
+/* Style the body */
+body {
+  font-family: Arial;
+  margin: 0;
+}
+
+/* Header/Logo Title */
+.header {
+  padding: 15px;
+  text-align: left;
+  background: #c70014;
+  color: white;
+  font-size: 20px;
+}
+
+/* Page Content */
+.content {padding:20px;}
+  </style>
+</head>
+<body>
+	<div class="header">
+		<h1>Autoenum</h1>
+  <!--<p>My supercool header</p> -->
+  <!--<img src="Logo.png" alt="logo" style="width:900px;height:200px;vertical-align:top">-->
+            <div style="display: flex; justify-content: flex-end" class="input-group">
+                <button type="button" class="btn btn-primary btn-lg">
+                    <i class="fas fa-search">Search</i>
+                </button>
+            </div>
+	</div>
+</head>
+<body>
+   <div class="container">
+     <h1 class="mb-2">List view</h1>
+      <a href="/hosts" class="btn"><i class="fa fa-bars"></i> Card view</a>
+   </div>
+
+   <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>IP</th>
+            <th>MAC</th>
+            <th>Hostname</th>
+            <th>Scan date</th>
+            <th>Scan time</th>
+            <th>Port</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% hosts.forEach(host => { %>
+            <tr>
+                <td><%= host._id %></td>
+                <td><%= host.ip %></td>
+                <td><%= host.macaddress['addr'] %></td>
+                <td><%= host.hostname[0]['name'] %></td>
+                <td><%= host.scanstats['scandate'] %></td>
+                <td><%= host.scanstats['scantime'] %></td>
+                <td><% host.ports.forEach(port => { %>
+                    <%= port['service']['product'] %>
+                    <%- "," %>
+                  <% }) %></td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+</body>
+</html>

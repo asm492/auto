@@ -52,35 +52,72 @@ body {
 </head>
 <body>
    <div class="container">
-     <h1 class="mb-2">Hosts</h1>
+     <h1 class="mb-2">Host details</h1>
       <a href="/hosts/list_view" class="btn"><i class="fa fa-bars"></i> List view</a>
-     <% hosts.forEach(host => { %>
+ 
        <div class="card mt-3">
          <div class="card-body">
-            <h4 class="card-title"><%= host.ip %></h4>
-            <div class="card-subtitle text-muted mb-2">
-              <%= host._id %>
-              <%= host.scanstats['scandate'] %>
-              <%= host.scanstats['scantime'] %>
-            </div>
-            <p class="card-text"><b>MAC address:</b></p>
-            <p class="card-text"><%= host.macaddress['addr'] %></p>
+            <h4 class="card-title"><%= host._id %></h4>
             
-            <p class="card-text"><b>OS:</b></p>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <p class="card-text"><b>Scan details:</b></p>
+                    <div>
+                    <b>Host ID:</b>
+                    <%= host._id %>
+                    </div>
+                    <div>
+                    <b>Scan date:</b>
+                    <%= host.scanstats['scandate'] %>
+                    </div>
+                    <div>
+                    <b>Scan time:</b>
+                    <%= host.scanstats['scantime'] %>
+                </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-body">
+                    <p class="card-text"><b>Host details:</b></p>
+                    <div>
+                    <b>IP address:</b>
+                    <%= host.ip %>
+                    </div>
+                    <div>
+                    <b>MAC:</b>
+                    <%= host.macaddress['addr'] %>
+                    </div>
+                    <b>Hostname:</b>
+                    <%= host.hostname[0]['name'] %>
+                    </div>
+                </div>
+            </div>
+
+
+            
+            <div class="card mt-3">
+                <div class="card-body">
+                <p class="card-text"><b>OS:</b></p>
+            <ul>
             <% host['osmatch'].forEach(match => { %>
-            <% if (match['accuracy'] == "100") { %>
               <li>
                 <%= match['name'] %>
+                <b>Accuracy: </b>
+                <%= match['accuracy'] %>
+                <b>%</b>
               </li>
-            <% } %>
-            <% }) %>
-            
+              <% }) %>
+            </ul>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-body">
             <p class="card-text"><b>Ports:</b></p>
             <ul>
               <% host.ports.forEach(port => { %>
-              
-                <% if (port['state'] == "open") { %>
-                  <li>
+                 <li>
                   <%= port['portid'] %>
                   <%= port['protocol'] %>
                   <%= port['service']['name'] %>
@@ -88,14 +125,14 @@ body {
                   <%= port['service']['version'] %>
                   <%= port['service']['extrainfo'] %>
                 </li>
-                <% } %>
             <% }) %>
             </ul>
-            <a href="/hosts/details/6050f17efbd98f66a3f18962" class="btn btn-primary">Details</a>
+                </div>
+            </div>
 
         </div>
        </div>
-     <% }) %>
+   
    </div>
 </body>
 </html>
