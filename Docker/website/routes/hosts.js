@@ -20,6 +20,7 @@ router.get('/', (req, res) => {
 })
 
 
+
 router.get('/list_view', async (req, res)  => {
 
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -59,11 +60,21 @@ router.get('/details/:id', async (req, res)  => {
       console.log(query)
       
       var host = await collection.findOne(query);
-      console.log(host)
-      res.render('./../views/details', {host: host})
+      //console.log(host)
+      var img = ''
+      
+      for(var i = 0; i < host['ports'].length; i++){
+        if('screengrab' in host['ports'][i]){
+          img = host['ports'][i]['screengrab']['Filename']
+        }
+      }
+      
+    
+      
+      res.render('./../views/details', {host: host, image: img})
       
     }catch(err){
-      console.log("Feil" + err)
+      res.send(err)
     }finally{
       await client.close();
     }
@@ -103,6 +114,7 @@ router.get('/getjson/:id', async (req, res)  => {
               
 router.post('/getsearchresults/:type', async function(req, res) {
 
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     //console.log(req)
     
     //console.log(type)
@@ -118,45 +130,42 @@ router.post('/getsearchresults/:type', async function(req, res) {
         case 'ip': q = {ip : query};
         break;
 
-        case 'mac': q = {macaddress : query};
+        //FA:16:3E:EE:50:91
+        case 'mac': q = {"macaddress.addr" : query};
         break;
         
-        //case 'date': q = {scanstats[scandate] : query};
-        //break;
+        //20210315
+        case 'date': q = {"scanstats.scandate" : query};
+        break;
 
-        //case 'cpe': q = {$or [{ports[]}],[{osmatch[0][cpe]}] };
-        //break;
+        //cpe:/o:microsoft:windows_server_2016
+        //cpe:/a:vsftpd:vsftpd:2.3.4
+      
+        case 'cpe': q = { "$or": [ {"osmatch.cpe" : query } , {"ports.cpe.cpe" : query } ] };
+        break;
     }
 
     console.log(q)
+
+
     
-
-    
-    //const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-
-    /*
     try{
       
       await client.connect();
       const database = client.db('mydb');
       const collection = database.collection('scans');
-      var obj_id = new ObjectID(hostId);
-      var query = {'_id': obj_id}
-      console.log(query)
-      
-      var host = []
-      host = await collection.findOne(query);
-      console.log(host)
-      return res.json(host)
-      
+            
+      var hosts = []
+      hosts = await collection.find(q).toArray();     
+      res.render('./../views/searchresults', {hosts: hosts, query: query});
+
     }catch(err){
       console.log("Feil" + err)
       return res(err)
     }finally{
       await client.close();
     }
-    */
+    
 
     
 })

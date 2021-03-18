@@ -24,16 +24,23 @@
     <tbody>
         <% hosts.forEach(host => { %>
             <tr>
-                <td><%= host._id %></td>
+                <td><a href="/hosts/details/<%= host._id %>"><%= host._id %></a></td>
                 <td><%= host.ip %></td>
                 <td><%= host.macaddress['addr'] %></td>
                 <td><%= host.hostname[0]['name'] %></td>
                 <td><%= host.scanstats['scandate'] %></td>
                 <td><%= host.scanstats['scantime'] %></td>
+                
                 <td><% host.ports.forEach(port => { %>
-                    <%= port['service']['product'] %>
-                    <%- "," %>
+                    
+                        <%= port['portid'] %>
+                        <%= port['service']['name'] %>
+                        <%= port['service']['product'] %>
+                        <%= port['service']['version'] %>
+                        <%- "," %>
+                    
                   <% }) %></td>
+                
             </tr>
         <% }) %>
     </tbody>

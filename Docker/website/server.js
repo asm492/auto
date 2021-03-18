@@ -41,6 +41,7 @@ app.get('/', async (req, res) =>{
 app.use('/hosts', hostsRouter)
 
 
+
 app.listen(port, () =>{
     console.log('Example app listening at http://localhost:${port}')
 });

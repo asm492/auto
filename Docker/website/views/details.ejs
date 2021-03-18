@@ -8,10 +8,11 @@
      <h1 class="mb-2">Host details</h1>
       <a href="/hosts/list_view" class="btn"><i class="fa fa-bars"></i> List view</a>
       <a href="/hosts/getjson/<%= host._id %>" class="btn"><i class="fa fa-code"></i> JSON</a>
-       <div class="card mt-3">
+       <div class="card mt-3;">
          <div class="card-body">
             <h4 class="card-title"><%= host._id %></h4>
-            
+
+
             <div class="card mt-3">
                 <div class="card-body">
                     <p class="card-text"><b>Scan details:</b></p>
@@ -99,19 +100,25 @@
         </div>
        </div>
 
-        <!--
        <div class="card mt-3">
         <div class="card-body">
             <p class="card-text"><b>Screengrabs:</b></p>
 
-        
-            <div class="card" style="width: 18rem;">
-                <img src="./Logo.png" class="card-img-top" alt="...">
+            <% if (image) { %>
+            <div class="card" style="width: 18rem">
+                
+                <img src="http://autoenum-api:5000/picture/<%= image %>" class="card-img-top" alt="Failed to get image from API">
+                <h4><%= image %></h4>
                 <div class="card-body">
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <p class="card-text"><%= image %></p>
                 </div>
               </div>
-              -->
+            <% } %>
+
+            
+
+        </div>
+    </div>
 
 
        
