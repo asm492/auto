@@ -10,8 +10,8 @@ const { urlencoded } = require('body-parser')
 app.use(express.urlencoded({ extended: false }))
 
 //REMEBER TO CHANGE WHEN RUNNING IN OPENSTACK
-const uri = "mongodb+srv://user3:6p@biBWhJF@Fs@Z@cluster0.yqxoa.mongodb.net/mydb?retryWrites=true&w=majority"
-//const uri = "mongodb://autoenum-mongodb:27017/"
+//const uri = "mongodb+srv://user3:6p@biBWhJF@Fs@Z@cluster0.yqxoa.mongodb.net/mydb?retryWrites=true&w=majority"
+const uri = "mongodb://autoenum-mongodb:27017/"
 //const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.set('view engine', 'ejs')
@@ -20,7 +20,7 @@ app.get('/', async (req, res) =>{
     //Link til views/index.ejs
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     try{
-      
+
       await client.connect();
       const database = client.db('mydb');
       const collection = database.collection('scans');
@@ -29,13 +29,13 @@ app.get('/', async (req, res) =>{
       hosts = await collection.find().toArray();
       console.log(hosts)
       res.render('index', {hosts: hosts});
-      
+
     }catch(err){
       console.log("Feil" + err)
     }finally{
       await client.close();
     }
-    
+
 });
 
 app.use('/hosts', hostsRouter)

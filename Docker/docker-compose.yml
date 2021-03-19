@@ -2,14 +2,16 @@ version: "3.2"
 services:
   autoenum-api:
     container_name: autoenum-api
+    hostname: autoenum-api
     restart: always
     build: ./api
     ports:
-      - '5001:5000'
+      - '5001:5001'
     networks:
       - autoenum-network
     volumes:
       - "screengrab-volume:/pictures"
+      - "log-volume:/log"
   autoenum-mongodb:
     container_name: autoenum-mongodb
     restart: always
@@ -34,10 +36,12 @@ services:
     container_name: autoenum-webgui
     restart: always
     build: ./website
+    depends_on:
+      - autoenum-api
     ports:
       - '8080:8080'
     networks:
-      - 'autoenum-network'
+      - autoenum-network
   cve_search:
     image: cve_search
     build:
@@ -87,6 +91,8 @@ volumes:
   mongo-docker-volume:
     external: false
   screengrab-volume:
+    external: false
+  log-volume:
     external: false
 networks:
   autoenum-network:

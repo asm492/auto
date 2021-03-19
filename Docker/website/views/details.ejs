@@ -5,14 +5,12 @@
 </head>
 <body>
    <div class="container">
-     <h1 class="mb-2">Host details</h1>
-      <a href="/hosts/list_view" class="btn"><i class="fa fa-bars"></i> List view</a>
-      <a href="/hosts/getjson/<%= host._id %>" class="btn"><i class="fa fa-code"></i> JSON</a>
-       <div class="card mt-3;">
-         <div class="card-body">
-            <h4 class="card-title"><%= host._id %></h4>
-
-
+    <h1 class="mb-2">Host details</h1>
+    <a href="/hosts/list_view" class="btn"><i class="fa fa-bars"></i> List view</a>
+    <a href="/hosts/getjson/<%= host._id %>" class="btn"><i class="fa fa-code"></i> JSON</a>
+    <div class="card mt-3;">
+        <div class="card-body">
+        <h4 class="card-title"><%= host._id %></h4>
             <div class="card mt-3">
                 <div class="card-body">
                     <p class="card-text"><b>Scan details:</b></p>
@@ -40,98 +38,83 @@
                     </div>
                     <div>
                     <b>MAC:</b>
-                    <%= host.macaddress['addr'] %>
+                    <% if (host.macaddress) { %>
+                        <% if (typeof host.macaddress['addr'] !== null) { %>
+                            <%= host.macaddress['addr'] %>
+                        <% } %>
+                    <% } %>
                     </div>
                     <div>
                     <b>Hostname:</b>
-                    <%= host.hostname[0]['name'] %>
+                    <% if (host.hostname) { %>
+                        <% if (host.hostname[0]) { %>
+                            <%= host.hostname[0]['name'] %>
+                        <% } %>
+                    <% } %>
                     </div>
                     <div>
-                        <b>State:</b>
-                        <%= host.state['state'] %>
+                    <b>State:</b>
+                    <%= host.state['state'] %>
                     </div>
                     <div>
-                        <b>State reason:</b>
-                        <%= host.state['reason'] %>
+                    <b>State reason:</b>
+                    <%= host.state['reason'] %>
                     </div>
-
                 </div>
             </div>
 
 
-            
+
             <div class="card mt-3">
                 <div class="card-body">
                 <p class="card-text"><b>OS:</b></p>
-            <ul>
-            <% host['osmatch'].forEach(match => { %>
-              <li>
-                <%= match['name'] %>
-                <b>Accuracy: </b>
-                <%= match['accuracy'] %>
-                <b>%</b>
-              </li>
-              <% }) %>
-            </ul>
+                <ul>
+                <% host['osmatch'].forEach(match => { %>
+                    <li>
+                    <%= match['name'] %>
+                    <b>Accuracy: </b>
+                    <%= match['accuracy'] %>
+                    <b>%</b>
+                    </li>
+                <% }) %>
+                </ul>
                 </div>
             </div>
 
             <div class="card mt-3">
                 <div class="card-body">
-            <p class="card-text"><b>Ports:</b></p>
-            <ul>
-              <% host.ports.forEach(port => { %>
-                 <li>
-                  <b><%= port['portid'] %></b>
-                  <%= port['protocol'] %>
-                  <%= port['service']['name'] %>
-                  <%= port['service']['product'] %>
-                  <%= port['service']['version'] %>
-                  <%= port['service']['extrainfo'] %>
-                  <b><%= port['state'] %></b>
-
-
-                 </li>
-            <% }) %>
-            </ul>
+                <p class="card-text"><b>Ports:</b></p>
+                <ul>
+                <% host.ports.forEach(port => { %>
+                    <li>
+                    <b><%= port['portid'] %></b>
+                    <%= port['protocol'] %>
+                    <%= port['service']['name'] %>
+                    <%= port['service']['product'] %>
+                    <%= port['service']['version'] %>
+                    <%= port['service']['extrainfo'] %>
+                    <b style="color:red"><%= port['state'] %></b>
+                    </li>
+                <% }) %>
+                </ul>
                 </div>
             </div>
 
-        </div>
-       </div>
-
-       <div class="card mt-3">
-        <div class="card-body">
-            <p class="card-text"><b>Screengrabs:</b></p>
-
-            <% if (image) { %>
-            <div class="card" style="width: 18rem">
-                
-                <img src="http://autoenum-api:5000/picture/<%= image %>" class="card-img-top" alt="Failed to get image from API">
-                <h4><%= image %></h4>
+            <div class="card mt-3">
                 <div class="card-body">
-                  <p class="card-text"><%= image %></p>
+                    <p class="card-text"><b>Screengrab:</b></p>
+                    <% if (image) { %>
+                    <div class="card" style="width: 18rem">
+                        <img src="<%= image %>" class="card-img-top" alt="Failed to get image from API">
+                        <div class="card-body">
+                            <a href="<%= viewimage %>"><%= viewimage %></a>
+                        </div>
+                    </div>
+                    <% } %>
                 </div>
-              </div>
-            <% } %>
-
-            
-
-        </div>
+            </div>
+        </div><!--Card body end-->
     </div>
-
-
-       
-        </div>
-  
-
-
-
-        </div>
     </div>
-        
-       
-   
-   </div>
 </body>
 </html>

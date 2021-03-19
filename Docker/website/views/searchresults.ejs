@@ -17,7 +17,7 @@
             </div>
             <p class="card-text"><b>MAC address:</b></p>
             <p class="card-text"><%= host.macaddress['addr'] %></p>
-            
+
             <p class="card-text"><b>OS:</b></p>
             <% host['osmatch'].forEach(match => { %>
             <% if (match['accuracy'] == "100") { %>
@@ -26,11 +26,11 @@
               </li>
             <% } %>
             <% }) %>
-            
+
             <p class="card-text"><b>Ports:</b></p>
             <ul>
               <% host.ports.forEach(port => { %>
-              
+
                 <% if (port['state'] == "open") { %>
                   <li>
                   <%= port['portid'] %>

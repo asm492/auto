@@ -15,9 +15,10 @@ import pymongo
 import ast #Testing only
 
 DBLINK = 'mongodb://localhost:27018/'
+#DBLINK = 'mongodb://autoenum_mongodb:27018/'
 TARGETFILE = "target.txt"
 LOG_FORMAT = "%(name)s %(asctime)s - %(message)s"
-FILENAME = "Scanner.log"
+FILENAME = "/var/lib/docker/volumes/docker_log-volume/_data/Scanner.log"
 
 def exclude_self():
         host_ip = ([l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0])
@@ -121,28 +122,6 @@ def remove_keys(res):
   logging.debug('[KEYS] done')
   return res
 
-def replace(res):
-  #Not in use
-  for k, v in res.items():
-    if v is None:
-      res[k] = "N/A"
-    elif type(v) == type(res):
-      replace(v)
-
-def find_ssl(res):
-  logging.debug('[FIND WEBPAGE] started')
-  #screengrab_list = open("ips_to_screengrab.txt","w")
-
-  r = {}
-  for k in res['ports']:
-    if k['portid'] == '80':
-      logging.debug('\tPossible webpage on: ' + res['ip'])
-      #screengrab_list.write(res['ip'] + "\n")
-    if k ['portid'] == '443':
-      logging.debug('\tPossible SSL on: ' + res['ip'])
-
-  #screengrab_list.close()
-  logging.debug('[FIND WEBPAGE] done')
 
 def take_screengrab(ip):
   url = 'http://localhost:3000/takescreengrab/'
@@ -150,10 +129,10 @@ def take_screengrab(ip):
   urllib3.disable_warnings()
   requests.packages.urllib3.disable_warnings()
   logging.debug(url)
-  response = ''
-  r = "0"
+  #response = ''
+  #r = "0"
   try:
-    resp = requests.get(url, verify=False, timeout=3).json()
+    resp = requests.get(url, verify=False, timeout=1).json()
   except requests.exceptions.HTTPError as errorHTTP:
     logging.debug("[SCREENGRAB] Http Error: ",errorHTTP)
   except requests.exceptions.ConnectionError as errorConnection:
@@ -176,7 +155,6 @@ def merge_results(t, u, start):
   starttime = start.strftime("%H%M%S")
   startdate = start.strftime("%Y%m%d")
 
-  #Remove
 
   for i in t:
     os = t[i]['osmatch']
@@ -184,7 +162,7 @@ def merge_results(t, u, start):
     u_ports = u[i]['ports']
     ports = t_ports + u_ports
 
-    #CVEs:
+    #OS CPE Ny kode start:
     for j in t[i]['osmatch']:
       if 'cpe' in j:
         if j['cpe']:
@@ -193,7 +171,8 @@ def merge_results(t, u, start):
           oscve = cve_lookup.find_cve(oscpe)
           logging.debug(oscve)
           j['cve'] = oscve
-    
+    #Ny kode slutt
+
     for port in ports:
       cve = []
       for script in port['scripts']:
@@ -204,7 +183,7 @@ def merge_results(t, u, start):
           cpe = port['cpe'][0]['cpe']
           cve = cve_lookup.find_cve(cpe)
           port['cpe'][0]['cve'] = cve
-      #Screengrab
+      #Ny kode
       if port['portid'] == "80":
         screengrab = take_screengrab(i)
         if 'Filename' in screengrab:
@@ -216,8 +195,6 @@ def merge_results(t, u, start):
 
     host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
     insert_db(host)
-    #print("\n\n\n")
-    #print(host)
 
   logging.debug("[MERGE RESULTS] done")
 
@@ -273,10 +250,12 @@ if __name__=="__main__":
     logging.debug("*****[TEST MODE ENABLED]*****")
     with open('tcp.json') as f:
       data = f.read()
+    f.close()
     result_tcp = ast.literal_eval(data)
 
     with open('udp.json') as f:
       data = f.read()
+    f.close()
     result_udp = ast.literal_eval(data)
 
 
