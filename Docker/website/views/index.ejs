@@ -15,6 +15,8 @@
               <%= host.scanstats['scandate'] %>
               <%= host.scanstats['scantime'] %>
             </div>
+            <p class="card-text"><b>UUID:</b></p>
+            <p class="card-text"><%= host.uuid %></p>
             <p class="card-text"><b>MAC address:</b></p>
                     <% if (host.macaddress) { %>
                         <% if (host.macaddress['addr']) { %>
@@ -47,7 +49,7 @@
                 <% } %>
             <% }) %>
             </ul>
-            <a href="/hosts/details/<%= host._id %>" class="btn btn-primary">Details</a>
+            <a href="/hosts/details/<%= host.uuid %>" class="btn btn-primary">Details</a>
 
         </div>
        </div>

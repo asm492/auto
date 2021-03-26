@@ -15,6 +15,7 @@ def hello():
   examples['/mac/FA:16:3E:EC:B4:0F'] = "Returns all host object with MAC address FA:16:3E:EC:B4:0F"
   examples['/date/20210302'] = "Returns all host objects scanned March 2nd 2021"
   examples['/viewpicture/644305-20210315-143941.jpg'] = "Returns all host objects scanned March 2nd 2021"
+  examples['/uuid/e76c7d1b-6788-4590-bc39-383739559ed7'] = "Returns the host object with given UUID"
 
   valid = {}
   valid['/'] = "Returns this message"
@@ -23,6 +24,8 @@ def hello():
   valid['/mac/<macaddress>'] = "A MAC address"
   valid['/date/<date>'] = "Date in yyyymmdd format"
   valid['/viewpicture/<filename>'] = "Displays the specified picture if in database"
+  valid['/uuid/<uuid>'] = "UUID"
+  valid['/log'] = "Returns log file (NOT JSON!)"
   valid['/all'] = "Returns ALL documents in DB"
 
   m = {}
@@ -68,6 +71,10 @@ def picture(filename):
 def viewpicture(filename):
   return render_template('display.html', img=filename)
 
+@app.route("/uuid/<string:uuid>", methods=['GET'])
+def uuid(uuid):
+  query = { "uuid" : uuid }
+  return find_in_db(query)
 
 @app.route("/log", methods=['GET'])
 def log():
@@ -93,11 +100,12 @@ def find_in_db(q):
 
   for doc in result:
 
-    hostid = str(doc['_id'])
-    hostid.replace("ObjectId(\"","")
-    hostid.replace("\"","")
-    doc.pop('_id', None)
-    response[hostid] = doc
+    host_object = doc['uuid']
+    #hostid = str(doc['_id'])
+    #hostid.replace("ObjectId(\"","")
+    #hostid.replace("\"","")
+    #doc.pop('_id', None)
+    response[host_object] = doc
 
 
   return jsonify(response)

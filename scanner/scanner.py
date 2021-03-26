@@ -12,6 +12,7 @@ import time
 import argparse
 import logging
 import pymongo
+import uuid
 import ast #Testing only
 
 DBLINK = 'mongodb://localhost:27018/'
@@ -89,18 +90,14 @@ def perform_portscan():
         return res
 
 def perform_tcp_scan():
-  #Aka Stage 2
-  #Tid uten -A på 192.168.1.0/24 og .2.0/24
-  #: 3:10. Med -A: 4:10 og det klikker.
-  # Med O: 3:36
+
   logging.debug('[TCP SCAN] started')
   nmap = nmap3.Nmap()
   result = nmap.nmap_version_detection(None, "-sV -p- --script ssl-cert -vv -O -iL ips_to_scan.txt");
   remove_keys(result)
   print(result)
   logging.debug(result)
-  #old_possible_webpage(result)
-  #print_json_file(result, "tcp.json")
+
   logging.debug('[TCP SCAN] done')
   return result
 
@@ -183,8 +180,7 @@ def merge_results(t, u, start):
           cpe = port['cpe'][0]['cpe']
           cve = cve_lookup.find_cve(cpe)
           port['cpe'][0]['cve'] = cve
-      #Ny kode
-      if port['portid'] == "80":
+      
         screengrab = take_screengrab(i)
         if 'Filename' in screengrab:
           port['screengrab'] = screengrab
@@ -193,7 +189,9 @@ def merge_results(t, u, start):
     state = t[i]['state']
     stats = {'scandate': startdate, 'scantime': starttime}
 
-    host = {'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
+    uid = str(uuid.uuid4())
+    print(uid)
+    host = {'uuid': uid, 'ip' : i, 'hostname': hostname, 'macaddress': macaddress,'osmatch': os, 'ports' : ports, 'state' : state, 'scanstats': stats}
     insert_db(host)
 
   logging.debug("[MERGE RESULTS] done")

@@ -12,7 +12,7 @@
    <table class="table table-striped">
     <thead>
         <tr>
-            <th>ID</th>
+            <th>Host object ID</th>
             <th>IP</th>
             <th>MAC</th>
             <th>Hostname</th>
@@ -24,7 +24,7 @@
     <tbody>
         <% hosts.forEach(host => { %>
             <tr>
-                <td><a href="/hosts/details/<%= host._id %>"><%= host._id %></a></td>
+                <td><a href="/hosts/details/<%= host.uuid %>"><%= host.uuid %></a></td>
                 <td><%= host.ip %></td>
                 <td>
                     <% if (host.macaddress) { %>

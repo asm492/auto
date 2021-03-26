@@ -56,7 +56,7 @@ router.get('/details/:id', async (req, res)  => {
       const database = client.db('mydb');
       const collection = database.collection('scans');
       var obj_id = new ObjectID(hostId);
-      var query = {'_id': obj_id}
+      var query = {'uuid': obj_id}
       console.log(query)
 
       var host = await collection.findOne(query);
@@ -97,7 +97,7 @@ router.get('/getjson/:id', async (req, res)  => {
       const database = client.db('mydb');
       const collection = database.collection('scans');
       var obj_id = new ObjectID(hostId);
-      var query = {'_id': obj_id}
+      var query = {'uuid': obj_id}
       console.log(query)
 
       var host = []

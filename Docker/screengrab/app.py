@@ -32,7 +32,6 @@ def takescreengrab(ip):
 
 
     imgkit_options= { 'quiet' : ''}
-    ip = ip + ":" + "80"
     response = {}
     response['date'] =  date
     response['time'] = time

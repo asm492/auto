@@ -7,16 +7,16 @@
    <div class="container">
     <h1 class="mb-2">Host details</h1>
     <a href="/hosts/list_view" class="btn"><i class="fa fa-bars"></i> List view</a>
-    <a href="/hosts/getjson/<%= host._id %>" class="btn"><i class="fa fa-code"></i> JSON</a>
+    <a href="/hosts/getjson/<%= host.uuid %>" class="btn"><i class="fa fa-code"></i> JSON</a>
     <div class="card mt-3;">
         <div class="card-body">
-        <h4 class="card-title"><%= host._id %></h4>
+        <h4 class="card-title"><%= host.uuid %></h4>
             <div class="card mt-3">
                 <div class="card-body">
                     <p class="card-text"><b>Scan details:</b></p>
                     <div>
-                    <b>Host ID:</b>
-                    <%= host._id %>
+                    <b>Host object ID:</b>
+                    <%= host.uuid %>
                     </div>
                     <div>
                     <b>Scan date:</b>
@@ -107,7 +107,8 @@
                     <div class="card" style="width: 18rem">
                         <img src="<%= image %>" class="card-img-top" alt="Failed to get image from API">
                         <div class="card-body">
-                            <a href="<%= viewimage %>"><%= viewimage %></a>
+                            <!--<a href="<%= viewimage %>" class="btn btn-primary">View</a>-->
+                            <a href="<%= viewimage %>" class="btn btn-primary"><i class="far fa-image"></i> View picture</a>
                         </div>
                     </div>
                     <% } %>
