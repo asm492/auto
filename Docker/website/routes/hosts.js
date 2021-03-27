@@ -42,10 +42,12 @@ router.get('/list_view', async (req, res)  => {
 router.get('/details/:id', async (req, res)  => {
     var img = ''
     var req_url = req.headers.referer
-    console.log(req_url)
+    var cve_url = req_url
+    
     req_url = req_url.replace("8080/","5001/")
 
-
+    cve_url = cve_url.replace("http://", "https://")
+    cve_url = cve_url.replace("8080/", "443/cve/")
 
     var hostId = req.params.id
     console.log(hostId)
@@ -73,7 +75,7 @@ router.get('/details/:id', async (req, res)  => {
       }
 
 
-      res.render('./../views/details', {host: host, image: img, viewimage: view_img})
+      res.render('./../views/details', {host: host, image: img, viewimage: view_img, cve_url :cve_url})
 
     }catch(err){
       res.send(err)
