@@ -12,8 +12,10 @@
         <div class="card-body">
         <h4 class="card-title"><%= host.uuid %></h4>
             <div class="card mt-3">
+                <div class="card-header">
+                    <b>Scan details:</b>
+                  </div>
                 <div class="card-body">
-                    <p class="card-text"><b>Scan details:</b></p>
                     <div>
                     <b>Host object ID:</b>
                     <%= host.uuid %>
@@ -30,8 +32,10 @@
             </div>
 
             <div class="card mt-3">
+                <div class="card-header">
+                    <b>Host details:</b>
+                  </div>
                 <div class="card-body">
-                    <p class="card-text"><b>Host details:</b></p>
                     <div>
                     <b>IP address:</b>
                     <%= host.ip %>
@@ -66,8 +70,10 @@
 
 
             <div class="card mt-3">
+                <div class="card-header">
+                    <b>OS:</b>
+                  </div>
                 <div class="card-body">
-                <p class="card-text"><b>OS:</b></p>
                 <ul>
                 <% host['osmatch'].forEach(match => { %>
                     <li>
@@ -82,8 +88,10 @@
             </div>
 
             <div class="card mt-3">
+                <div class="card-header">
+                    <b>Ports:</b>
+                  </div>
                 <div class="card-body">
-                <p class="card-text"><b>Ports:</b></p>
                 <ul>
                 <% host.ports.forEach(port => { %>
                     <li>
@@ -101,8 +109,10 @@
             </div>
 
             <div class="card mt-3">
+                <div class="card-header">
+                    <b>Screengrab:</b>
+                  </div>
                 <div class="card-body">
-                    <p class="card-text"><b>Screengrab:</b></p>
                     <% if (image) { %>
                     <div class="card" style="width: 18rem">
                         <img src="<%= image %>" class="card-img-top" alt="Failed to get image from API">

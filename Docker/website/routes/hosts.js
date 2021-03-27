@@ -55,8 +55,7 @@ router.get('/details/:id', async (req, res)  => {
       await client.connect();
       const database = client.db('mydb');
       const collection = database.collection('scans');
-      var obj_id = new ObjectID(hostId);
-      var query = {'uuid': obj_id}
+      var query = {'uuid': hostId}
       console.log(query)
 
       var host = await collection.findOne(query);
@@ -96,8 +95,8 @@ router.get('/getjson/:id', async (req, res)  => {
       await client.connect();
       const database = client.db('mydb');
       const collection = database.collection('scans');
-      var obj_id = new ObjectID(hostId);
-      var query = {'uuid': obj_id}
+      
+      var query = {'uuid': hostId}
       console.log(query)
 
       var host = []
@@ -115,29 +114,21 @@ router.get('/getjson/:id', async (req, res)  => {
 
 })
 
-router.post('/getsearchresults/:type', async function(req, res) {
+
+router.post('/search', async function(req, res) {
 
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-    var q = ''
-    var type = req.params.type
-    var query = req.body.search_query
+    var query = req.body.all_query
 
  
-
-    switch(type){
-        case 'ip': q = {ip : query};
-        break;
-
-        case 'mac': q = {"macaddress.addr" : query};
-        break;
-
-        case 'date': q = {"scanstats.scandate" : query};
-        break;
-
-        case 'cpe': q = { "$or": [ {"osmatch.cpe" : query } , {"ports.cpe.cpe" : query } ] };
-        break;
-    }
+    var ip_q = {ip : query};
+    var mac_q = {"macaddress.addr" : query}
+    var date_q = {"scanstats.scandate" : query};
+    var os_cpe_q = {"osmatch.cpe" : query };
+    var ports_cpe_q = {"ports.cpe.cpe" : query };
+    var uuid_q = {"uuid" : query}
+    var q = {"$or": [ip_q, mac_q, date_q, os_cpe_q, ports_cpe_q, uuid_q]}
 
     try{
 

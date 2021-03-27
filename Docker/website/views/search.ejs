@@ -14,44 +14,16 @@
 
 
                 <div class="card mt-3">
-                    <div class="card-body">
-                    <form action="/hosts/getsearchresults/ip" method="POST">
-                        <label for="ip"><b>IP:</b></label><br>
-                      <input type="text" placeholder="192.168.1.5" id="search_query" name="search_query"><br><br>
-                      <button type="submit">Search</button>
-                    </form>
-                    </div>
-                </div>
+                  <div class="card-body">
+                  <form action="/hosts/search" method="POST">
+                      <label for="ip"><b>Search query:</b></label><br>
+                    <input type="text" placeholder="CPE, IP, MAC, UUID or date" id="all_query" name="all_query"><br><br>
+                    <button class="btn btn-primary" type="submit">Search</button>
+                  </form>
+                  </div>
+              </div>
 
-                <div class="card mt-3">
-                    <div class="card-body">
-                    <form action="/hosts/getsearchresults/mac" method="POST">
-                        <label for="ip"><b>MAC:</b></label><br>
-                        <input type="text" placeholder="FA:16:3E:79:CF:20" id="search_query" name="search_query"><br><br>
-                        <button type="submit">Search</button>
-                      </form>
-                    </div>
-                </div>
 
-                <div class="card mt-3">
-                    <div class="card-body">
-                      <form action="/hosts/getsearchresults/cpe" method="POST">
-                        <label for="ip"><b>CPE:</b></label><br>
-                        <input type="text" placeholder="cpe:/o:microsoft:windows" id="search_query" name="search_query"><br><br>
-                        <button type="submit">Search</button>
-                      </form>
-                    </div>
-                </div>
-
-                <div class="card mt-3">
-                    <div class="card-body">
-                      <form action="/hosts/getsearchresults/date" method="POST">
-                        <label for="ip"><b>Date:</b></label><br>
-                        <input type="text" placeholder="YYYYMMDD" id="search_query" name="search_query"><br><br>
-                        <button type="submit">Search</button>
-                      </form>
-                    </div>
-                </div>
 
             </div>
         </div>
