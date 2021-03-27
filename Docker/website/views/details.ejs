@@ -114,9 +114,7 @@
                                         </td>
                                         <td>
                                             <% match.cve.forEach(c=> { %>
-                                                <b style="color:red">
-                                                    <%= c %>
-                                                </b>
+                                                <a href="<%= cve_url%><%= c %>"><%= c %></a>
                                                 <% }) %>
                                         </td>
 
