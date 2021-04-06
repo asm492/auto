@@ -101,9 +101,6 @@ def find_in_db(q):
   for doc in result:
 
     host_object = doc['uuid']
-    #hostid = str(doc['_id'])
-    #hostid.replace("ObjectId(\"","")
-    #hostid.replace("\"","")
     doc.pop('_id', None)
     response[host_object] = doc
 

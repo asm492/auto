@@ -6,7 +6,6 @@ import os
 import random
 
 app = Flask(__name__)
-#app.config['JSON_SORT_KEYS'] = False
 
 @app.route("/")
 def hello():
@@ -15,7 +14,6 @@ def hello():
   m['Port'] = "3000"
   m['Endpoint'] = "/takescreengrab/<ip>/"
   return jsonify(m)
-
 
 @app.route("/takescreengrab/<string:ip>/", methods=['GET'])
 def takescreengrab(ip):
@@ -29,7 +27,6 @@ def takescreengrab(ip):
     filename += time
     filename += ".jpg"
     path = "/pictures/" + filename
-
 
     imgkit_options= { 'quiet' : ''}
     response = {}

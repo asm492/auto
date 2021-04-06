@@ -55,11 +55,9 @@ def find_interesting_ip(result):
     logging.debug('\t[INTERESTING IP] started')
     output_list = open("ips_to_scan.txt", "w")
     for ip_addr in result:
-        #logging.debug("\t\t" + ip_addr)
         for i in range(len(result[ip_addr]['ports'])):
             if result[ip_addr]['ports'][i]['state'] == "open" or result[ip_addr]['ports'][i]['state'] == "filtered":
                 output_list.write(ip_addr + "\n")
-                #logging.debug("\t\t\t" + result[ip_addr]['ports'][i]['portid'])
                 break
 
     output_list.close()
@@ -67,14 +65,12 @@ def find_interesting_ip(result):
 
 
 def perform_host_discovery():
-    # Aka stage 0
+    # Stage 0
     logging.debug('[HOST DISCOVERY] started')
     nmap = nmap3.NmapHostDiscovery()
     res = nmap.nmap_no_portscan(
         None, args="-sn --excludefile exclude_ip.txt -iL target.txt")
-    #logging.debug('Output of host discovery: ')
     res = remove_keys(res)
-    # logging.debug(res)
     f = open("ips_to_scan.txt", "w")
     for ip in res:
         logging.debug('Found IP: ' + ip)
@@ -90,34 +86,27 @@ def perform_portscan():
     nmap = nmap3.NmapHostDiscovery()
     res = nmap.scan_top_ports(None, args="-F -iL ips_to_scan.txt")
     res = remove_keys(res)
-    # logging.debug(res)
     find_interesting_ip(res)
     logging.debug('[FAST PORTSCAN] done')
     return res
 
 
 def perform_tcp_scan():
-
     logging.debug('[TCP SCAN] started')
     nmap = nmap3.Nmap()
     result = nmap.nmap_version_detection(
         None, "-sV -p- --script ssl-cert -vv -O -iL ips_to_scan.txt")
     remove_keys(result)
-    # print(result)
-    # logging.debug(result)
-
     logging.debug('[TCP SCAN] done')
     return result
 
 
 def perform_udp_scan():
-    # Aka Stage 3
     logging.debug('[UDP SCAN] started')
     nmap = nmap3.NmapScanTechniques()
     result = nmap.nmap_udp_scan(
         None, "-iL ips_to_scan.txt -p53,67,68,123,137,138,161,445,5000")
     remove_keys(result)
-    #print_json_file(result, "udp.json")
     logging.debug('[UDP SCAN] done')
     return result
 
@@ -136,9 +125,7 @@ def take_screengrab(ip):
     url += ip
     urllib3.disable_warnings()
     requests.packages.urllib3.disable_warnings()
-    # logging.debug(url)
     resp = {}
-    #r = "0"
     try:
         resp = requests.get(url, verify=False, timeout=1).json()
     except requests.exceptions.HTTPError as errorHTTP:
@@ -170,16 +157,14 @@ def merge_results(t, u, start):
         u_ports = u[i]['ports']
         ports = t_ports + u_ports
 
-        # OS CPE Ny kode start:
+        # OS CPE :
         for j in t[i]['osmatch']:
             if 'cpe' in j:
                 if j['cpe']:
                     oscve = []
                     oscpe = j['cpe']
                     oscve = cve_lookup.find_cve(oscpe)
-                    # logging.debug(oscve)
                     j['cve'] = oscve
-        # Ny kode slutt
 
         for port in ports:
             cve = []
@@ -201,7 +186,6 @@ def merge_results(t, u, start):
         stats = {'scandate': startdate, 'scantime': starttime}
 
         uid = str(uuid.uuid4())
-        #print(uid)
         host = {'uuid': uid, 'ip': i, 'hostname': hostname, 'macaddress': macaddress,
                 'osmatch': os, 'ports': ports, 'state': state, 'scanstats': stats}
         insert_db(host)

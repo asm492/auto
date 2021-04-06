@@ -9,13 +9,8 @@ const MongoClient = require('mongodb').MongoClient;
 const { urlencoded } = require('body-parser')
 app.use(express.urlencoded({ extended: false }))
 
-//REMEBER TO CHANGE WHEN RUNNING IN OPENSTACK
-//const uri = "mongodb+srv://user3:6p@biBWhJF@Fs@Z@cluster0.yqxoa.mongodb.net/mydb?retryWrites=true&w=majority"
 const uri = "mongodb://autoenum-mongodb:27017/"
-//const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
 app.set('view engine', 'ejs')
-
 app.get('/', async (req, res) =>{
     //Link til views/index.ejs
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -24,7 +19,6 @@ app.get('/', async (req, res) =>{
       await client.connect();
       const database = client.db('mydb');
       const collection = database.collection('scans');
-      //var q = {ip:"192.168.1.5"}
       var hosts = [];
       hosts = await collection.find().toArray();
       console.log(hosts)
@@ -39,8 +33,6 @@ app.get('/', async (req, res) =>{
 });
 
 app.use('/hosts', hostsRouter)
-
-
 
 app.listen(port, () =>{
     console.log('Example app listening at http://localhost:${port}')

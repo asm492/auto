@@ -1,15 +1,12 @@
 #ps1_sysnative
-#https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html#winrm-setup
 
 #Make new user:
 $usrname = "ansibleuser"
 $password = ConvertTo-SecureString "@nsib1epaSsw0rd" -AsPlainText -Force
 New-LocalUser $usrname -Password $password -FullName "Ansible User" -Description "Ansible account with admin privileges"
 Add-LocalGroupMember -Group "Administrators" -Member $usrname
-#Get-LocalGroupMember -Group "Administrators"
 
 #Bypass SSL
-#https://stackoverflow.com/questions/146973/powershell-script-to-download-file-having-trouble-setting-up-a-secure-connectio
 [Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
 
 #Fixes winRM memory bug in Powershell v3.0 

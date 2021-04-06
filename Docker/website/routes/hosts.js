@@ -2,19 +2,10 @@ const express = require('express')
 const { urlencoded } = require('body-parser')
 const router = express.Router()
 const MongoClient = require('mongodb').MongoClient;
-//REMEBER TO CHANGE WHEN RUNNING IN OPENSTACK
-//const uri = "mongodb+srv://user3:6p@biBWhJF@Fs@Z@cluster0.yqxoa.mongodb.net/mydb?retryWrites=true&w=majority"
 const uri = "mongodb://autoenum-mongodb:27017/"
 const ObjectID = require('mongodb').ObjectID;
 
 require('../models/scan');
-
-//test
-router.get('/', (req, res) => {
-    res.send('In hosts')
-})
-
-
 
 router.get('/list_view', async (req, res)  => {
 
@@ -35,7 +26,6 @@ router.get('/list_view', async (req, res)  => {
     }finally{
       await client.close();
     }
-
 
 })
 
@@ -74,9 +64,7 @@ router.get('/details/:id', async (req, res)  => {
         }
       }
 
-
       res.render('./../views/details', {host: host, image: img, viewimage: view_img, cve_url :cve_url})
-
     }catch(err){
       res.send(err)
     }finally{
@@ -122,8 +110,6 @@ router.post('/search', async function(req, res) {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
     var query = req.body.all_query
-
- 
     var ip_q = {ip : query};
     var mac_q = {"macaddress.addr" : query}
     var date_q = {"scanstats.scandate" : query};
