@@ -9,7 +9,7 @@ cd ~
 git clone https://github.com/ChaoticWeg/discord.sh.git
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Starter installering. Sier i fra når jeg er ferdig."
 
-#sudo apt  install nmap -y
+sudo apt  install nmap -y
 sudo apt install python3-pip -y
 
 #pip install python3-namp

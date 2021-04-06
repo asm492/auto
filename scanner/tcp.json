@@ -1,0 +1,1351 @@
+{
+    "192.168.1.4": {
+        "osmatch": [
+            {
+                "name": "Linux 2.6.32",
+                "accuracy": "96",
+                "line": "55173",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "2.6.X",
+                    "accuracy": "96"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:2.6.32"
+            },
+            {
+                "name": "Linux 3.2 - 4.9",
+                "accuracy": "96",
+                "line": "65105",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "4.X",
+                    "accuracy": "96"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:4"
+            },
+            {
+                "name": "Linux 2.6.32 - 3.10",
+                "accuracy": "96",
+                "line": "56381",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "96"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3"
+            },
+            {
+                "name": "Linux 3.4 - 3.10",
+                "accuracy": "95",
+                "line": "65366",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "95"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3"
+            },
+            {
+                "name": "Linux 3.1",
+                "accuracy": "95",
+                "line": "62708",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "95"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3.1"
+            },
+            {
+                "name": "Linux 3.2",
+                "accuracy": "95",
+                "line": "64455",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "95"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3.2"
+            },
+            {
+                "name": "AXIS 210A or 211 Network Camera (Linux 2.6.17)",
+                "accuracy": "94",
+                "line": "61606",
+                "osclass": {
+                    "type": "webcam",
+                    "vendor": "AXIS",
+                    "osfamily": "embedded",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/h:axis:211_network_camera"
+            },
+            {
+                "name": "Synology DiskStation Manager 5.2-5644",
+                "accuracy": "94",
+                "line": "101159",
+                "osclass": {
+                    "type": "storage-misc",
+                    "vendor": "Synology",
+                    "osfamily": "DiskStation Manager",
+                    "osgen": "5.X",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/a:synology:diskstation_manager:5.2"
+            },
+            {
+                "name": "Netgear RAIDiator 4.2.28",
+                "accuracy": "94",
+                "line": "88023",
+                "osclass": {
+                    "type": "storage-misc",
+                    "vendor": "Netgear",
+                    "osfamily": "RAIDiator",
+                    "osgen": "4.X",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/o:netgear:raidiator:4.2.28"
+            },
+            {
+                "name": "Linux 2.6.32 - 2.6.35",
+                "accuracy": "94",
+                "line": "56153",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "2.6.X",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:2.6"
+            }
+        ],
+        "ports": [
+            {
+                "protocol": "tcp",
+                "portid": "22",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "service": {
+                    "name": "ssh",
+                    "product": "OpenSSH",
+                    "version": "8.2p1 Ubuntu 4",
+                    "extrainfo": "Ubuntu Linux; protocol 2.0",
+                    "ostype": "Linux",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:linux:linux_kernel"
+                    }
+                ],
+                "scripts": []
+            },
+            {
+                "protocol": "tcp",
+                "portid": "80",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "service": {
+                    "name": "http",
+                    "product": "Apache httpd",
+                    "version": "2.4.46",
+                    "extrainfo": "(Ubuntu)",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/a:apache:http_server:2.4.46"
+                    }
+                ],
+                "scripts": [
+                    {
+                        "name": "http-server-header",
+                        "raw": "Apache/2.4.46 (Ubuntu)",
+                        "data": {
+                            "0": "Apache/2.4.46 (Ubuntu)"
+                        }
+                    }
+                ]
+            }
+        ],
+        "hostname": [
+            {
+                "name": "host-192-168-1-4.openstacklocal",
+                "type": "PTR"
+            }
+        ],
+        "macaddress": {
+            "addr": "FA:16:3E:08:99:18",
+            "addrtype": "mac"
+        },
+        "state": {
+            "state": "up",
+            "reason": "arp-response",
+            "reason_ttl": "0"
+        }
+    },
+    "192.168.1.5": {
+        "osmatch": [],
+        "ports": [
+            {
+                "protocol": "tcp",
+                "portid": "80",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "http",
+                    "product": "Microsoft IIS httpd",
+                    "version": "10.0",
+                    "ostype": "Windows",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": [
+                    {
+                        "name": "http-server-header",
+                        "raw": "Microsoft-IIS/10.0",
+                        "data": {
+                            "0": "Microsoft-IIS/10.0"
+                        }
+                    }
+                ]
+            },
+            {
+                "protocol": "tcp",
+                "portid": "443",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "http",
+                    "product": "Microsoft IIS httpd",
+                    "version": "10.0",
+                    "ostype": "Windows",
+                    "tunnel": "ssl",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": [
+                    {
+                        "name": "http-server-header",
+                        "raw": "Microsoft-IIS/10.0",
+                        "data": {
+                            "0": "Microsoft-IIS/10.0"
+                        }
+                    },
+                    {
+                        "name": "ssl-cert",
+                        "raw": "Subject: commonName=win1\nSubject Alternative Name: DNS:win1\nIssuer: commonName=win1\nPublic Key type: rsa\nPublic Key bits: 2048\nSignature Algorithm: sha256WithRSAEncryption\nNot valid before: 2021-02-14T10:59:47\nNot valid after:  2022-02-14T00:00:00\nMD5:   6a19 d0ad 0f5f 0d60 0644 4e61 2142 391c\nSHA-1: 8978 622c 9ddc f0e9 f6e1 f6b3 9552 9535 9cab 7915\n-----BEGIN CERTIFICATE-----\nMIIC3TCCAcWgAwIBAgIQRNHIkgloYZBKScGuxKstnTANBgkqhkiG9w0BAQsFADAP\nMQ0wCwYDVQQDEwR3aW4xMB4XDTIxMDIxNDEwNTk0N1oXDTIyMDIxNDAwMDAwMFow\nDzENMAsGA1UEAxMEd2luMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\nAOKNUeg9/MITIsXjiYcbdni0cDVXX4YtyWBwPxz1f3smZajY8W9+D+7wDBSE3SP1\nTCooHaKcwblMqYB2gVE2uTWGLW91WlCrK/H1I2I2zG5Si0KjUgdG7JgDi1vwui14\n3Ax6FsiQMLI206QRcSvIQJdWtlxjmdC5zYxpJR55++8J3bnH6jaEuYmBMfB+qDNp\nPrVlwjvlBdbl+s07EbP/DoeZwfpxepdL2N8MsmQ1BMaOSaSjTC7Ks4W86ufMepNU\nZWSv3ucIhnwXS4U1AxYcC4ALlSaV2QM/BCcG20/DFynmqil0Jo6JiMIZHIFQNbrm\nE1+AHFGa+QlQomwBGFOXNlECAwEAAaM1MDMwCwYDVR0PBAQDAgQwMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMA8GA1UdEQQIMAaCBHdpbjEwDQYJKoZIhvcNAQELBQADggEB\nACaAeYkbYi9nW48DwvrOzWZoBl9Vt7CWpIfktn9TyEBXDsPNjFjiYzmly2/OHnxF\n+CjwBOWXgj2oKwNlOfHBSu8XOIAb8DPVfZmNJfvuAg+u7P6WNofG+8oZUoPpimpe\nxBxhSlTpNqnYdwtM0SGvnhHD6ZqimVmpAHojTGH6g7G1pC+6qa63GpZGkIx2FFz0\n9nL11TnmeIWtCCnb0H3AanDGi9Vhtdr674n5H9g/8mRbns7tCIFejYwW7c1uxzZs\nbTQADNnsZEOfR1oPl7LIs0Hb1jET9zqBR/mOcE6D43DrjtWyXwQZYlNHozK9d4LS\n1WMKBbdIrWeEEbuR0z99puE=\n-----END CERTIFICATE-----\n",
+                        "data": {
+                            "sig_algo": "sha256WithRSAEncryption",
+                            "md5": "6a19d0ad0f5f0d6006444e612142391c",
+                            "sha1": "8978622c9ddcf0e9f6e1f6b3955295359cab7915",
+                            "pem": "-----BEGIN CERTIFICATE-----\nMIIC3TCCAcWgAwIBAgIQRNHIkgloYZBKScGuxKstnTANBgkqhkiG9w0BAQsFADAP\nMQ0wCwYDVQQDEwR3aW4xMB4XDTIxMDIxNDEwNTk0N1oXDTIyMDIxNDAwMDAwMFow\nDzENMAsGA1UEAxMEd2luMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\nAOKNUeg9/MITIsXjiYcbdni0cDVXX4YtyWBwPxz1f3smZajY8W9+D+7wDBSE3SP1\nTCooHaKcwblMqYB2gVE2uTWGLW91WlCrK/H1I2I2zG5Si0KjUgdG7JgDi1vwui14\n3Ax6FsiQMLI206QRcSvIQJdWtlxjmdC5zYxpJR55++8J3bnH6jaEuYmBMfB+qDNp\nPrVlwjvlBdbl+s07EbP/DoeZwfpxepdL2N8MsmQ1BMaOSaSjTC7Ks4W86ufMepNU\nZWSv3ucIhnwXS4U1AxYcC4ALlSaV2QM/BCcG20/DFynmqil0Jo6JiMIZHIFQNbrm\nE1+AHFGa+QlQomwBGFOXNlECAwEAAaM1MDMwCwYDVR0PBAQDAgQwMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMA8GA1UdEQQIMAaCBHdpbjEwDQYJKoZIhvcNAQELBQADggEB\nACaAeYkbYi9nW48DwvrOzWZoBl9Vt7CWpIfktn9TyEBXDsPNjFjiYzmly2/OHnxF\n+CjwBOWXgj2oKwNlOfHBSu8XOIAb8DPVfZmNJfvuAg+u7P6WNofG+8oZUoPpimpe\nxBxhSlTpNqnYdwtM0SGvnhHD6ZqimVmpAHojTGH6g7G1pC+6qa63GpZGkIx2FFz0\n9nL11TnmeIWtCCnb0H3AanDGi9Vhtdr674n5H9g/8mRbns7tCIFejYwW7c1uxzZs\nbTQADNnsZEOfR1oPl7LIs0Hb1jET9zqBR/mOcE6D43DrjtWyXwQZYlNHozK9d4LS\n1WMKBbdIrWeEEbuR0z99puE=\n-----END CERTIFICATE-----\n",
+                            "subject": {
+                                "children": [
+                                    {
+                                        "commonName": "win1"
+                                    }
+                                ]
+                            },
+                            "issuer": {
+                                "children": [
+                                    {
+                                        "commonName": "win1"
+                                    }
+                                ]
+                            },
+                            "pubkey": {
+                                "children": [
+                                    {
+                                        "exponent": "userdata: 0x55f36ac941e8",
+                                        "bits": "2048",
+                                        "modulus": "userdata: 0x55f36ac94228",
+                                        "type": "rsa"
+                                    }
+                                ]
+                            },
+                            "extensions": {
+                                "children": [
+                                    {
+                                        "name": "X509v3 Key Usage",
+                                        "value": "Key Encipherment, Data Encipherment"
+                                    },
+                                    {
+                                        "name": "X509v3 Extended Key Usage",
+                                        "value": "TLS Web Server Authentication"
+                                    },
+                                    {
+                                        "name": "X509v3 Subject Alternative Name",
+                                        "value": "DNS:win1"
+                                    }
+                                ]
+                            },
+                            "validity": {
+                                "children": [
+                                    {
+                                        "notBefore": "2021-02-14T10:59:47",
+                                        "notAfter": "2022-02-14T00:00:00"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "protocol": "tcp",
+                "portid": "3389",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "ms-wbt-server",
+                    "product": "Microsoft Terminal Services",
+                    "ostype": "Windows",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": [
+                    {
+                        "name": "ssl-cert",
+                        "raw": "Subject: commonName=win1\nIssuer: commonName=win1\nPublic Key type: rsa\nPublic Key bits: 2048\nSignature Algorithm: sha256WithRSAEncryption\nNot valid before: 2021-04-05T08:42:54\nNot valid after:  2021-10-05T08:42:54\nMD5:   8c56 7d81 cc8a 73be 73fc c7c7 5f61 f45f\nSHA-1: 1184 61b9 656b 3720 01fc 7a3c 55e9 e0d0 787f c399\n-----BEGIN CERTIFICATE-----\nMIICzDCCAbSgAwIBAgIQLkuX9OM+wYpDS0S0BwlOhjANBgkqhkiG9w0BAQsFADAP\nMQ0wCwYDVQQDEwR3aW4xMB4XDTIxMDQwNTA4NDI1NFoXDTIxMTAwNTA4NDI1NFow\nDzENMAsGA1UEAxMEd2luMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\nALkrGIaO/hGLPDIAKxyC6kbaA2Va4amyjguPw6rl/lA0DGrA4ZVwjUdi1S74EN6T\nKD1OfutGVyWrx22ttjhN+q+PcW53Gn0dL9IcbudMF9GL+jSWhUT+8UAhavekCuun\nRNj5ja8YgRtfoeRBR4zRibUKh/T75PemECtDXlHCmhmAesu6ksMtOvrX3FszeFpc\nCC8bm+C9c0ab2yUkmdNmsp6XifBgKlJS6niZRgm0ivuoUY+ckZ74mLU+5I+D7NUi\nP7+0NJE40T1TjZQY23O3UJNvFbBl9EMbZoLWwkibC082AEULInE9Tm5jNGkCLdtR\nxjZp0nQUk/3/nUlMvYhSk+0CAwEAAaMkMCIwEwYDVR0lBAwwCgYIKwYBBQUHAwEw\nCwYDVR0PBAQDAgQwMA0GCSqGSIb3DQEBCwUAA4IBAQAa4ovAxToO+JzdHB0qzxjw\nwyHrtEPeXbiscP2PZ+GNTcT+Spa6ipz/BmYx5PH3VJyWpxjPNYnV0gWmWoBoapjA\n2wxm7dLEabSgo6cZD4uYvV5IAewauPW2mv5iorUBCCa27X7N13JFsRrckvz863C7\nQkFDetCy0EFoyCEv3EpCz0Q/lwU4IzJQoCfxzMtGx017AhXEf2cv9EftXIPPi10Z\nYCENNHtSJxn1YnvI1hhvp39RawBn5cWquM7GvdIUefYIYxWVoZLrRLf7yTV26+5H\ngcAIWigylrz+gql271KCCF9ai6JyysyZnQk50KD0w4MNeLGzEnw/QjmCI12Heidb\n-----END CERTIFICATE-----\n",
+                        "data": {
+                            "sig_algo": "sha256WithRSAEncryption",
+                            "md5": "8c567d81cc8a73be73fcc7c75f61f45f",
+                            "sha1": "118461b9656b372001fc7a3c55e9e0d0787fc399",
+                            "pem": "-----BEGIN CERTIFICATE-----\nMIICzDCCAbSgAwIBAgIQLkuX9OM+wYpDS0S0BwlOhjANBgkqhkiG9w0BAQsFADAP\nMQ0wCwYDVQQDEwR3aW4xMB4XDTIxMDQwNTA4NDI1NFoXDTIxMTAwNTA4NDI1NFow\nDzENMAsGA1UEAxMEd2luMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\nALkrGIaO/hGLPDIAKxyC6kbaA2Va4amyjguPw6rl/lA0DGrA4ZVwjUdi1S74EN6T\nKD1OfutGVyWrx22ttjhN+q+PcW53Gn0dL9IcbudMF9GL+jSWhUT+8UAhavekCuun\nRNj5ja8YgRtfoeRBR4zRibUKh/T75PemECtDXlHCmhmAesu6ksMtOvrX3FszeFpc\nCC8bm+C9c0ab2yUkmdNmsp6XifBgKlJS6niZRgm0ivuoUY+ckZ74mLU+5I+D7NUi\nP7+0NJE40T1TjZQY23O3UJNvFbBl9EMbZoLWwkibC082AEULInE9Tm5jNGkCLdtR\nxjZp0nQUk/3/nUlMvYhSk+0CAwEAAaMkMCIwEwYDVR0lBAwwCgYIKwYBBQUHAwEw\nCwYDVR0PBAQDAgQwMA0GCSqGSIb3DQEBCwUAA4IBAQAa4ovAxToO+JzdHB0qzxjw\nwyHrtEPeXbiscP2PZ+GNTcT+Spa6ipz/BmYx5PH3VJyWpxjPNYnV0gWmWoBoapjA\n2wxm7dLEabSgo6cZD4uYvV5IAewauPW2mv5iorUBCCa27X7N13JFsRrckvz863C7\nQkFDetCy0EFoyCEv3EpCz0Q/lwU4IzJQoCfxzMtGx017AhXEf2cv9EftXIPPi10Z\nYCENNHtSJxn1YnvI1hhvp39RawBn5cWquM7GvdIUefYIYxWVoZLrRLf7yTV26+5H\ngcAIWigylrz+gql271KCCF9ai6JyysyZnQk50KD0w4MNeLGzEnw/QjmCI12Heidb\n-----END CERTIFICATE-----\n",
+                            "subject": {
+                                "children": [
+                                    {
+                                        "commonName": "win1"
+                                    }
+                                ]
+                            },
+                            "issuer": {
+                                "children": [
+                                    {
+                                        "commonName": "win1"
+                                    }
+                                ]
+                            },
+                            "pubkey": {
+                                "children": [
+                                    {
+                                        "exponent": "userdata: 0x55f36acc9518",
+                                        "bits": "2048",
+                                        "modulus": "userdata: 0x55f36ac86a48",
+                                        "type": "rsa"
+                                    }
+                                ]
+                            },
+                            "extensions": {
+                                "children": [
+                                    {
+                                        "name": "X509v3 Extended Key Usage",
+                                        "value": "TLS Web Server Authentication"
+                                    },
+                                    {
+                                        "name": "X509v3 Key Usage",
+                                        "value": "Key Encipherment, Data Encipherment"
+                                    }
+                                ]
+                            },
+                            "validity": {
+                                "children": [
+                                    {
+                                        "notBefore": "2021-04-05T08:42:54",
+                                        "notAfter": "2021-10-05T08:42:54"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "protocol": "tcp",
+                "portid": "5985",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "http",
+                    "product": "Microsoft HTTPAPI httpd",
+                    "version": "2.0",
+                    "extrainfo": "SSDP/UPnP",
+                    "ostype": "Windows",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": [
+                    {
+                        "name": "http-server-header",
+                        "raw": "Microsoft-HTTPAPI/2.0",
+                        "data": {
+                            "0": "Microsoft-HTTPAPI/2.0"
+                        }
+                    }
+                ]
+            },
+            {
+                "protocol": "tcp",
+                "portid": "5986",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "http",
+                    "product": "Microsoft HTTPAPI httpd",
+                    "version": "2.0",
+                    "extrainfo": "SSDP/UPnP",
+                    "ostype": "Windows",
+                    "tunnel": "ssl",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": [
+                    {
+                        "name": "http-server-header",
+                        "raw": "Microsoft-HTTPAPI/2.0",
+                        "data": {
+                            "0": "Microsoft-HTTPAPI/2.0"
+                        }
+                    },
+                    {
+                        "name": "ssl-cert",
+                        "raw": "Subject: commonName=Cloudbase-Init WinRM\nIssuer: commonName=Cloudbase-Init WinRM\nPublic Key type: rsa\nPublic Key bits: 2048\nSignature Algorithm: sha1WithRSAEncryption\nNot valid before: 2021-04-05T08:44:11\nNot valid after:  2031-04-04T08:44:11\nMD5:   4939 59f7 e98e 1202 b43d afc4 ecc0 4909\nSHA-1: f3a7 a921 ead7 221f 5edf 2ee1 f1e6 3120 54bf 9bf5\n-----BEGIN CERTIFICATE-----\nMIICxjCCAa6gAwIBAgIQUdX0RyFMbbVOTNO+XJn+XzANBgkqhkiG9w0BAQUFADAf\nMR0wGwYDVQQDExRDbG91ZGJhc2UtSW5pdCBXaW5STTAeFw0yMTA0MDUwODQ0MTFa\nFw0zMTA0MDQwODQ0MTFaMB8xHTAbBgNVBAMTFENsb3VkYmFzZS1Jbml0IFdpblJN\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4f5igqW2ZIxphzymf8Qh\nvzC5MFExUuCBmAzmku/yJEhjgT5W9QM6uDbz4jH98OD+mtMSQDCMXsIosBh1/DU1\nEsa72jx87FSoSq4qyXsAPriy6L8nj2krkdz66F2UZrklnAFOvb2gxHUr0uvDOKn4\nbOjJ6vnd4mN+wp+61uI8kNNxo9Upebh+YrDGRaMHSlo5gzvvAh2yYs28+JTF5632\n5y9FW3OUOYBtrkKPsPkL1LO96GgAMuparwp/5v921gjF2wBcBwEgH3oNQdJurM+f\nQ0WUU9H92c6QIZ0AZvmS9yIvMkHfvcfaYLtQIrzFi8uejPW+xICIbib9G3HEb6Qn\nGQIDAQABMA0GCSqGSIb3DQEBBQUAA4IBAQAMXpUXTE7grahuD+Kg2xqCyD0dOGye\ns4Lh6eq4XjVxhWrWIHxkdrvyutwfzfusfwiIWvGZh1PBf5UFt+acgHQMINJ5PRKA\n5LIHiaRPNV1VUCiGpZT0GREtDAlSFRMyMnZvaCkhP+El1rmLHOlHW1yXhTdk3lIQ\nCfUK+Xbc9YiU0BkFtI5PBQxPbPaOi1tT8Ez+tlcqOniZflH+1FB2hn0uA9fy/cCO\noNkoasNO6GpPwBQAmx3LUDGbbaFjgFXB4C1rMaefj2qr1SSXlIic7P2WdQ0aAobK\nMn7UhviVfqudDTFPMcBCyd7VvQWT9V/hem/zWZ6XJDZJfPkmUGOaQVUl\n-----END CERTIFICATE-----\n",
+                        "data": {
+                            "sig_algo": "sha1WithRSAEncryption",
+                            "md5": "493959f7e98e1202b43dafc4ecc04909",
+                            "sha1": "f3a7a921ead7221f5edf2ee1f1e6312054bf9bf5",
+                            "pem": "-----BEGIN CERTIFICATE-----\nMIICxjCCAa6gAwIBAgIQUdX0RyFMbbVOTNO+XJn+XzANBgkqhkiG9w0BAQUFADAf\nMR0wGwYDVQQDExRDbG91ZGJhc2UtSW5pdCBXaW5STTAeFw0yMTA0MDUwODQ0MTFa\nFw0zMTA0MDQwODQ0MTFaMB8xHTAbBgNVBAMTFENsb3VkYmFzZS1Jbml0IFdpblJN\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4f5igqW2ZIxphzymf8Qh\nvzC5MFExUuCBmAzmku/yJEhjgT5W9QM6uDbz4jH98OD+mtMSQDCMXsIosBh1/DU1\nEsa72jx87FSoSq4qyXsAPriy6L8nj2krkdz66F2UZrklnAFOvb2gxHUr0uvDOKn4\nbOjJ6vnd4mN+wp+61uI8kNNxo9Upebh+YrDGRaMHSlo5gzvvAh2yYs28+JTF5632\n5y9FW3OUOYBtrkKPsPkL1LO96GgAMuparwp/5v921gjF2wBcBwEgH3oNQdJurM+f\nQ0WUU9H92c6QIZ0AZvmS9yIvMkHfvcfaYLtQIrzFi8uejPW+xICIbib9G3HEb6Qn\nGQIDAQABMA0GCSqGSIb3DQEBBQUAA4IBAQAMXpUXTE7grahuD+Kg2xqCyD0dOGye\ns4Lh6eq4XjVxhWrWIHxkdrvyutwfzfusfwiIWvGZh1PBf5UFt+acgHQMINJ5PRKA\n5LIHiaRPNV1VUCiGpZT0GREtDAlSFRMyMnZvaCkhP+El1rmLHOlHW1yXhTdk3lIQ\nCfUK+Xbc9YiU0BkFtI5PBQxPbPaOi1tT8Ez+tlcqOniZflH+1FB2hn0uA9fy/cCO\noNkoasNO6GpPwBQAmx3LUDGbbaFjgFXB4C1rMaefj2qr1SSXlIic7P2WdQ0aAobK\nMn7UhviVfqudDTFPMcBCyd7VvQWT9V/hem/zWZ6XJDZJfPkmUGOaQVUl\n-----END CERTIFICATE-----\n",
+                            "subject": {
+                                "children": [
+                                    {
+                                        "commonName": "Cloudbase-Init WinRM"
+                                    }
+                                ]
+                            },
+                            "issuer": {
+                                "children": [
+                                    {
+                                        "commonName": "Cloudbase-Init WinRM"
+                                    }
+                                ]
+                            },
+                            "pubkey": {
+                                "children": [
+                                    {
+                                        "exponent": "userdata: 0x55f36acb0a68",
+                                        "bits": "2048",
+                                        "modulus": "userdata: 0x55f36ac92f78",
+                                        "type": "rsa"
+                                    }
+                                ]
+                            },
+                            "validity": {
+                                "children": [
+                                    {
+                                        "notBefore": "2021-04-05T08:44:11",
+                                        "notAfter": "2031-04-04T08:44:11"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "hostname": [
+            {
+                "name": "host-192-168-1-5.openstacklocal",
+                "type": "PTR"
+            }
+        ],
+        "macaddress": {
+            "addr": "FA:16:3E:4B:69:3E",
+            "addrtype": "mac"
+        },
+        "state": {
+            "state": "up",
+            "reason": "arp-response",
+            "reason_ttl": "0"
+        }
+    },
+    "192.168.1.6": {
+        "osmatch": [
+            {
+                "name": "Linux 2.6.32",
+                "accuracy": "96",
+                "line": "55173",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "2.6.X",
+                    "accuracy": "96"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:2.6.32"
+            },
+            {
+                "name": "Linux 3.2 - 4.9",
+                "accuracy": "96",
+                "line": "65105",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "4.X",
+                    "accuracy": "96"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:4"
+            },
+            {
+                "name": "Linux 2.6.32 - 3.10",
+                "accuracy": "96",
+                "line": "56381",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "96"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3"
+            },
+            {
+                "name": "Linux 3.4 - 3.10",
+                "accuracy": "95",
+                "line": "65366",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "95"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3"
+            },
+            {
+                "name": "Linux 3.1",
+                "accuracy": "95",
+                "line": "62708",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "95"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3.1"
+            },
+            {
+                "name": "Linux 3.2",
+                "accuracy": "95",
+                "line": "64455",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "95"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3.2"
+            },
+            {
+                "name": "AXIS 210A or 211 Network Camera (Linux 2.6.17)",
+                "accuracy": "94",
+                "line": "61606",
+                "osclass": {
+                    "type": "webcam",
+                    "vendor": "AXIS",
+                    "osfamily": "embedded",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/h:axis:211_network_camera"
+            },
+            {
+                "name": "Synology DiskStation Manager 5.2-5644",
+                "accuracy": "94",
+                "line": "101159",
+                "osclass": {
+                    "type": "storage-misc",
+                    "vendor": "Synology",
+                    "osfamily": "DiskStation Manager",
+                    "osgen": "5.X",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/a:synology:diskstation_manager:5.2"
+            },
+            {
+                "name": "Netgear RAIDiator 4.2.28",
+                "accuracy": "94",
+                "line": "88023",
+                "osclass": {
+                    "type": "storage-misc",
+                    "vendor": "Netgear",
+                    "osfamily": "RAIDiator",
+                    "osgen": "4.X",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/o:netgear:raidiator:4.2.28"
+            },
+            {
+                "name": "Linux 2.6.32 - 2.6.35",
+                "accuracy": "94",
+                "line": "56153",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "2.6.X",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:2.6"
+            }
+        ],
+        "ports": [
+            {
+                "protocol": "tcp",
+                "portid": "21",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "service": {
+                    "name": "ftp",
+                    "product": "vsftpd",
+                    "version": "2.3.4",
+                    "ostype": "Unix",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/a:vsftpd:vsftpd:2.3.4"
+                    }
+                ],
+                "scripts": []
+            },
+            {
+                "protocol": "tcp",
+                "portid": "22",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "service": {
+                    "name": "ssh",
+                    "product": "OpenSSH",
+                    "version": "7.6p1 Ubuntu 4ubuntu0.3",
+                    "extrainfo": "Ubuntu Linux; protocol 2.0",
+                    "ostype": "Linux",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:linux:linux_kernel"
+                    }
+                ],
+                "scripts": []
+            },
+            {
+                "protocol": "tcp",
+                "portid": "23",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "service": {
+                    "name": "telnet",
+                    "product": "Linux telnetd",
+                    "ostype": "Linux",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:linux:linux_kernel"
+                    }
+                ],
+                "scripts": []
+            },
+            {
+                "protocol": "tcp",
+                "portid": "139",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "service": {
+                    "name": "netbios-ssn",
+                    "product": "Samba smbd",
+                    "version": "3.X - 4.X",
+                    "extrainfo": "workgroup: WORKGROUP",
+                    "hostname": "UBUNTU18",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/a:samba:samba"
+                    }
+                ],
+                "scripts": []
+            },
+            {
+                "protocol": "tcp",
+                "portid": "445",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "service": {
+                    "name": "netbios-ssn",
+                    "product": "Samba smbd",
+                    "version": "3.X - 4.X",
+                    "extrainfo": "workgroup: WORKGROUP",
+                    "hostname": "UBUNTU18",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/a:samba:samba"
+                    }
+                ],
+                "scripts": []
+            }
+        ],
+        "hostname": [
+            {
+                "name": "host-192-168-1-6.openstacklocal",
+                "type": "PTR"
+            }
+        ],
+        "macaddress": {
+            "addr": "FA:16:3E:45:EA:72",
+            "addrtype": "mac"
+        },
+        "state": {
+            "state": "up",
+            "reason": "arp-response",
+            "reason_ttl": "0"
+        }
+    },
+    "192.168.1.10": {
+        "osmatch": [
+            {
+                "name": "Microsoft Windows Server 2016",
+                "accuracy": "100",
+                "line": "75728",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Microsoft",
+                    "osfamily": "Windows",
+                    "osgen": "2016",
+                    "accuracy": "100"
+                },
+                "cpe": "cpe:/o:microsoft:windows_server_2016"
+            }
+        ],
+        "ports": [
+            {
+                "protocol": "tcp",
+                "portid": "80",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "http",
+                    "product": "Apache httpd",
+                    "version": "2.4.46",
+                    "extrainfo": "(Win64)",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/a:apache:http_server:2.4.46"
+                    }
+                ],
+                "scripts": [
+                    {
+                        "name": "http-server-header",
+                        "raw": "Apache/2.4.46 (Win64)",
+                        "data": {
+                            "0": "Apache/2.4.46 (Win64)"
+                        }
+                    }
+                ]
+            },
+            {
+                "protocol": "tcp",
+                "portid": "135",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "msrpc",
+                    "product": "Microsoft Windows RPC",
+                    "ostype": "Windows",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": []
+            },
+            {
+                "protocol": "tcp",
+                "portid": "445",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "microsoft-ds",
+                    "product": "Microsoft Windows Server 2008 R2 - 2012 microsoft-ds",
+                    "ostype": "Windows Server 2008 R2 - 2012",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": []
+            },
+            {
+                "protocol": "tcp",
+                "portid": "3389",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "ms-wbt-server",
+                    "product": "Microsoft Terminal Services",
+                    "ostype": "Windows",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": [
+                    {
+                        "name": "ssl-cert",
+                        "raw": "Subject: commonName=win2\nIssuer: commonName=win2\nPublic Key type: rsa\nPublic Key bits: 2048\nSignature Algorithm: sha256WithRSAEncryption\nNot valid before: 2021-04-05T08:42:26\nNot valid after:  2021-10-05T08:42:26\nMD5:   fe2c 8770 1823 ffc1 3238 e4f4 8362 f3b3\nSHA-1: 5a72 cd76 1f8f 8b0b 80b3 947a 430a 65b8 6de2 9a5f\n-----BEGIN CERTIFICATE-----\nMIICzDCCAbSgAwIBAgIQfbM4i1q9vLBKM0cv6ylOXDANBgkqhkiG9w0BAQsFADAP\nMQ0wCwYDVQQDEwR3aW4yMB4XDTIxMDQwNTA4NDIyNloXDTIxMTAwNTA4NDIyNlow\nDzENMAsGA1UEAxMEd2luMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\nAMkHRyBGh5pCJ3Tyaoz0m2vHTTdrgh1BaDgQiyU9IQ0ngcyfYOicb57D+8bEcmC+\nb4PJL9Mce2WH8Yzwagn5yEpN8IEH98fUM9S8tpJ8qEbGxukAGRLtja+ERZzkmAWp\n79emLzq0+c/4qIpZ7UXIahbEE0Oa2W5MOLb/fCv8Y12oy+MSXr40C/YrEagaXAvy\n8TmmlBi5HlG0O34ygRPIHuDNbXENrEK5Kd9DynzTaRtzpLz7Qai/e/F5ZGjs8uHl\nGEZkl9cIj54gX654MZJjQnKEx/cCMGGhVfnL83zIeNro3w1tfy6u2vr5U6rPSH91\nxeGPl4U+d4vxQk2KujkkHN8CAwEAAaMkMCIwEwYDVR0lBAwwCgYIKwYBBQUHAwEw\nCwYDVR0PBAQDAgQwMA0GCSqGSIb3DQEBCwUAA4IBAQBdwgIAKQprw9h54Gtx3zv2\nKsh4y46g6lsVbPzxL+IJiXNGkvVC4oPhfp1MEY8juMglZx683wzvVunPYmcyxp3r\n5pYnOGJlatRdXdIFl28v/VZuR2ueVArqPZj8qu7BKi6rXPXbLUcqF0Adepd8EWqg\nSZCEoOW2CdIK12FS/IbPQzH9+Tiy5hF7VULEg8zLw8wV/4Znhuv8rMSg3CmlSoBZ\ntfw9dAmlhOV7AyNtWcjpEW/0cuUFZ+ee1TNnTH/SO+LVC1DL7Q8c6L1Voauo0Fuc\n9Gww0g+MKH7CW1HWy2bQhDDirC2e/T5W+1QH+zK2vZwc6TAYDx0aFAVAc58xfaeZ\n-----END CERTIFICATE-----\n",
+                        "data": {
+                            "sig_algo": "sha256WithRSAEncryption",
+                            "md5": "fe2c87701823ffc13238e4f48362f3b3",
+                            "sha1": "5a72cd761f8f8b0b80b3947a430a65b86de29a5f",
+                            "pem": "-----BEGIN CERTIFICATE-----\nMIICzDCCAbSgAwIBAgIQfbM4i1q9vLBKM0cv6ylOXDANBgkqhkiG9w0BAQsFADAP\nMQ0wCwYDVQQDEwR3aW4yMB4XDTIxMDQwNTA4NDIyNloXDTIxMTAwNTA4NDIyNlow\nDzENMAsGA1UEAxMEd2luMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\nAMkHRyBGh5pCJ3Tyaoz0m2vHTTdrgh1BaDgQiyU9IQ0ngcyfYOicb57D+8bEcmC+\nb4PJL9Mce2WH8Yzwagn5yEpN8IEH98fUM9S8tpJ8qEbGxukAGRLtja+ERZzkmAWp\n79emLzq0+c/4qIpZ7UXIahbEE0Oa2W5MOLb/fCv8Y12oy+MSXr40C/YrEagaXAvy\n8TmmlBi5HlG0O34ygRPIHuDNbXENrEK5Kd9DynzTaRtzpLz7Qai/e/F5ZGjs8uHl\nGEZkl9cIj54gX654MZJjQnKEx/cCMGGhVfnL83zIeNro3w1tfy6u2vr5U6rPSH91\nxeGPl4U+d4vxQk2KujkkHN8CAwEAAaMkMCIwEwYDVR0lBAwwCgYIKwYBBQUHAwEw\nCwYDVR0PBAQDAgQwMA0GCSqGSIb3DQEBCwUAA4IBAQBdwgIAKQprw9h54Gtx3zv2\nKsh4y46g6lsVbPzxL+IJiXNGkvVC4oPhfp1MEY8juMglZx683wzvVunPYmcyxp3r\n5pYnOGJlatRdXdIFl28v/VZuR2ueVArqPZj8qu7BKi6rXPXbLUcqF0Adepd8EWqg\nSZCEoOW2CdIK12FS/IbPQzH9+Tiy5hF7VULEg8zLw8wV/4Znhuv8rMSg3CmlSoBZ\ntfw9dAmlhOV7AyNtWcjpEW/0cuUFZ+ee1TNnTH/SO+LVC1DL7Q8c6L1Voauo0Fuc\n9Gww0g+MKH7CW1HWy2bQhDDirC2e/T5W+1QH+zK2vZwc6TAYDx0aFAVAc58xfaeZ\n-----END CERTIFICATE-----\n",
+                            "subject": {
+                                "children": [
+                                    {
+                                        "commonName": "win2"
+                                    }
+                                ]
+                            },
+                            "issuer": {
+                                "children": [
+                                    {
+                                        "commonName": "win2"
+                                    }
+                                ]
+                            },
+                            "pubkey": {
+                                "children": [
+                                    {
+                                        "exponent": "userdata: 0x55f36ac2d078",
+                                        "bits": "2048",
+                                        "modulus": "userdata: 0x55f36ac13568",
+                                        "type": "rsa"
+                                    }
+                                ]
+                            },
+                            "extensions": {
+                                "children": [
+                                    {
+                                        "name": "X509v3 Extended Key Usage",
+                                        "value": "TLS Web Server Authentication"
+                                    },
+                                    {
+                                        "name": "X509v3 Key Usage",
+                                        "value": "Key Encipherment, Data Encipherment"
+                                    }
+                                ]
+                            },
+                            "validity": {
+                                "children": [
+                                    {
+                                        "notBefore": "2021-04-05T08:42:26",
+                                        "notAfter": "2021-10-05T08:42:26"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "protocol": "tcp",
+                "portid": "5985",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "http",
+                    "product": "Microsoft HTTPAPI httpd",
+                    "version": "2.0",
+                    "extrainfo": "SSDP/UPnP",
+                    "ostype": "Windows",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": [
+                    {
+                        "name": "http-server-header",
+                        "raw": "Microsoft-HTTPAPI/2.0",
+                        "data": {
+                            "0": "Microsoft-HTTPAPI/2.0"
+                        }
+                    }
+                ]
+            },
+            {
+                "protocol": "tcp",
+                "portid": "5986",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "http",
+                    "product": "Microsoft HTTPAPI httpd",
+                    "version": "2.0",
+                    "extrainfo": "SSDP/UPnP",
+                    "ostype": "Windows",
+                    "tunnel": "ssl",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": [
+                    {
+                        "name": "http-server-header",
+                        "raw": "Microsoft-HTTPAPI/2.0",
+                        "data": {
+                            "0": "Microsoft-HTTPAPI/2.0"
+                        }
+                    },
+                    {
+                        "name": "ssl-cert",
+                        "raw": "Subject: commonName=Cloudbase-Init WinRM\nIssuer: commonName=Cloudbase-Init WinRM\nPublic Key type: rsa\nPublic Key bits: 2048\nSignature Algorithm: sha1WithRSAEncryption\nNot valid before: 2021-04-05T08:44:04\nNot valid after:  2031-04-04T08:44:04\nMD5:   b1fa 2a63 06b3 a8c3 6eb4 3641 9d62 b988\nSHA-1: a4d5 4c8f ec2d 6695 4250 48d7 d6f5 3bc5 ea41 5ef1\n-----BEGIN CERTIFICATE-----\nMIICxjCCAa6gAwIBAgIQaWJdr+BiZIlKKNNj4K6ohzANBgkqhkiG9w0BAQUFADAf\nMR0wGwYDVQQDExRDbG91ZGJhc2UtSW5pdCBXaW5STTAeFw0yMTA0MDUwODQ0MDRa\nFw0zMTA0MDQwODQ0MDRaMB8xHTAbBgNVBAMTFENsb3VkYmFzZS1Jbml0IFdpblJN\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2lzHUc9VRONeBfqm8/mB\njomrHOLdXFsvqTJ6/RmZ9ifra9EbV6oo50jhBJaYiOk6TV1uvEYa7IhQ6DdzGDlF\nfHM6NBrzl5g0gCcWzNpaCX5J0MQvysW4dWTKlAtoARzmfljlavSm77+3df5H9pg2\n+678BOhoSLu5Gol5X29ibUaNzWznKC9WelRVfSYmoztZLcjunKcuzNWBToyfpnLt\nZx8xyu95XrwNZR7DnDocB+Jr/SciUyAg3phD/MOM/zbYzWAatO+PtLV9JI0iXpdV\neEnRFvd1FICf+gRaft+ACtGs0TaZH+I7TrdmpuU4rVjNtcuqzN3uwv/F20lGqSDt\nsQIDAQABMA0GCSqGSIb3DQEBBQUAA4IBAQAdXPAs7kjPs4bcWHcQIfQTtHdAhGwh\nhjPaJ2e++rU6ASyiKEmD2KFT8Z0GVIehUwxbt6ADO8rZ6FVEMI6+QwwIWpMbnGT8\nG4CFUSigABmNgGFmfZ5ZoUBCSoE6A/Ywqhq3RLrJosJAQ1A7mY/EMTYCCHXAgQVI\nd26IILoWdvrIV3K4a6N/C0tsRI7Dne2K/mjAH+AhaPR7MWdFvmrWxwivxsA7A4Td\nQFRxXE+SWRW+4XWCAr+OnL/RXLNnwep55x2DkCc/OAl6TtRDPb6hkVVd38ZbQ4bo\nc2So9gWOLapDbmwsfMSpB95B65HNCfZME/Tp50FCq+Wzs1wPNrOa55eI\n-----END CERTIFICATE-----\n",
+                        "data": {
+                            "sig_algo": "sha1WithRSAEncryption",
+                            "md5": "b1fa2a6306b3a8c36eb436419d62b988",
+                            "sha1": "a4d54c8fec2d6695425048d7d6f53bc5ea415ef1",
+                            "pem": "-----BEGIN CERTIFICATE-----\nMIICxjCCAa6gAwIBAgIQaWJdr+BiZIlKKNNj4K6ohzANBgkqhkiG9w0BAQUFADAf\nMR0wGwYDVQQDExRDbG91ZGJhc2UtSW5pdCBXaW5STTAeFw0yMTA0MDUwODQ0MDRa\nFw0zMTA0MDQwODQ0MDRaMB8xHTAbBgNVBAMTFENsb3VkYmFzZS1Jbml0IFdpblJN\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2lzHUc9VRONeBfqm8/mB\njomrHOLdXFsvqTJ6/RmZ9ifra9EbV6oo50jhBJaYiOk6TV1uvEYa7IhQ6DdzGDlF\nfHM6NBrzl5g0gCcWzNpaCX5J0MQvysW4dWTKlAtoARzmfljlavSm77+3df5H9pg2\n+678BOhoSLu5Gol5X29ibUaNzWznKC9WelRVfSYmoztZLcjunKcuzNWBToyfpnLt\nZx8xyu95XrwNZR7DnDocB+Jr/SciUyAg3phD/MOM/zbYzWAatO+PtLV9JI0iXpdV\neEnRFvd1FICf+gRaft+ACtGs0TaZH+I7TrdmpuU4rVjNtcuqzN3uwv/F20lGqSDt\nsQIDAQABMA0GCSqGSIb3DQEBBQUAA4IBAQAdXPAs7kjPs4bcWHcQIfQTtHdAhGwh\nhjPaJ2e++rU6ASyiKEmD2KFT8Z0GVIehUwxbt6ADO8rZ6FVEMI6+QwwIWpMbnGT8\nG4CFUSigABmNgGFmfZ5ZoUBCSoE6A/Ywqhq3RLrJosJAQ1A7mY/EMTYCCHXAgQVI\nd26IILoWdvrIV3K4a6N/C0tsRI7Dne2K/mjAH+AhaPR7MWdFvmrWxwivxsA7A4Td\nQFRxXE+SWRW+4XWCAr+OnL/RXLNnwep55x2DkCc/OAl6TtRDPb6hkVVd38ZbQ4bo\nc2So9gWOLapDbmwsfMSpB95B65HNCfZME/Tp50FCq+Wzs1wPNrOa55eI\n-----END CERTIFICATE-----\n",
+                            "subject": {
+                                "children": [
+                                    {
+                                        "commonName": "Cloudbase-Init WinRM"
+                                    }
+                                ]
+                            },
+                            "issuer": {
+                                "children": [
+                                    {
+                                        "commonName": "Cloudbase-Init WinRM"
+                                    }
+                                ]
+                            },
+                            "pubkey": {
+                                "children": [
+                                    {
+                                        "exponent": "userdata: 0x55f36acced28",
+                                        "bits": "2048",
+                                        "modulus": "userdata: 0x55f36acd0ff8",
+                                        "type": "rsa"
+                                    }
+                                ]
+                            },
+                            "validity": {
+                                "children": [
+                                    {
+                                        "notBefore": "2021-04-05T08:44:04",
+                                        "notAfter": "2031-04-04T08:44:04"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "protocol": "tcp",
+                "portid": "49669",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "msrpc",
+                    "product": "Microsoft Windows RPC",
+                    "ostype": "Windows",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": []
+            },
+            {
+                "protocol": "tcp",
+                "portid": "49735",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "128",
+                "service": {
+                    "name": "msrpc",
+                    "product": "Microsoft Windows RPC",
+                    "ostype": "Windows",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:microsoft:windows"
+                    }
+                ],
+                "scripts": []
+            }
+        ],
+        "hostname": [
+            {
+                "name": "host-192-168-1-10.openstacklocal",
+                "type": "PTR"
+            }
+        ],
+        "macaddress": {
+            "addr": "FA:16:3E:04:62:AF",
+            "addrtype": "mac"
+        },
+        "state": {
+            "state": "up",
+            "reason": "arp-response",
+            "reason_ttl": "0"
+        }
+    },
+    "192.168.1.12": {
+        "osmatch": [
+            {
+                "name": "Linux 3.2 - 4.9",
+                "accuracy": "100",
+                "line": "65105",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "4.X",
+                    "accuracy": "100"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:4"
+            }
+        ],
+        "ports": [
+            {
+                "protocol": "tcp",
+                "portid": "22",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "service": {
+                    "name": "ssh",
+                    "product": "OpenSSH",
+                    "version": "7.7p1 Debian 2",
+                    "extrainfo": "protocol 2.0",
+                    "ostype": "Linux",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:linux:linux_kernel"
+                    }
+                ],
+                "scripts": []
+            },
+            {
+                "protocol": "tcp",
+                "portid": "5901",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "service": {
+                    "name": "vnc",
+                    "product": "VNC",
+                    "extrainfo": "protocol 3.8",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "scripts": [
+                    {
+                        "name": "ssl-cert",
+                        "raw": "ERROR: Script execution failed (use -d to debug)",
+                        "data": {}
+                    }
+                ]
+            },
+            {
+                "protocol": "tcp",
+                "portid": "6001",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "64",
+                "service": {
+                    "name": "X11",
+                    "extrainfo": "access denied",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "scripts": []
+            }
+        ],
+        "hostname": [
+            {
+                "name": "host-192-168-1-12.openstacklocal",
+                "type": "PTR"
+            }
+        ],
+        "macaddress": {
+            "addr": "FA:16:3E:5D:CF:9C",
+            "addrtype": "mac"
+        },
+        "state": {
+            "state": "up",
+            "reason": "arp-response",
+            "reason_ttl": "0"
+        }
+    },
+    "192.168.2.2": {
+        "osmatch": [
+            {
+                "name": "Linux 2.6.32",
+                "accuracy": "96",
+                "line": "55173",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "2.6.X",
+                    "accuracy": "96"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:2.6.32"
+            },
+            {
+                "name": "Linux 3.2 - 4.9",
+                "accuracy": "96",
+                "line": "65105",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "4.X",
+                    "accuracy": "96"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:4"
+            },
+            {
+                "name": "Linux 2.6.32 - 3.10",
+                "accuracy": "96",
+                "line": "56381",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "96"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3"
+            },
+            {
+                "name": "Linux 3.4 - 3.10",
+                "accuracy": "95",
+                "line": "65366",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "95"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3"
+            },
+            {
+                "name": "Linux 3.1",
+                "accuracy": "95",
+                "line": "62708",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "95"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3.1"
+            },
+            {
+                "name": "Linux 3.2",
+                "accuracy": "95",
+                "line": "64455",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "3.X",
+                    "accuracy": "95"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:3.2"
+            },
+            {
+                "name": "AXIS 210A or 211 Network Camera (Linux 2.6.17)",
+                "accuracy": "94",
+                "line": "61606",
+                "osclass": {
+                    "type": "webcam",
+                    "vendor": "AXIS",
+                    "osfamily": "embedded",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/h:axis:211_network_camera"
+            },
+            {
+                "name": "Synology DiskStation Manager 5.2-5644",
+                "accuracy": "94",
+                "line": "101159",
+                "osclass": {
+                    "type": "storage-misc",
+                    "vendor": "Synology",
+                    "osfamily": "DiskStation Manager",
+                    "osgen": "5.X",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/a:synology:diskstation_manager:5.2"
+            },
+            {
+                "name": "Netgear RAIDiator 4.2.28",
+                "accuracy": "94",
+                "line": "88023",
+                "osclass": {
+                    "type": "storage-misc",
+                    "vendor": "Netgear",
+                    "osfamily": "RAIDiator",
+                    "osgen": "4.X",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/o:netgear:raidiator:4.2.28"
+            },
+            {
+                "name": "Linux 2.6.32 - 2.6.35",
+                "accuracy": "94",
+                "line": "56153",
+                "osclass": {
+                    "type": "general purpose",
+                    "vendor": "Linux",
+                    "osfamily": "Linux",
+                    "osgen": "2.6.X",
+                    "accuracy": "94"
+                },
+                "cpe": "cpe:/o:linux:linux_kernel:2.6"
+            }
+        ],
+        "ports": [
+            {
+                "protocol": "tcp",
+                "portid": "22",
+                "state": "open",
+                "reason": "syn-ack",
+                "reason_ttl": "63",
+                "service": {
+                    "name": "ssh",
+                    "product": "OpenSSH",
+                    "version": "8.2p1 Ubuntu 4",
+                    "extrainfo": "Ubuntu Linux; protocol 2.0",
+                    "ostype": "Linux",
+                    "method": "probed",
+                    "conf": "10"
+                },
+                "cpe": [
+                    {
+                        "cpe": "cpe:/o:linux:linux_kernel"
+                    }
+                ],
+                "scripts": []
+            }
+        ],
+        "hostname": [],
+        "macaddress": null,
+        "state": {
+            "state": "up",
+            "reason": "timestamp-reply",
+            "reason_ttl": "63"
+        }
+    }
+}

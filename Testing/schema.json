@@ -1,375 +1,65 @@
 {
-        "_id" : ObjectId("6054ef07309b380bd0e5789b"),
-        "ip" : "192.168.2.2",
-        "hostname" : [ ],
-        "macaddress" : null,
+        "_id" : "ObjectId",
+        "ip" : "String",
+        "hostname" : [
+                {
+                        "name": "String",
+                        "type": "String"
+                }
+        ],
+        "macaddress" : {
+                "addr" : "String",
+                "addrtype" : "String",
+                "vendor": "String"
+        },
         "osmatch" : [
                 {
-                        "name" : "Linux 2.6.32",
-                        "accuracy" : "96",
-                        "line" : "55173",
+                        "name" : "String",
+                        "accuracy" : "String",
+                        "line" : "String",
                         "osclass" : {
-                                "type" : "general purpose",
-                                "vendor" : "Linux",
-                                "osfamily" : "Linux",
-                                "osgen" : "2.6.X",
-                                "accuracy" : "96"
+                                "type" : "String",
+                                "vendor" : "String",
+                                "osfamily" : "String",
+                                "osgen" : "String",
+                                "accuracy" : "String"
                         },
-                        "cpe" : "cpe:/o:linux:linux_kernel:2.6.32",
-                        "cve" : [
-                                "CVE-2018-5703",
-                                "CVE-2018-20961",
-                                "CVE-2017-7895",
-                                "CVE-2019-15505",
-                                "CVE-2019-15504",
-                                "CVE-2016-9555",
-                                "CVE-2019-14896",
-                                "CVE-2019-15292",
-                                "CVE-2016-7117",
-                                "CVE-2015-8812"
-                        ]
-                },
-                {
-                        "name" : "Linux 3.2 - 4.9",
-                        "accuracy" : "96",
-                        "line" : "65105",
-                        "osclass" : {
-                                "type" : "general purpose",
-                                "vendor" : "Linux",
-                                "osfamily" : "Linux",
-                                "osgen" : "4.X",
-                                "accuracy" : "96"
-                        },
-                        "cpe" : "cpe:/o:linux:linux_kernel:4",
-                        "cve" : [
-                                "CVE-2016-10150",
-                                "CVE-2016-7117",
-                                "CVE-2019-15292",
-                                "CVE-2016-10229",
-                                "CVE-2018-12714",
-                                "CVE-2016-3955",
-                                "CVE-2016-9555",
-                                "CVE-2019-14901",
-                                "CVE-2015-8812",
-                                "CVE-2019-10125"
-                        ]
-                },
-                {
-                        "name" : "Linux 2.6.32 - 3.10",
-                        "accuracy" : "96",
-                        "line" : "56381",
-                        "osclass" : {
-                                "type" : "general purpose",
-                                "vendor" : "Linux",
-                                "osfamily" : "Linux",
-                                "osgen" : "3.X",
-                                "accuracy" : "96"
-                        },
-                        "cpe" : "cpe:/o:linux:linux_kernel:3",
-                        "cve" : [ ]
-                },
-                {
-                        "name" : "Linux 3.4 - 3.10",
-                        "accuracy" : "95",
-                        "line" : "65366",
-                        "osclass" : {
-                                "type" : "general purpose",
-                                "vendor" : "Linux",
-                                "osfamily" : "Linux",
-                                "osgen" : "3.X",
-                                "accuracy" : "95"
-                        },
-                        "cpe" : "cpe:/o:linux:linux_kernel:3",
-                        "cve" : [ ]
-                },
-                {
-                        "name" : "Linux 3.1",
-                        "accuracy" : "95",
-                        "line" : "62708",
-                        "osclass" : {
-                                "type" : "general purpose",
-                                "vendor" : "Linux",
-                                "osfamily" : "Linux",
-                                "osgen" : "3.X",
-                                "accuracy" : "95"
-                        },
-                        "cpe" : "cpe:/o:linux:linux_kernel:3.1",
-                        "cve" : [
-                                "CVE-2018-5703",
-                                "CVE-2018-20961",
-                                "CVE-2017-7895",
-                                "CVE-2019-15505",
-                                "CVE-2019-15504",
-                                "CVE-2016-9555",
-                                "CVE-2019-14901",
-                                "CVE-2019-15292",
-                                "CVE-2016-7117",
-                                "CVE-2015-8812"
-                        ]
-                },
-                {
-                        "name" : "Linux 3.2",
-                        "accuracy" : "95",
-                        "line" : "64455",
-                        "osclass" : {
-                                "type" : "general purpose",
-                                "vendor" : "Linux",
-                                "osfamily" : "Linux",
-                                "osgen" : "3.X",
-                                "accuracy" : "95"
-                        },
-                        "cpe" : "cpe:/o:linux:linux_kernel:3.2",
-                        "cve" : [
-                                "CVE-2018-5703",
-                                "CVE-2018-20961",
-                                "CVE-2017-7895",
-                                "CVE-2019-15505",
-                                "CVE-2019-15504",
-                                "CVE-2016-9555",
-                                "CVE-2019-14901",
-                                "CVE-2019-15292",
-                                "CVE-2016-7117",
-                                "CVE-2015-8812"
-                        ]
-                },
-                {
-                        "name" : "AXIS 210A or 211 Network Camera (Linux 2.6.17)",
-                        "accuracy" : "94",
-                        "line" : "61606",
-                        "osclass" : {
-                                "type" : "webcam",
-                                "vendor" : "AXIS",
-                                "osfamily" : "embedded",
-                                "accuracy" : "94"
-                        },
-                        "cpe" : "cpe:/h:axis:211_network_camera",
-                        "cve" : [ ]
-                },
-                {
-                        "name" : "Synology DiskStation Manager 5.2-5644",
-                        "accuracy" : "94",
-                        "line" : "101159",
-                        "osclass" : {
-                                "type" : "storage-misc",
-                                "vendor" : "Synology",
-                                "osfamily" : "DiskStation Manager",
-                                "osgen" : "5.X",
-                                "accuracy" : "94"
-                        },
-                        "cpe" : "cpe:/a:synology:diskstation_manager:5.2",
-                        "cve" : [
-                                "CVE-2018-1160",
-                                "CVE-2018-13284",
-                                "CVE-2017-12075",
-                                "CVE-2017-15889",
-                                "CVE-2018-8920",
-                                "CVE-2018-8919",
-                                "CVE-2018-7184",
-                                "CVE-2018-7185",
-                                "CVE-2017-9554",
-                                "CVE-2017-5753"
-                        ]
-                },
-                {
-                        "name" : "Netgear RAIDiator 4.2.28",
-                        "accuracy" : "94",
-                        "line" : "88023",
-                        "osclass" : {
-                                "type" : "storage-misc",
-                                "vendor" : "Netgear",
-                                "osfamily" : "RAIDiator",
-                                "osgen" : "4.X",
-                                "accuracy" : "94"
-                        },
-                        "cpe" : "cpe:/o:netgear:raidiator:4.2.28",
-                        "cve" : [ ]
-                },
-                {
-                        "name" : "Linux 2.6.32 - 2.6.35",
-                        "accuracy" : "94",
-                        "line" : "56153",
-                        "osclass" : {
-                                "type" : "general purpose",
-                                "vendor" : "Linux",
-                                "osfamily" : "Linux",
-                                "osgen" : "2.6.X",
-                                "accuracy" : "94"
-                        },
-                        "cpe" : "cpe:/o:linux:linux_kernel:2.6",
-                        "cve" : [
-                                "CVE-2009-0065",
-                                "CVE-2008-4395",
-                                "CVE-2009-1385",
-                                "CVE-2009-3613",
-                                "CVE-2009-2844",
-                                "CVE-2009-1439",
-                                "CVE-2009-3726",
-                                "CVE-2008-4576",
-                                "CVE-2009-1389",
-                                "CVE-2010-0008"
-                        ]
-                }
+                        "cpe" : "String",
+                        "cve" : []
+                }               
         ],
         "ports" : [
                 {
-                        "protocol" : "tcp",
-                        "portid" : "22",
-                        "state" : "open",
-                        "reason" : "syn-ack",
-                        "reason_ttl" : "63",
+                        "protocol" : "String",
+                        "portid" : "String",
+                        "state" : "String",
+                        "reason" : "String",
+                        "reason_ttl" : "String",
                         "service" : {
-                                "name" : "ssh",
-                                "product" : "OpenSSH",
-                                "version" : "8.2p1 Ubuntu 4ubuntu0.2",
-                                "extrainfo" : "Ubuntu Linux; protocol 2.0",
-                                "ostype" : "Linux",
-                                "method" : "probed",
-                                "conf" : "10"
+                                "name" : "String",
+                                "product" : "String",
+                                "version" : "String",
+                                "extrainfo" : "String",
+                                "ostype" : "String",
+                                "method" : "String",
+                                "conf" : "String"
                         },
                         "cpe" : [
                                 {
-                                        "cpe" : "cpe:/o:linux:linux_kernel",
-                                        "cve" : [
-                                                "CVE-2019-8069",
-                                                "CVE-2019-7096",
-                                                "CVE-2020-9633",
-                                                "CVE-2019-8255",
-                                                "CVE-2019-8070",
-                                                "CVE-2018-4944",
-                                                "CVE-2018-4937",
-                                                "CVE-2018-4935",
-                                                "CVE-2018-5703",
-                                                "CVE-2018-4920"
-                                        ]
+                                        "cpe" : "String",
+                                        "cve" : []
                                 }
                         ],
-                        "scripts" : [ ]
-                },
-                {
-                        "protocol" : "udp",
-                        "portid" : "53",
-                        "state" : "closed",
-                        "reason" : "port-unreach",
-                        "reason_ttl" : "63",
-                        "service" : {
-                                "name" : "domain",
-                                "method" : "table",
-                                "conf" : "3"
-                        },
-                        "scripts" : [ ]
-                },
-                {
-                        "protocol" : "udp",
-                        "portid" : "67",
-                        "state" : "closed",
-                        "reason" : "port-unreach",
-                        "reason_ttl" : "63",
-                        "service" : {
-                                "name" : "dhcps",
-                                "method" : "table",
-                                "conf" : "3"
-                        },
-                        "scripts" : [ ]
-                },
-                {
-                        "protocol" : "udp",
-                        "portid" : "68",
-                        "state" : "open|filtered",
-                        "reason" : "no-response",
-                        "reason_ttl" : "0",
-                        "service" : {
-                                "name" : "dhcpc",
-                                "method" : "table",
-                                "conf" : "3"
-                        },
-                        "scripts" : [ ]
-                },
-                {
-                        "protocol" : "udp",
-                        "portid" : "123",
-                        "state" : "closed",
-                        "reason" : "port-unreach",
-                        "reason_ttl" : "63",
-                        "service" : {
-                                "name" : "ntp",
-                                "method" : "table",
-                                "conf" : "3"
-                        },
-                        "scripts" : [ ]
-                },
-                {
-                        "protocol" : "udp",
-                        "portid" : "137",
-                        "state" : "closed",
-                        "reason" : "port-unreach",
-                        "reason_ttl" : "63",
-                        "service" : {
-                                "name" : "netbios-ns",
-                                "method" : "table",
-                                "conf" : "3"
-                        },
-                        "scripts" : [ ]
-                },
-                {
-                        "protocol" : "udp",
-                        "portid" : "138",
-                        "state" : "closed",
-                        "reason" : "port-unreach",
-                        "reason_ttl" : "63",
-                        "service" : {
-                                "name" : "netbios-dgm",
-                                "method" : "table",
-                                "conf" : "3"
-                        },
-                        "scripts" : [ ]
-                },
-                {
-                        "protocol" : "udp",
-                        "portid" : "161",
-                        "state" : "closed",
-                        "reason" : "port-unreach",
-                        "reason_ttl" : "63",
-                        "service" : {
-                                "name" : "snmp",
-                                "method" : "table",
-                                "conf" : "3"
-                        },
-                        "scripts" : [ ]
-                },
-                {
-                        "protocol" : "udp",
-                        "portid" : "445",
-                        "state" : "closed",
-                        "reason" : "port-unreach",
-                        "reason_ttl" : "63",
-                        "service" : {
-                                "name" : "microsoft-ds",
-                                "method" : "table",
-                                "conf" : "3"
-                        },
-                        "scripts" : [ ]
-                },
-                {
-                        "protocol" : "udp",
-                        "portid" : "5000",
-                        "state" : "closed",
-                        "reason" : "port-unreach",
-                        "reason_ttl" : "63",
-                        "service" : {
-                                "name" : "upnp",
-                                "method" : "table",
-                                "conf" : "3"
-                        },
                         "scripts" : [ ]
                 }
         ],
         "state" : {
-                "state" : "up",
-                "reason" : "echo-reply",
-                "reason_ttl" : "63"
+                "state" : "String",
+                "reason" : "String",
+                "reason_ttl" : "String"
         },
         "scanstats" : {
-                "scandate" : "20210319",
-                "scantime" : "193204"
+                "scandate" : "String",
+                "scantime" : "String"
         }
 }
