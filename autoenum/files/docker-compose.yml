@@ -1,0 +1,99 @@
+version: "3.2"
+services:
+  autoenum-api:
+    container_name: autoenum-api
+    hostname: autoenum-api
+    restart: always
+    build: ./api
+    ports:
+      - '5001:5001'
+    networks:
+      - autoenum-network
+    volumes:
+      - "screengrab-volume:/pictures"
+      - "log-volume:/log"
+  autoenum-mongodb:
+    container_name: autoenum-mongodb
+    restart: always
+    image: mongo
+    ports:
+      - '27018:27017'
+    volumes:
+      - "mongo-docker-volume:/data/db"
+    networks:
+      - autoenum-network
+  autoenum-screengrab:
+    container_name: autoenum-screengrab
+    restart: always
+    build: ./screengrab
+    ports:
+      - '3000:3000'
+    networks:
+      - autoenum-network
+    volumes:
+      - "screengrab-volume:/pictures"
+  autoenum-webgui:
+    container_name: autoenum-webgui
+    restart: always
+    build: ./website
+    depends_on:
+      - autoenum-api
+    ports:
+      - '8080:8080'
+    networks:
+      - autoenum-network
+  cve_search:
+    image: cve_search
+    build:
+      context: ./cve-search
+      dockerfile: /etc/ansible/roles/autoenum/files/cve-search/docker/images/cve_search/dockerfile-cve_search
+      args:
+        - REPO=cve-search/cve-search
+        - BRANCH=master
+    hostname: cve_search
+    depends_on:
+      - redis
+      - mongo
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=TRUE
+    ports:
+      - 443:5000
+    networks:
+      - autoenum-network
+  redis:
+    image: cve_search-redis
+    hostname: redis
+    restart: always
+    build:
+      context: ./cve-search
+      dockerfile: /etc/ansible/roles/autoenum/files/cve-search/docker/images/redis/dockerfile-redis
+    volumes:
+      - "./.cve_search_data/cve_search_redis:/data"
+    expose:
+      - 6379
+    networks:
+      - autoenum-network
+  mongo:
+    image: cve_search-mongo
+    hostname: mongo
+    restart: always
+    build:
+      context: ./cve-search
+      dockerfile: /etc/ansible/roles/autoenum/files/cve-search/docker/images/mongodb/dockerfile-mongo
+    volumes:
+      - "./.cve_search_data/cve_search_mongodb:/data/db"
+    expose:
+      - 27017
+    networks:
+      - autoenum-network
+volumes:
+  mongo-docker-volume:
+    external: false
+  screengrab-volume:
+    external: false
+  log-volume:
+    external: false
+networks:
+  autoenum-network:
+    driver: bridge
