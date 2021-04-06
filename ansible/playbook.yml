@@ -1,5 +1,0 @@
-- hosts: ubuntu
-  become: yes
-  roles:
-    - ubuntu
-      #- geerlingguy.mysql

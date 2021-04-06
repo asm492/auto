@@ -1,9 +1,0 @@
----
-- hosts: windows
-  gather_facts: no
-  tasks:
-  - name: Start services
-    win_service:
-      name: FTPSVC
-      name: LdapAdmin.exe
-      state: started
