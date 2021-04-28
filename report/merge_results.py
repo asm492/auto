@@ -1,14 +1,8 @@
 def merge_results(t, u, start):
-    # This function reorganizes output
-    # from nmap to to have data sorted
-    # by hosts.
-
-    # Just converting the start time
-    # object from main to date and time
     logging.debug("[MERGE RESULTS] start")
     starttime = start.strftime("%H%M%S")
     startdate = start.strftime("%Y%m%d")
-
+    
     for i in t:
         os = t[i]['osmatch']
         t_ports = t[i]['ports']

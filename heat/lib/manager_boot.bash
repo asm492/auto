@@ -2,7 +2,6 @@
 export DEBIAN_FRONTEND=noninteractive
 
 sudo apt update -y
-
 #Depenency for Discord bot
 sudo apt-get install jq -y
 cd ~
@@ -11,19 +10,14 @@ discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/80616814
 
 sudo apt  install nmap -y
 sudo apt install python3-pip -y
-
-#pip install python3-namp
-#pip install python3-nmap -y
-#pip3 install ansible
 sudo apt-get install ansible -y
 pip3 install "pywinrm>=0.3.0"
 ansible-galaxy collection install ansible.windows
+
 #For unzip
 ansible-galaxy collection install community.windows
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Python, pip, ansible, pywinrm er ferdig"
 
-#For MongoDB:
-#sudo apt install -y mongodb
 pip3 install pymongo
 
 #Docker and Docker compose
@@ -83,8 +77,8 @@ chmod 500 /etc/ansible/key
 
 cd ~
 discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Installerer DVVWA!"
-git clone https://github.com/Monastyr/ansible-ubuntu.git
-mv ansible-ubuntu/* /etc/ansible/
+git clone https://github.com/Monastyr/autoenum-TestENV.git
+mv autoenum-TestENV/* /etc/ansible/
 cd /etc/ansible
 ~/discord.sh/./discord.sh --webhook-url="https://discord.com/api/webhooks/806168148922466304/6OMF-RpDB8XIQ9X-lebXgCnuoufB5h322IxZjKo4JB7kL7cGnxcBUL82Y3zYHbdB3Hqt" --text "Kjører playbooks"
 ansible-playbook main.yml

@@ -1,5 +1,6 @@
 {
         "_id" : "ObjectId",
+        "uuid" : "String/UUID v4",
         "ip" : "String",
         "hostname" : [
                 {

@@ -1,0 +1,19 @@
+auto/Docker/website/
+|-- Dockerfile
+|-- models
+|   `-- scan.js
+|-- node_modules [...]
+|-- package.json
+|-- package-lock.json
+|-- routes
+|   `-- hosts.js
+|-- server.js
+`-- views
+    |-- banner_logo.png
+    |-- details.ejs
+    |-- header.ejs
+    |-- index.ejs
+    |-- list.ejs
+    |-- Logo.png
+    |-- search.ejs
+    `-- searchresults.ejs

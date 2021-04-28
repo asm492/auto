@@ -1,0 +1,109 @@
+{
+    "_id": ObjectId("606c3c578e1b559ea9930e2e"),
+    "uuid": "145b6ae9-835c-4b6d-9aad-d3bf8066bd6b",
+    "ip": "192.168.1.6",
+    "hostname": [
+        {
+            "name": "host-192-168-1-6.openstacklocal",
+            "type": "PTR"
+        }
+    ],
+    "macaddress": {
+        "addr": "FA:16:3E:32:7B:C7",
+        "addrtype": "mac"
+    },
+    "osmatch": [
+        {
+            "name": "Linux 2.6.32",
+            "accuracy": "96",
+            "line": "55173",
+            "osclass": {
+                "type": "general purpose",
+                "vendor": "Linux",
+                "osfamily": "Linux",
+                "osgen": "2.6.X",
+                "accuracy": "96"
+            },
+            "cpe": "cpe:/o:linux:linux_kernel:2.6.32",
+            "cve": [
+                "CVE-2018-5703",
+                "CVE-2018-20961",
+                "CVE-2017-7895",
+                "CVE-2019-15505",
+                "CVE-2019-15504",
+                "CVE-2016-9555",
+                "CVE-2019-14896",
+                "CVE-2019-15292",
+                "CVE-2016-7117",
+                "CVE-2015-8812"
+            ]
+        }
+    ],
+    "ports": [
+        {
+            "protocol": "tcp",
+            "portid": "21",
+            "state": "open",
+            "reason": "syn-ack",
+            "reason_ttl": "64",
+            "service": {
+                "name": "ftp",
+                "product": "vsftpd",
+                "version": "2.3.4",
+                "ostype": "Unix",
+                "method": "probed",
+                "conf": "10"
+            },
+            "cpe": [
+                {
+                    "cpe": "cpe:/a:vsftpd:vsftpd:2.3.4",
+                    "cve": []
+                }
+            ],
+            "scripts": []
+        },
+        {
+            "protocol": "tcp",
+            "portid": "22",
+            "state": "open",
+            "reason": "syn-ack",
+            "reason_ttl": "64",
+            "service": {
+                "name": "ssh",
+                "product": "OpenSSH",
+                "version": "7.6p1 Ubuntu 4ubuntu0.3",
+                "extrainfo": "Ubuntu Linux; protocol 2.0",
+                "ostype": "Linux",
+                "method": "probed",
+                "conf": "10"
+            },
+            "cpe": [
+                {
+                    "cpe": "cpe:/o:linux:linux_kernel",
+                    "cve": [
+                        "CVE-2019-8069",
+                        "CVE-2019-7096",
+                        "CVE-2020-9633",
+                        "CVE-2019-8255",
+                        "CVE-2019-8070",
+                        "CVE-2018-4944",
+                        "CVE-2018-4937",
+                        "CVE-2018-4935",
+                        "CVE-2018-5703",
+                        "CVE-2018-4920"
+                    ]
+                }
+            ],
+            "scripts": []
+        }
+    ],
+    "state": {
+        "state": "up",
+        "reason": "arp-response",
+        "reason_ttl": "0"
+    },
+    "scanstats": {
+        "scandate": "20210406",
+        "scantime": "124408"
+    }
+}
